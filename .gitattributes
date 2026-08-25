@@ -1,0 +1,3 @@
+# Zeilenenden bleiben, wie sie sind (Hausregel, s. GIT-UND-B-LAUFWERK.md):
+# Git soll nichts umschreiben - weder beim Einchecken noch beim Auschecken.
+* -text
