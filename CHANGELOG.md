@@ -27,6 +27,61 @@ lokalen Modells nicht feststellen, gibt es die Ansage lieber: sie kostet ein
 paar Marken, ihr Fehlen kostet doppelte Arbeit. Abschaltbar ueber
 agent.werkzeug_echo, die Schwelle steht in agent.werkzeug_echo_ab_b.
 
+**Die Browser-Bruecke laesst nur noch deine eigene Erweiterung herein — und
+deine Erweiterung nur noch deinen eigenen Qwirbel.** Bisher galt: wer sich
+beim Anklopfen als Browser-Erweiterung ausgab, war drin. Fuer eine Webseite
+ist das tatsaechlich eine Huerde, die sie nicht nehmen kann. Fuer ein
+Programm auf demselben Rechner ist es keine: drei Zeilen Code genuegen, um
+sich als Erweiterung auszugeben — und damit haette es deinen Browser samt
+aller offenen Anmeldungen fernsteuern koennen.
+
+Jetzt bekommt die Erweiterung beim ersten Verbinden ein Dauer-Token, und
+Qwirbel merkt sich, welche Erweiterung das war. Danach kommt nur noch diese
+eine durch: falsches Token, fremde Kennung oder gar keins — abgewiesen, und
+der Versuch wird mitgeschrieben. Abtippen musst du dafuer weiterhin nichts.
+
+**Und die Erweiterung glaubt jetzt nicht mehr jedem, der am anderen Ende
+antwortet.** Beim Verbinden schickt sie eine Zufallszahl und verlangt eine
+Signatur damit zurueck — die kann nur bilden, wer das Token kennt. Kommt sie
+nicht oder ist sie falsch, macht die Erweiterung die Verbindung zu und
+fuehrt **keinen einzigen Befehl** aus. Vorher haette jedes Programm, das
+schneller auf dem Port sitzt, ihr Befehle geben koennen.
+
+**Neu koppeln geht ueber den Knopf, den es schon gibt:** Einstellungen →
+Verbindung → Browser koppeln. Der oeffnet fuer fuenf Minuten ein Fenster,
+in dem sich eine Erweiterung anmelden darf, und liefert wie bisher zusaetzlich
+einen Code. Wer es ganz streng mag, stellt `browser_bruecke.streng` an —
+dann koppelt sich nichts mehr von selbst, auch nicht beim ersten Mal.
+
+⚠️ **Nach diesem Update die Erweiterung einmal neu laden** (in
+chrome://extensions der Kreis-Pfeil auf ihrer Karte). Sie verbindet sich
+danach von selbst und holt sich dabei ihr Token.
+
+**Der Update-Knopf fragt jetzt wirklich jemanden.** „Jetzt pruefen" im
+Updates-Tab meldete bisher „Kein Manifest konfiguriert" - es gab die ganze
+Update-Maschinerie (Kanaele, gestaffelter Rollout, Pruefsummen, Rollback), aber
+keine Adresse, an die sie sich haette wenden koennen. Ab jetzt fragt jede
+Installation von selbst bei Qwirbels oeffentlicher Info-Seite auf GitHub nach:
+Version, was neu ist, fuer welchen Kanal freigegeben. Ist etwas Neues da, sagt
+Qwirbel es - mit den Stichpunkten aus der neuen Fassung.
+
+**Und wenn ein Paket bereitsteht, gibt es einen Knopf dafuer.** „Jetzt
+installieren" laedt es, prueft die Pruefsumme und wendet es an; die Sicherung
+davor macht Qwirbel wie immer selbst. Passt die Pruefsumme nicht, wird nichts
+angewendet - dann steht lieber die alte Fassung da als eine halbe neue. Der
+Neustart bleibt ein eigener Klick, damit ein Update keine laufende Aufgabe
+mitreisst. Steht kein Paket zum Direkt-Laden bereit, erscheint auch kein Knopf,
+sondern die Bezugsquelle - ein Knopf, der beim Druecken erklaert, warum er
+nicht geht, ist schlimmer als keiner.
+
+**Eine leere Update-Adresse heisst ab jetzt „nicht eingetragen", nicht „aus".**
+Das klingt nach Kleinkram und war der eigentliche Fehler: die Adresse als
+Standard im Programm zu hinterlegen reichte nicht, weil in JEDER gespeicherten
+Einstellungsdatei bereits ein leerer Wert stand - und der gewinnt gegen einen
+Standard. Bestandsinstallationen haetten den Knopf also weiterhin fuer kaputt
+gehalten. Wer den Update-Kanal wirklich nicht will, traegt jetzt ausdruecklich
+„aus" ein; Firmen koennen wie bisher auf ihr eigenes Manifest zeigen.
+
 **Die Leiste ganz links ist wieder durchsichtig.** Seit v2.8.0 ist das eigene
 Hintergrundbild eine eigene Ebene und keine der Hintergrund-Wahlen mehr. Die
 Seitenleiste hatte ihre Glas-Optik aber genau an diese alte Wahl gehaengt -
