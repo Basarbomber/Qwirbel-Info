@@ -1,0 +1,24 @@
+{
+  "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket.",
+  "version": "2.8.1",
+  "kanal": ["stabil", "test", "lts"],
+  "freigabe_ab": "",
+  "min_version": "",
+  "rollout_prozent": 100,
+  "url": "",
+  "sha256": "",
+  "bezugsquelle": "https://qwirbel.de",
+  "changelog_url": "https://github.com/Basarbomber/Qwirbel-Info/blob/main/CHANGELOG.md",
+  "hinweise": "v2.8.1 - Klecks laedt, was er zeigt. Die Klecks-Modellliste und ihr Lade-Knopf sprechen wieder ueber denselben Motor; VRAM FREIGEBEN wirft auch Klecks' Chatmodell raus; Klecks startet jetzt auch auf Linux und macOS; die Seitenleiste laesst sich am PC einklappen. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
+  "_felder": {
+    "version": "Zielversion. Qwirbel bietet sie nur an, wenn sie NEUER ist als die installierte.",
+    "kanal": "Fuer welche Kanaele freigegeben (stabil/test/lts). Wer im Kanal 'lts' sitzt, sieht eine Version nur, wenn 'lts' hier steht.",
+    "freigabe_ab": "ISO-Zeitpunkt. Davor wird nichts angeboten. Leer = sofort.",
+    "min_version": "Mindestens installierte Version, sonst wird zuerst dorthin verwiesen. Leer = egal.",
+    "rollout_prozent": "Staffelung 0-100. Jede Installation hat einen festen Platz 0-99 je Version; wer einmal drin ist, bleibt drin.",
+    "url": "Direkter Download des Update-ZIPs. LEER LASSEN, solange das Paket nicht oeffentlich liegen soll - dann meldet Qwirbel nur die neue Version und nennt die Bezugsquelle.",
+    "sha256": "Pruefsumme des ZIPs. Passt sie nicht, wird NICHT angewendet.",
+    "bezugsquelle": "Wo es das Paket gibt, wenn 'url' leer ist.",
+    "hinweise": "Was in dieser Version neu ist - wird im Update-Tab angezeigt."
+  }
+}
