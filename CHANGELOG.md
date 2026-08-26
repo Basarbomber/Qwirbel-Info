@@ -1,3 +1,91 @@
+## v2.8.5 - Qwirbel antwortet in DEINER Sprache, und das Symbol holt das Fenster zurueck
+
+**Zwei Kaeufer haben denselben Nachmittag zwei Fehler gemeldet, und beide waren
+echt.** Der eine hatte sein Programm auf Englisch gestellt und bekam trotzdem
+deutsche Antworten. Der andere schloss das Fenster mit dem X und kam danach nur
+noch ueber den Browser hinein. Beides ist behoben – und in beiden Faellen war
+die Ursache nicht das, wonach es aussah.
+
+**Die Sprache: es waren zwei Regeln, die sich widersprochen haben.** Im
+Grundtext, den Qwirbel jedem Modell mitgibt, stand fest verdrahtet *Antworte
+IMMER auf Deutsch, ohne Ausnahme*. Bei englischer Einstellung wurde ans Ende
+desselben Textes gehaengt *Answer exclusively in ENGLISH*. Das Modell bekam also
+zwei Anweisungen, beide als wichtigste bezeichnet, und musste raten. Einer der
+Kaeufer hat den Denkverlauf seines Modells mitgeschickt – darin dreht es sich
+minutenlang im Kreis und schreibt woertlich *This is a conflict*. Er hatte recht.
+
+**Jetzt kann Qwirbel jede Sprache, und der Standard ist die des Nutzers.**
+Schreibt jemand franzoesisch, antwortet Qwirbel franzoesisch; wechselt er
+mitten im Gespraech, wechselt Qwirbel mit. Wer eine feste Sprache will, waehlt
+sie – dann gilt sie ueberall und ohne Ausnahme, in achtundzwanzig Sprachen von
+Deutsch und Englisch ueber Franzoesisch, Spanisch, Portugiesisch, Tuerkisch,
+Polnisch bis Japanisch. Die Regel selbst steht jetzt an EINER Stelle im
+Programm statt an vier, und ein Test faellt durch, sobald wieder zwei
+verschiedene Sprachen in einem Text landen.
+
+**Das Desktop-Symbol holt das Fenster zurueck.** Das X schliesst nur das
+Fenster – Qwirbel laeuft danach im Hintergrund weiter, das ist Absicht. Wer
+dann das Symbol doppelt anklickte, bekam aber nur einen Hinweis, er moege das
+vorhandene Fenster benutzen oder das Symbol im Infobereich anklicken. Nur: das
+Fenster gab es nicht mehr, und Windows blendet Symbole im Infobereich
+standardmaessig aus. Man sah einen Zettel, fand nichts und ging in den Browser.
+Jetzt sieht Qwirbel nach, ob ueberhaupt ein Fenster da ist – und macht eins auf,
+wenn keins da ist. Genau das, was ein Doppelklick tun soll.
+
+**Das Setup sagt jetzt, was es tut.** Bisher hiess das Fenster immer *Setup*,
+auch wenn laengst eine Fassung installiert war. Jetzt steht dort *Update*, wenn
+eine aeltere gefunden wird, *Reparieren* bei derselben – und *Aeltere Fassung*,
+wenn man versehentlich eine aeltere EXE ueber eine neuere Installation legt.
+Der letzte Fall ist der Grund fuer die Unterscheidung: eine Rueckstufung soll
+man lesen koennen, bevor man auf Weiter drueckt.
+
+**Der Update-Kanal holt je System das richtige Paket.** Qwirbel gibt es sechsmal
+– Windows, Linux und macOS, jeweils als Normal- und als Server-Fassung. Das
+Update-Manifest kannte aber nur EINE Adresse fuer alle. Jetzt steht dort je
+System und Variante ein eigener Eintrag, und Qwirbel nimmt den, der zu diesem
+Rechner passt. Findet er keinen, laedt er NICHTS – ein Windows-Paket auf einem
+Mac auszupacken waere schlimmer als gar kein Update. Aeltere Manifeste
+funktionieren unveraendert weiter.
+
+**Qwirbel misst jetzt selbst, was in deinem Rechner steckt.** Die
+Modell-Empfehlung fragte bisher ausschliesslich ComfyUI nach der Grafikkarte –
+auf einem Rechner ohne ComfyUI kam schlicht nichts heraus, und die
+Selbst-Einrichtung blieb wirkungslos. Jetzt liest Qwirbel die Karte selbst, aus
+mehreren Quellen je nach System, und sagt bei jeder Zahl dazu, woher sie stammt.
+Findet er keine Karte, sagt er das – statt einen Wert zu raten.
+
+**Und die Empfehlungen selbst hatten Loecher.** Zwischen den Stufen klafften
+Luecken: eine Karte mit 7,95 GB fiel durch alle Stufen hindurch in einen
+Rueckfall, der ausgerechnet die groesste Empfehlung war – ein Modell mit
+knapp 20 GB auf einer 8-GB-Karte. Jetzt sind die Stufen lueckenlos, der
+Rueckfall ist die kleinste statt der groessten, und es gibt eigene Stufen fuer
+Rechner ohne Grafikkarte, fuer 4 GB und fuer 24 GB aufwaerts. Apple Silicon
+wird als das behandelt, was es ist: gemeinsamer Speicher, keine getrennte Karte.
+
+**Die Motoranzeige unten links hat die Unwahrheit gesagt** – und zwar genau
+verkehrt herum. Sie meldete *rechnet*, sobald irgendeine Modelldatei auf der
+Platte lag, und *bereit* ausgerechnet dann, wenn keine da war. Jetzt
+unterscheidet sie, ob ein Modell geladen ist, ob nur welche herumliegen, ob ein
+Teil im Hauptspeicher liegt (dann ist es spuerbar langsamer, und das steht
+jetzt da) – und ob die Antwort schlicht nicht rechtzeitig kam. Der letzte Fall
+ist ein eigener Zustand: keine Antwort heisst nicht *aus*, sondern *unklar*.
+
+**Fuer Firmen: eine Rechte-Luecke ist geschlossen.** Fuenf Werkzeuge, mit denen
+Qwirbel auf einem verbundenen Zweitgeraet Dateien lesen und schreiben kann,
+waren fuer Mitarbeiter-Konten nicht gesperrt – und die Geraeteliste filtert
+nicht nach Mandant. Ein Mitarbeiter haette damit jedes angemeldete Geraet
+erreichen koennen, auch das der Geschaeftsfuehrung. Bis es eine Zuordnung von
+Geraeten zu Konten gibt, sind diese Werkzeuge fuer Mitarbeiter gesperrt.
+
+**Kleinigkeiten, die im Alltag auffallen:** Ein Modell laesst sich jetzt direkt
+in Klecks eigenen Ordner laden, mit Fortschritt und Abbrechen – bisher landete
+jeder Download im Ordner des anderen Motors, der ihn nie zu sehen bekam. Die
+Modell-Liste im Chat-Menue fuellt sich nach, wenn Klecks spaeter gestartet wird,
+statt bis zum naechsten Neustart leer zu bleiben. Und die Zustandsabfrage des
+Rechenwerks braucht statt zwei Sekunden nur noch eine Viertelsekunde: sie
+wartete jedes Mal darauf, dass auf einem geschlossenen Anschluss niemand
+antwortet.
+
 ## v2.8.4 - Qwirbel spricht die Sprache deines Rechners
 
 **Auf einem englischen Windows war bisher alles deutsch.** Ein Kaeufer meldete
