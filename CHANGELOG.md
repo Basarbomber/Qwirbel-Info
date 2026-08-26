@@ -1,3 +1,73 @@
+## v2.8.6 - Die Sprache wird gemessen statt geraten, und Klecks sieht endlich alle Modelle
+
+**Beim ersten Start stand die Sprache falsch – auf einem deutschen Windows.**
+Das ist der Fehler, der eine Fassung nach seiner eigenen Behebung wieder
+aufgetaucht ist, nur von der anderen Seite. In v2.8.5 liest Qwirbel die Sprache
+des Systems – und das tut es richtig: unter Windows die Anzeigesprache des
+Benutzerkontos. Das FENSTER fragte aber jemand anderen. Es nahm die Sprache der
+Browser-Laufzeit, die in dem eingebauten Fenster steckt, und die meldet oft
+Englisch, auch wenn Windows deutsch ist. Im Einrichtungs-Assistenten war damit
+der englische Knopf vorausgewaehlt – und ein markierter Knopf sieht aus wie
+*das ist deins*. Wer darauf klickte, hatte sein Qwirbel auf Englisch gestellt,
+ohne es zu wollen.
+
+**Jetzt fragt das Fenster den Server.** Der weiss es, weil er das
+Betriebssystem direkt fragen kann. Die Vermutung aus der Browser-Laufzeit gilt
+nur noch fuer den Sekundenbruchteil, bis die richtige Antwort da ist. Und wer
+einmal selbst eine Sprache gewaehlt hat, behaelt sie – korrigiert wird nur die
+Vorbelegung, nie die Entscheidung.
+
+**Klecks sieht jetzt alle Modelle, die da sind.** Bisher las er ausschliesslich
+seine eigenen Ordner. Das war richtig gedacht – er soll ohne Ollama
+funktionieren, und das tut er weiterhin. Nur: wer Ollama installiert hat und
+sich dort ein Modell holt, sah es bei Klecks nicht. Jetzt gilt beides. Klecks
+eigene Ordner bleiben die Grundlage; was Ollama zusaetzlich hat, kommt dazu.
+Dieselbe Datei unter zwei Namen erscheint dabei nur EINMAL – Qwirbel erkennt
+das an der Datei selbst, nicht am Namen.
+
+**Und der Modelle-Tab zeigt es.** Bisher standen dort die Modelle von Ollama,
+ComfyUI und den anderen Quellen – Klecks fehlte, obwohl er rechnet. Jetzt ist
+er dabei, mitsamt der Angabe, ob ein Modell auf die Grafikkarte passt. Weil die
+Abfrage bei Klecks ein paar Sekunden dauert, wird sie kurz zwischengespeichert;
+wie frisch die Liste ist, steht mit dabei. Eine stille alte Zahl waere genau
+die Art Anzeige, die spaeter wie ein Fehler aussieht.
+
+**Klecks laedt jetzt das Modell, das du gewaehlt hast.** Zwei Beschwerden,
+eine Ursache: *"Er tut da einfach ein anderes laden, was dann nicht antwortet"*
+und *"Der Prompt hat 10303 Marken, das Fenster fasst 8192."* Dahinter stand
+eine einzige falsch gelesene Angabe. Qwirbel fragte Klecks *laeufst du?* und
+verstand die Antwort als *ist ein Modell geladen?* - gemeint war aber *liegen
+brauchbare Modelldateien da?*. Weil immer welche dalagen, kam Qwirbel nie zum
+Laden: das zuletzt benutzte Modell blieb auf der Karte, egal was oben im Chip
+stand, und dessen Textfenster war zu klein fuer die Anfrage.
+
+**Jetzt gilt, was im Chip steht.** Liegt ein anderes Modell auf der Karte, wird
+gewechselt. Ist das Textfenster zu klein, wird es mit dem groesseren neu
+geladen, statt dir vorzurechnen, wie viele Marken fehlen. Bei dieser Art
+Rechenwerk steht die Fenstergroesse beim Start fest - Ollama macht deshalb
+genau dasselbe, nur unsichtbar. Und wenn das Laden wirklich scheitert, sagt
+Qwirbel das weiterhin klar, mit Modellname und Zahl.
+
+**Die Modell-Liste im Chip haelt sich auf dem Laufenden.** Sie wurde bisher
+einmal geholt und blieb dann stehen. Wer im Klecks-Tab alle Modelle sah und
+oben im Chip nur drei, hatte genau das vor sich. Jetzt merkt Qwirbel, wenn sich
+die Zahl der verfuegbaren Modelle aendert - weil ein Dienst neu startete oder
+eine Datei dazukam - und holt die Liste dann nach. Nicht dauernd: die Abfrage
+kostet ein paar Sekunden, und alle acht Sekunden waere sie teurer als ihr
+Nutzen.
+
+**Kleinigkeit mit grosser Wirkung:** Die Zustandsabfrage von Klecks wartete bei
+jedem Aufruf zwei Sekunden darauf, dass auf einem geschlossenen Anschluss
+niemand antwortet. Jetzt fragt sie erst kurz nach, ob dort ueberhaupt jemand
+ist. Dieselbe Antwort, nur in einer Viertelsekunde statt in zwei.
+
+**Was sich NICHT geaendert hat, und das ist Absicht:** Ollama bleibt der
+Standard – im Programm und in der Einrichtung. ComfyUI bleibt fuer Bilder,
+Video und Musik. Klecks laeuft daneben und wird sichtbar besser. Woran man
+erkennt, wann er so weit ist, steht ab dieser Fassung als Liste mit Zahlen im
+Programmordner (`KLECKS-BEREIT-KRITERIEN.md`): neun Schwellen, zwei davon
+gruen. Solange auch nur eine rot ist, bleibt es beim bewaehrten Weg.
+
 ## v2.8.5 - Qwirbel antwortet in DEINER Sprache, und das Symbol holt das Fenster zurueck
 
 **Zwei Kaeufer haben denselben Nachmittag zwei Fehler gemeldet, und beide waren
