@@ -1,3 +1,65 @@
+## v2.8.3 - ONTOGO: Der Schwarm-Check feuert jetzt wirklich
+
+**Die Setup-EXE verlangt keine ZIP mehr.** Ein Kaeufer meldete: Doppelklick auf
+`Qwirbel-Setup.exe`, und statt zu installieren fragt das Fenster nach einer
+Programm-ZIP - obwohl das Programm in der EXE steckt. Das war ein echter Fehler,
+und er betraf **jede** Setup-EXE bis einschliesslich v2.8.1, Normal wie Server.
+
+Beim Verpacken landete das Programm-Paket in einem Unterordner statt in der
+Wurzel der EXE. Das Setup sucht es an der richtigen Stelle, fand dort nichts und
+fiel deshalb auf die letzte Notloesung zurueck: den Nutzer nach der ZIP fragen.
+Auf dem Entwicklungsrechner ist das nie aufgefallen, weil dort neben der EXE
+immer das Release-ZIP liegt - der Rueckfall hat es gefunden, und alles sah
+gesund aus. Genau das ist die Lehre: **eine Setup-EXE muss in einem leeren
+Ordner getestet werden, sonst prueft man die eigene Festplatte statt das
+Produkt.**
+
+Behoben, und zwar gemessen: die neuen EXEs tragen das Paket in der Wurzel, und
+beide Varianten wurden allein in einem leeren Ordner durchlaufen - Normal wie
+Server installieren ohne eine einzige Rueckfrage. Dazu ein Test, der genau das
+festnagelt: er prueft den Bau-Aufruf, das Verhalten bei falsch abgelegtem Paket
+und die fertigen EXEs auf dem Datentraeger.
+
+**Zweiter Fund im selben Zug:** Die Notloesung „ZIP neben der EXE" suchte nur
+nach Normal-Paketen. Ein Server-Kaeufer haette also selbst diesen Rueckweg nicht
+gehabt. Sie kennt jetzt beide Varianten, und die Fehlermeldung sagt auch, welche
+Datei sie eigentlich sucht.
+
+**Wer betroffen war und was zu tun ist:** Wer per ZIP installiert hat, war nie
+betroffen. Wer eine Setup-EXE bis v2.8.1 hat, nimmt einfach die neue - oder legt
+die Programm-ZIP neben die alte EXE, dann laeuft auch die durch. Auf dem Rechner
+bleibt in beiden Faellen nichts Halbes zurueck: das Setup bricht ab, bevor es
+etwas anfasst.
+
+**Der automatische Schwarm-Start („großes Projekt → aufteilen“) feuerte nie – zwei Tore
+blockierten ihn.** Erstens verlangte _grosses_projekt zwingend eine Roadmap-Datei im
+Projektordner: Fehlte sie, kam immer „klein“ heraus, egal wie riesig der Auftrag war –
+deshalb startete der Auto-Schwarm nie von allein. Jetzt gilt: Roadmap ODER Nachricht ab
+300 Zeichen, die mehrere Dinge auf einmal nennt. Die KI denkt dabei weiterhin erst
+selbst nach: Die Zerlegung läuft über das LLM, ergibt sie nur EINEN Teil, arbeitet der
+Agent allein weiter – eine bewusste Entscheidung MIT oder OHNE Schwarm, ohne Rückfrage
+(genau Falkos Wunsch: „du denkst erst mal nach“).
+
+**Zweitens warf ein mitgeschicktes Bild die Nachricht aus dem Aufgaben-Weg.** Ein Bild
+erzwang vorher überall typ=generation – auch im Work-/Code-Tab. Damit verschwand die
+Nachricht in der Bild-Pipeline, BEVOR der Schwarm-Check sie überhaupt sah; eine „große
+Nachricht mit Bild in einen neuen Code-Tab“ konnte den Schwarm-Check deshalb nie
+erreichen. Jetzt ist ein Bild in Work/Code KONTEXT für die Aufgabe (die Vision-
+Beschreibung wandert in die Aufgaben-Nachricht), nur ein explizit gewählter Workflow-
+Chip bleibt Generation – im Chat-Tab wie bisher.
+
+**User-Zwischennachrichten erscheinen genau einmal.** Das Echo eines Zurufs konnte
+mehrfach ankommen (Reload/Reconnect spielt Events nach) – die Nachricht stand dann zwei-
+oder dreimal im Chat. zwischenrufEcho ist jetzt idempotent: Existiert bereits ein
+bestätigter Zwischenruf mit demselben Text, fliegt nur die vorläufige Zeile raus,
+eingefügt wird nichts mehr. Dasselbe Netz jetzt auch an der SENDEN-Stelle: Schickt Falko
+dieselbe Nachricht mehrfach los (Doppelklick, Enter + Klick), meldet das Backend
+"duplikat" und die vorläufige Zeile verschwindet wieder, statt doppelt stehen zu
+bleiben. Und der Verlaufs-Schreiber verwirft ein zweites identisches Zwischenruf-Echo –
+quittieren mehrere Helfer denselben Posteingang (Broadcast UND Stream), landet die Zeile
+trotzdem nur einmal in der Chat-Datei. Nur FALKOS Zwischenrufe werden entdupliziert;
+Qwirbels eigene Meldungen bleiben unberührt.
+
 ## v2.8.2 - Kleine Modelle wissen jetzt, was sie schon getan haben
 
 **Ein Modell unter 34 Milliarden Parametern bekommt nach jedem Befehl eine

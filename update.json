@@ -1,7 +1,12 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket.",
+  "_naechster_schritt": "v2.8.3 ist gepackt (Windows-ZIPs + beide Setup-EXEs, 26.08.2026), liegt aber noch nicht auf qwirbel.de. SOBALD hochgeladen: hier 'version' auf 2.8.3 setzen und 'hinweise' ersetzen. Vorher NICHT - ein Manifest, das eine Version nennt, die niemand laden kann, schickt Leute ins Leere.",
   "version": "2.8.1",
-  "kanal": ["stabil", "test", "lts"],
+  "kanal": [
+    "stabil",
+    "test",
+    "lts"
+  ],
   "freigabe_ab": "",
   "min_version": "",
   "rollout_prozent": 100,
