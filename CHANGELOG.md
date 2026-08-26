@@ -1,3 +1,86 @@
+## v2.8.7 - Qwirbel startet in Sekunden statt in einer halben Minute
+
+**Das Programm hat sich bei jedem Oeffnen selbst neu uebersetzt.** Die
+Oberflaeche ist ein einziges grosses Stueck Programmcode, und dieser Code wurde
+bisher in deinem Browser uebersetzt, bevor das erste Bild stand - jedes Mal
+aufs Neue, rund 28.000 Zeilen. Gemessen auf dieser Maschine: **22,2 Sekunden**.
+Dazu kam eine 2,7-Megabyte-Hilfsbibliothek, die dafuer erst geladen und
+ausgepackt werden musste.
+
+**Jetzt wird einmal beim Bauen uebersetzt.** Das Ergebnis liegt fertig bei, die
+Hilfsbibliothek wird gar nicht mehr geholt. Dieselbe Messung: **63
+Millisekunden**. Die Seite selbst schrumpft von 1,86 Megabyte auf 109 Kilobyte.
+Wer eine aeltere Fassung von Hand veraendert, verliert nichts - Qwirbel merkt
+das an einem Fingerabdruck und nimmt dann wieder den alten, langsamen Weg,
+statt etwas Falsches anzuzeigen.
+
+**Beim Umbau sind sieben echte Fehler aufgefallen, die vorher niemand sehen
+konnte.** Der alte Uebersetzer hat sie zugedeckt: Werte, auf die zugegriffen
+wurde, bevor es sie gab, wurden stillschweigend zu "nichts". Der teuerste davon:
+Qwirbel hielt eine laufende Bilderzeugung nie fuer beschaeftigt und durfte die
+Oberflaeche mitten hinein neu laden. Kein Absturz, keine Meldung - nur ein
+Verhalten, das sich niemand erklaeren konnte. Eine Pruefung faengt solche
+Stellen ab jetzt dauerhaft ab.
+
+**"Meine Chats sind weg" - waren sie nie.** Waehrend der Verlauf vom Server
+kam, zeigte der Chat den Willkommens-Schirm. Das sieht nicht aus wie "laedt
+gerade", sondern wie "alles verloren", und nichts sprach dagegen. Jetzt steht
+dort, dass geladen wird - und dass nichts verloren geht. Dauert irgendetwas
+anderes laenger als einen Augenblick, laeuft oben ein schmaler Streifen.
+
+**Der Ordner, den du gesetzt hast, gilt jetzt auch.** Wer einen Arbeitsordner
+angibt, erwartet, dass Qwirbel dort arbeitet und dort sucht. Im Auftragstext an
+die KI stand aber nur das WORT "Arbeitsordner" - ohne den Pfad. Das Modell
+suchte folgerichtig in den Ordnern, die es kannte: Home, Schreibtisch,
+Arbeitsbereich. Jetzt steht der echte Pfad dort, an allen drei Stellen, an
+denen Qwirbel mit der KI redet. Bis Rechte-Stufe 7 ist er die Vorgabe - auch
+fuers Suchen. Auf Stufe 8 (alles erlaubt) darf die KI darueber hinaus, wenn die
+Aufgabe es verlangt.
+
+**Neu: schlicht oder vollstaendig.** Unter Darstellung waehlst du, wie du durch
+Qwirbel navigierst - die neue Kopfleiste (vorne Chat und Work, dahinter was
+gerade laeuft) oder die gewohnte Seitenleiste mit allen Reitern. Es
+verschwindet nichts, nur der Weg dorthin ist ein anderer. Der Reiter, in dem du
+gerade steckst, steht dabei immer vorne.
+
+**Untertabs lassen sich anheften.** Rechtsklick auf einen Unterpunkt zeigt sein
+Zeichen, seinen Namen und das Tastenkuerzel - und "Als Haupt setzen". Danach
+oeffnet der Hauptreiter immer genau diesen Unterpunkt. Modelle oeffnet
+ab jetzt von sich aus die Modellbibliothek statt der Liste des bereits
+Installierten: wer noch nichts hat, stand dort vor einer leeren Liste.
+
+**Empfohlen werden jetzt Modelle, mit denen man wirklich arbeiten kann.**
+Bisher schlug Qwirbel dichte Modelle vor, die ihre volle Groesse rechnen
+muessen. Neu sind quantisierte Experten-Modelle: gemma-4-26B traegt 26
+Milliarden Parameter an Wissen, rechnet aber nur mit vier davon je Wort - und
+passt mit 9,8 Gigabyte auf dieselbe Karte wie ein deutlich duemmeres Modell.
+Fuer kleinere Karten gilt dasselbe eine Nummer kleiner. Geladen wird nichts von
+allein; der Vorschlag steht mit Groesse, Begruendung und einer ehrlichen
+Antwort darauf, ob er auf DEINE Karte passt.
+
+**Beim Einrichten wirst du gefragt, womit Bilder entstehen sollen** - mit dem
+eingebauten Klecks oder mit ComfyUI, oder mit beidem. Qwirbel schaut vorher
+nach, was wirklich da ist. Und weil sich so etwas aendert, kommt die Frage nach
+jedem Update genau einmal wieder.
+
+**Und du kannst sehen, wo Qwirbel seine Sachen ablegt.** Unter Einstellungen →
+Dateien & Speicher steht jeder Ordner mit Groesse, Zweck und - das ist der
+Punkt - was ein Loeschen kosten wuerde. Die Chats haben keine zweite Kopie; die
+Modelle sind nur wiederbeschaffbar. Wer das nicht sehen will, schaltet es am
+Ende des Setups ab; geloescht oder abgeschaltet wird dabei nichts.
+
+**Die Oberflaeche kann jetzt jede Sprache lernen.** Unter Einstellungen →
+Sprache legst du mit einem Plus eine neue an, und ein Modell uebersetzt die
+2.433 Texte des Programms - in Abschnitten, mit sichtbarem Fortschritt, und
+jederzeit anzuhalten. Was schon uebersetzt ist, bleibt gespeichert. Ehrlich
+dazu: rund 540 Stellen setzen ihren Text erst beim Anzeigen zusammen ("Ich sehe
+16 GB") - die bleiben auf Deutsch oder Englisch, ebenso alles noch nicht
+Uebersetzte. Die Oberflaeche bleibt dadurch immer bedienbar.
+
+**Kleinere Fehler:** Im Modell-Menue blieb die Ollama-Liste stumm leer, wenn
+Ollama nicht lief - jetzt steht dort, woran es liegt. Und wer nur Klecks
+benutzt, bekam statt der Modellwahl einen Setup-Knopf angeboten.
+
 ## v2.8.6 - Die Sprache wird gemessen statt geraten, und Klecks sieht endlich alle Modelle
 
 **Beim ersten Start stand die Sprache falsch – auf einem deutschen Windows.**
