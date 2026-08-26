@@ -1,3 +1,36 @@
+## v2.8.4 - Qwirbel spricht die Sprache deines Rechners
+
+**Auf einem englischen Windows war bisher alles deutsch.** Ein Kaeufer meldete
+es genau so: sein System ist englisch, sein Qwirbel war es nicht. Das lag nicht
+an einer Einstellung, die er uebersehen hatte – es war schlicht fest verdrahtet.
+Ohne gespeicherte Wahl fiel die Oberflaeche auf Deutsch zurueck, und der
+Setup-Assistent kannte ueberhaupt keine zweite Sprache: das allererste, was ein
+englischer Kunde von Qwirbel zu sehen bekam, war ein Fenster, das er nicht lesen
+konnte.
+
+**Jetzt entscheidet der Rechner.** Beim ersten Start liest Qwirbel die Sprache
+des Systems – unter Windows die Anzeigesprache des Benutzerkontos, sonst die
+ueblichen Sprach-Einstellungen. Deutsch bleibt Deutsch, alles andere wird
+Englisch. Wer in den Einstellungen selbst etwas waehlt, ueberstimmt das
+dauerhaft; die eigene Wahl gewinnt immer. Auch die Sprache, in der Qwirbel
+ANTWORTET, folgt beim ersten Start dem System statt einer festen Vorgabe.
+
+**Das Setup-Fenster gibt es jetzt auf Englisch.** Vollstaendig: Schritte,
+Erklaerungen, Knoepfe, die Beschreibung jeder Variante, jede der zwoelf
+Datengruppen bei der Uebernahme, die Lizenz-Texte, die Warnungen bei
+Fehleingaben. Auch die Konsolen-Ausgabe, die man zu sehen bekommt, wenn das
+Fenster nicht startet. Was noch keine Uebersetzung hat, erscheint unveraendert
+auf Deutsch statt zu verschwinden – eine fehlende Zeile ist ein Schoenheits-
+fehler, eine verschluckte waere ein Fehler.
+
+**Und ein Test passt ab jetzt darauf auf:** er zaehlt jeden sichtbaren Text im
+Setup-Fenster und faellt durch, sobald einer ohne Uebersetzung dasteht. Beim
+Bauen dieser Fassung waren das 45 Texte im Fenster plus 30 aus den Varianten-
+und Datengruppen-Listen – alle uebersetzt.
+
+**Fuer wen sich nichts aendert:** wer Qwirbel schon benutzt, behaelt seine
+Sprache. Die Erkennung greift nur, wo noch nie etwas gewaehlt wurde.
+
 ## v2.8.3 - ONTOGO: Der Schwarm-Check feuert jetzt wirklich
 
 **Die Setup-EXE verlangt keine ZIP mehr.** Ein Kaeufer meldete: Doppelklick auf
