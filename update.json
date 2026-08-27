@@ -31,32 +31,32 @@
     "windows": {
       "datei": "Qwirbel-Windows-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "8ef4d1ab18a1245bfc148736b5f1eb4ede72f1e0980b04bcb793c030a3f228bc"
+      "sha256": "700362398839ab137a92adaa0efe335624e0f0893fe3af72c84b29451adb422e"
     },
     "windows_server": {
       "datei": "Qwirbel-Windows-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "b29b923b13e874ca569a15dbe19efe6ad28ffbf72e40c80acbfcebd0f4a4886b"
+      "sha256": "3d84a54f0a89d4f75016e860d62c291d8ed1ccec99ff5f6f78ffb50b1042cf32"
     },
     "linux": {
       "datei": "Qwirbel-Linux-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "9ab99a9920da5fab3cb7736f39edb6f3345c250d5229cff861c51fcb0fcf8e93"
+      "sha256": "53da5e02a484ed31d45fca4c9d5d875cf18a5a08974ba3cb4cd9b5a80c90ec34"
     },
     "linux_server": {
       "datei": "Qwirbel-Linux-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "0635b0099c6dacaee753594bf2ccb03cb792c7882a0f19bd6db769be7c3742f6"
+      "sha256": "7bb53fc331ee8968e509aed8b1cd217f4e72abcd3511bca05b65986c55913be0"
     },
     "macos": {
       "datei": "Qwirbel-macOS-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "700d524ac81310c32c991b897e16a673bc947cfb3253546938863c9d76aa9954"
+      "sha256": "f7520412c4a246ce906294ea0760e490e3ddc5df6a02785d3c44b21324555436"
     },
     "macos_server": {
       "datei": "Qwirbel-macOS-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "960677241c9b888abc01026722ac945780c3117f788b0093f24ecb28e21aea82"
+      "sha256": "770ffabfa173990e90e95b2159140246fa4aecdd71ac87362baafb4ef7bcdd42"
     }
   }
 }
