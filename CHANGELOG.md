@@ -54,6 +54,28 @@ hinein. Jedes Panel laesst sich jetzt einzeln zuklappen und merkt sich das;
 eingeklappt bleiben Titel, Fortschritt, Zustand und der Schritt sichtbar, der
 gerade laeuft. Laufende Auftraege stehen oben, fertige rutschen nach unten.
 
+**Im Taskmanager stand "pythonw.exe" mit dem Python-Logo.** Qwirbel laeuft als
+Python-Programm, und genau das stand auch im Taskmanager - fuer ein gekauftes
+Programm sieht das aus wie ein fremder Interpreter. Jetzt startet Qwirbel als
+"Qwirbel.exe" mit dem eigenen Symbol, in neun Groessen bis 256 Pixel. Das ist
+kein Umweg ueber ein zusaetzliches Startprogramm: es ist derselbe Interpreter,
+nur unter eigenem Namen und mit eigenem Bild. Auch das Fenster laeuft jetzt
+darunter. Faellt die Datei weg, startet Qwirbel wie bisher weiter.
+
+**Das Tray-Menue hatte drei Eintraege.** Oeffnen, Browser, Beenden - alles
+andere ging nur ueber das Fenster, auch wenn man es gar nicht sehen wollte.
+Dazugekommen sind: Grafikspeicher freigeben (der Knopf, den es bisher nur in
+der Oberflaeche gab - praktisch, wenn man schnell zocken will), Programm-,
+Arbeits- und Protokollordner oeffnen sowie Neu starten. Der Neustart geht
+ueber den richtigen Startweg, nicht am Programmordner vorbei.
+
+**Unten im Chat liessen sich die lokalen Modelle nicht waehlen.** Der
+Anbieter-Knopf zeigte die Modell-Liste nur bei Cloud-Anbietern; wer Ollama
+fuhr, sah nur die Anbieter, und das Menue schloss sich beim Klick sofort
+wieder. Das Modell liess sich nur oben im Kopf wechseln. Jetzt zeigt der Knopf
+in beiden Faellen dieselbe Liste - und beide Wege stellen dieselbe Wahl,
+nicht zwei getrennte.
+
 **Und die Werkzeug-Listen darin waren zu lang, um sie zu lesen.** In einem
 einzigen Auftrag sind ueber dreihundert Werkzeug-Zeilen zusammengekommen -
 gekuerzt hat sie niemand, weder der Server noch die Anzeige. Sichtbar war davon
