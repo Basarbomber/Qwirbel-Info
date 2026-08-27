@@ -1,7 +1,7 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket.",
-  "_naechster_schritt": "v2.8.7 ist gepackt (27.08.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
-  "version": "2.8.7",
+  "_naechster_schritt": "v2.8.9 ist gepackt (27.08.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download. HINWEIS: 2.8.8 wurde seinerzeit nicht nachgezogen, dieser Stand holt sie mit.",
+  "version": "2.8.9",
   "kanal": [
     "stabil",
     "test",
@@ -14,7 +14,7 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://github.com/Basarbomber/Qwirbel-Info/blob/main/CHANGELOG.md",
-  "hinweise": "v2.8.7 - Qwirbel startet in Sekunden statt in einer halben Minute. Die Oberflaeche wurde bei jedem Oeffnen neu uebersetzt (gemessen: 22,2 Sekunden); das passiert jetzt einmal beim Bauen - 63 Millisekunden, und die 2,7-MB-Hilfsbibliothek entfaellt. Beim Umbau kamen sieben echte Fehler ans Licht, die der alte Weg zugedeckt hatte. Dazu: 'Deine Chats werden geladen' statt eines leeren Schirms, der gesetzte Arbeitsordner gilt jetzt auch fuer die KI, waehlbar zwischen schlichter Kopfleiste und voller Seitenleiste, Untertabs anheftbar, empfohlen werden quantisierte Experten-Modelle (gemma-4-26B mit 9,8 GB statt eines duemmeren Modells), beim Einrichten die Frage Klecks oder ComfyUI, eine Uebersicht aller Programmordner mit dem was ein Loeschen kostet, und die Oberflaeche kann jede Sprache lernen. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
+  "hinweise": "v2.8.9 - Symbole, die etwas sagen. Muehe- und Rechte-Regler zeigten auf jeder Stufe und in jedem Reiter dasselbe Maennchen; jetzt hat jede Stufe ihr eigenes Symbol und jeder Reiter seine eigene Bildsprache - der Code-Reiter erzaehlt den Bau-Ablauf, die Rechte-Stufen zeigen, was sie erlauben. Dazu behoben: ein Arm der Figur drehte sich um den Kopf statt um die Schulter; die Modell-Schranke rechnete nach jedem Chatwechsel mit null statt mit dem echten Verlauf, und das Zahnrad in Work/Code nahm den Verlauf eines fremden Reiters; das Modell-Menue liess bis zu fuenf Sekunden auf sich warten und ist jetzt sofort da; ein erzeugtes Video blieb im Generieren-Reiter schwarz, weil es dort nur eine Bild-Anzeige gab; angehaengte Bilder gingen je nach Herkunft zwei verschiedene Wege. Und: mehrere laufende Auftraege lassen sich einzeln einklappen - zwei volle Schrittlisten passten nie zusammen auf den Schirm, und in einem Auftrag sind ueber dreihundert Werkzeug-Zeilen zusammengekommen, von denen etwa ein Zehntel sichtbar war. Enthaelt auch 2.8.8 (Dokumente im Chat, Muehe-Regler im Chat, Absturz im Mehr-Menue). Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
   "_felder": {
     "version": "Zielversion. Qwirbel bietet sie nur an, wenn sie NEUER ist als die installierte.",
     "kanal": "Fuer welche Kanaele freigegeben (stabil/test/lts). Wer im Kanal 'lts' sitzt, sieht eine Version nur, wenn 'lts' hier steht.",
@@ -29,34 +29,34 @@
   },
   "pakete": {
     "windows": {
-      "datei": "Qwirbel-Windows-Normal-v2.8.7.zip",
+      "datei": "Qwirbel-Windows-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "a892bd0836fce38a964bc576840738800ca6e9da8d4feb65ce17395038fdeb4b"
+      "sha256": "8ef4d1ab18a1245bfc148736b5f1eb4ede72f1e0980b04bcb793c030a3f228bc"
     },
     "windows_server": {
-      "datei": "Qwirbel-Windows-Server-v2.8.7.zip",
+      "datei": "Qwirbel-Windows-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "16f74fd09810aa90472ea3ffa3b113b30b5a8ff3ffae2750775c02ed1076b3bb"
+      "sha256": "b29b923b13e874ca569a15dbe19efe6ad28ffbf72e40c80acbfcebd0f4a4886b"
     },
     "linux": {
-      "datei": "Qwirbel-Linux-Normal-v2.8.7.zip",
+      "datei": "Qwirbel-Linux-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "5dc95d48e9eb8ec7c838e2c3ad087625da2a9a3f9ffce24485a0da816ec78a9a"
+      "sha256": "9ab99a9920da5fab3cb7736f39edb6f3345c250d5229cff861c51fcb0fcf8e93"
     },
     "linux_server": {
-      "datei": "Qwirbel-Linux-Server-v2.8.7.zip",
+      "datei": "Qwirbel-Linux-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "b3e96063b6178dc407e6ba7c038df016f4eaffd46ca908c9cb73cdbb46747971"
+      "sha256": "0635b0099c6dacaee753594bf2ccb03cb792c7882a0f19bd6db769be7c3742f6"
     },
     "macos": {
-      "datei": "Qwirbel-macOS-Normal-v2.8.7.zip",
+      "datei": "Qwirbel-macOS-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "45d2469f106255ab7cad49eb85f6dde1d4941c5a19448de4f2546bc026f8ae07"
+      "sha256": "700d524ac81310c32c991b897e16a673bc947cfb3253546938863c9d76aa9954"
     },
     "macos_server": {
-      "datei": "Qwirbel-macOS-Server-v2.8.7.zip",
+      "datei": "Qwirbel-macOS-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "2ba3cc62d90ad5804e1fe2481a6d0f73e786c1c60ecc9e545ea7985f907975ec"
+      "sha256": "960677241c9b888abc01026722ac945780c3117f788b0093f24ecb28e21aea82"
     }
   }
 }

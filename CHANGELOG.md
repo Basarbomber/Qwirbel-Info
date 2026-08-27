@@ -1,3 +1,136 @@
+## v2.8.9 - Symbole, die etwas sagen, und ein Regler, der richtig rechnet
+
+**Auf jeder Stufe stand dasselbe Maennchen.** Ob "Blitz" oder "Maximal", ob im
+Chat oder im Code-Reiter - der Regler fuer Muehe und der fuer Rechte zeigten
+ueberall dieselbe Pixelfigur. Sie sagte weder etwas ueber die Stufe noch
+darueber, was der Reiter eigentlich tut. Jetzt traegt jede Stufe ein eigenes
+Symbol, und jeder Reiter seine eigene Bildsprache: der Chat geht vom Blitz
+ueber die Sprechblase und die Lupe zum Gehirn, der Code-Reiter erzaehlt den
+Bau-Ablauf selbst - hinschreiben, starten, testen, Kaefer fangen, im laufenden
+Programm klicken, reparieren. Die Rechte-Stufen folgen dem, was sie erlauben:
+Stufe 2 heisst "Arbeitsordner" und zeigt einen Ordner, Stufe 7 heisst
+"Aufraeumen" und zeigt einen Besen. Das Maennchen ist nicht verschwunden - es
+wackelt weiter im Chat, solange gearbeitet wird.
+
+**Und ein Arm des Maennchens lief quer.** Beide Arme drehten sich um denselben
+Punkt und in dieselbe Richtung: der eine schwang nach aussen, der andere quer
+ueber den Koerper. Schuld war eine fehlende Angabe, worauf sich die Drehung
+bezieht - ohne sie nahm der Browser die Mitte des ganzen Bildes statt die
+Schulter des jeweiligen Arms. Beide Arme kreisten also um den Kopf. Jetzt hat
+jede Seite ihren eigenen Drehpunkt und ihre eigene Richtung.
+
+**Die Modell-Schranke rechnete nach jedem Chatwechsel mit null.** Qwirbel graut
+Modelle aus, die fuer einen Chat zu klein sind - das haengt daran, wie voll der
+Verlauf schon ist. Diese Zahl wurde aber aus der Anzeige "zuletzt gesehener
+Reiter" geholt. Passte die nicht zum Reiter, in dem man gerade stand, setzte
+Qwirbel den Verlauf auf null und die Schranke griff nicht. Eine zweite Stelle -
+das Zahnrad in Work und Code - fragte gar nicht erst nach, welcher Reiter
+gemeint ist, und rechnete mit dem Verlauf eines fremden Chats. Beide holen den
+Wert jetzt dort, wo er nach Reitern getrennt liegt.
+
+**Das Modell-Menue liess auf sich warten.** Es fragte erst beim Aufklappen nach,
+welche Modelle taugen - und dahinter stehen zwei Anfragen an Ollama und Klecks,
+die bis zu fuenf Sekunden brauchen duerfen. So lange stand das Menue
+ungefiltert da. Der letzte Stand wird jetzt je Reiter gemerkt und ist sofort da;
+nachgefragt wird im Hintergrund.
+
+**Ein erzeugtes Video blieb im Generieren-Reiter schwarz.** Dort konnte die
+Anzeige nur Bilder. Wer ein Video oder ein Musikstueck erzeugte, bekam es in
+ein Bild-Feld gelegt - im Chat war dasselbe Ergebnis in Ordnung. Es gab zwei
+getrennte Anzeigen fuer dieselbe Sache. Jetzt ist es eine, und der
+Generieren-Reiter kann Filme und Ton wie der Chat.
+
+**Angehaengte Bilder gingen zwei verschiedene Wege.** Ein reingezogenes Bild
+wurde anders angezeigt als ein mit Strg+V eingefuegtes - unter anderem liess
+sich nur eines davon zum Vergroessern anklicken. Beide laufen jetzt durch
+dieselbe Anzeige, egal ob das Bild als Datei oder als Pfad ankommt.
+
+**Mehrere laufende Auftraege liessen sich nicht einklappen.** Wer in zwei
+Reitern gleichzeitig arbeiten liess, bekam zwei volle Schrittlisten
+untereinander und musste durch alles hindurchscrollen. Das war kein Zufall,
+sondern Rechnung: die Spalte darf nicht ganz so hoch werden wie das Fenster,
+jedes einzelne Panel aber fast halb so hoch - zwei passen also nie zusammen
+hinein. Jedes Panel laesst sich jetzt einzeln zuklappen und merkt sich das;
+eingeklappt bleiben Titel, Fortschritt, Zustand und der Schritt sichtbar, der
+gerade laeuft. Laufende Auftraege stehen oben, fertige rutschen nach unten.
+
+**Und die Werkzeug-Listen darin waren zu lang, um sie zu lesen.** In einem
+einzigen Auftrag sind ueber dreihundert Werkzeug-Zeilen zusammengekommen -
+gekuerzt hat sie niemand, weder der Server noch die Anzeige. Sichtbar war davon
+etwa ein Zehntel, der Rest lag im Scrollbereich. Jetzt zeigt der laufende
+Schritt seine letzten sechs Werkzeuge, ein abgehakter seine letzten zwei, und
+darueber steht, wie viele es sonst noch waren.
+
+## v2.8.8 - Knoepfe, die nichts taten, tun jetzt etwas
+
+**Der Knopf "Mehr" hat die Oberflaeche zerlegt.** Wer in der schlichten
+Ansicht oben auf "Mehr" drueckte, bekam statt der Tab-Liste einen Fehlerschirm:
+"Qwirbel hat einen Schluckauf". Der Grund war eine einzige fehlende
+Weitergabe - das Menue wollte wissen, in welchem Reiter man gerade steht,
+bekam es aber nie gesagt und stuerzte bei jedem Oeffnen ab. Deshalb hat auch
+die Gruppe "Hier bist du" nie funktioniert, die genau das zeigen sollte.
+
+**Zehn Bedienwege brachen still ab.** Beim Umbau der aufklappbaren Reiter am
+12.08. wurde ein Schalter entfernt - zehn Aufrufe blieben stehen. Jeder von
+ihnen warf einen Fehler, und weil er MITTEN in der Zeile stand, lief der Rest
+der Zeile nicht mehr. Betroffen waren: die Tastenkuerzel zum Reiter-Wechsel,
+das Hotword "Hey Qwirbel", das Diktat in die Planung, der Weg aus dem Chat in
+den Code-Reiter und der Knopf "Browser koppeln". Der Reiter wechselte, der
+Unterreiter blieb stehen - und niemand konnte sagen, warum. Eine neue Pruefung
+faengt genau diese Fehlerart ab jetzt vor dem Bauen ab; sie hat die beiden
+Stellen gefunden.
+
+**Ein Druck aufs Logo holt das Fenster zurueck.** Bisher stand da ein Zettel:
+"Qwirbel laeuft bereits - bitte dieses Fenster benutzen, es ist vielleicht
+hinter einem anderen." Ein Programm, das weiss, wo sein Fenster ist, soll es
+holen und nicht beschreiben. Dasselbe im Tray: "Qwirbel oeffnen" und das
+Tastenkuerzel Strg+Shift+Q taten gar nichts, solange das Fenster lief - sie
+holen es jetzt nach vorn.
+
+**Der Knopf "Jetzt installieren" war unsichtbar, obwohl das Paket bereitlag.**
+Seit 2.8.6 sucht Qwirbel das Update je Betriebssystem im passenden Eintrag.
+Der Knopf fragte aber noch das alte, gemeinsame Feld ab - wer das Verzeichnis
+richtig ausfuellte, bekam den Knopf nie zu sehen. Jetzt entscheidet der Server,
+ob es fuer DIESEN Rechner ein Paket gibt, und zwar mit derselben Funktion, die
+es danach auch herunterlaedt.
+
+**Ein Update sagt jetzt Bescheid.** Liegt eine neue Fassung bereit, sitzt ein
+oranger Punkt am Zahnrad oben, und im Menue darunter steht, welche Version es
+ist. Dazu kommt einmal ein kleines Fenster unten rechts - einmal je Version,
+nicht bei jedem Start. Es blockiert nichts. Der Punkt bleibt, bis das Update
+da ist.
+
+**Der Pfeil oben links hat drei Stufen.** Volle Seitenleiste, nur Symbole,
+Kopfleiste oben - und aus der Kopfleiste fuehrt derselbe Pfeil an derselben
+Stelle wieder zurueck. Vorher war das Umschalten zwischen den beiden Ansichten
+nur ueber die Einstellungen erreichbar.
+
+**Welcher Reiter vorne steht, laesst sich endlich einstellen.** Das ging bisher
+nur ueber einen Rechtsklick im "Mehr"-Menue - wer das nicht zufaellig
+ausprobiert hat, fand es nie. Unter Einstellungen -> Menue steht es jetzt bei
+Sortieren und Ausblenden, mit dem Hinweis, was fuer beide Ansichten gilt und
+was nur fuer die schlichte.
+
+**Die Update-Historie zeigte Unsinn.** Nach jedem Update standen dort zwei
+Zeilen statt einer, und die zweite behauptete einen Wechsel von einer Version
+auf sich selbst. Als Paketname stand ein Zufallsname aus dem Zwischenspeicher
+statt der Datei, die man ausgewaehlt hatte. Beides sind jetzt eine Zeile und
+der richtige Name.
+
+**In jedem verkauften Paket lagen 861 Dateien, die dort nicht hingehoerten.**
+Vorschaubilder erzeugter Bilder, Zwischenstaende laufender Auftraege und der
+Update-Verlauf des Rechners, auf dem gepackt wurde - zusammen rund 14 Megabyte
+in jedem Paket, auf allen drei Betriebssystemen. Das Windows-Paket schrumpft
+damit von 28,8 auf 15,6 Megabyte. Neue Kaeufer sahen im Update-Tab bisher eine
+fremde Historie.
+
+**Vorbereitet: Updates werden klein.** Statt des ganzen Programms kann Qwirbel
+kuenftig nur noch die geaenderten Dateien laden - gemessen 2,2 statt 15,6
+Megabyte, mit demselben Ergebnis Datei fuer Datei. Das ist gebaut und geprueft,
+aber noch nicht in Betrieb: dafuer muss die Bezugsquelle erst umgestellt
+werden. Bis dahin bleibt alles wie gewohnt.
+
+
 ## v2.8.7 - Qwirbel startet in Sekunden statt in einer halben Minute
 
 **Das Programm hat sich bei jedem Oeffnen selbst neu uebersetzt.** Die
