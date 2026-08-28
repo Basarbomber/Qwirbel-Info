@@ -1,3 +1,100 @@
+## v2.9.1 - Qwirbel ist beim Oeffnen da, nicht nach dem Ladekreis
+
+**Beim Start kamen fuenf Megabyte ueber die Leitung, jetzt sind es 624
+Kilobyte.** Qwirbel schickte seine Oberflaeche bisher als ein einziges,
+unuebersetztes Stueck an den Browser - 1,9 Megabyte - und dazu noch den
+Uebersetzer selbst, weitere 2,7 Megabyte. Der Browser musste damit bei jedem
+Oeffnen rund dreissigtausend Zeilen neu uebersetzen, bevor das erste Bild
+stand. Diese Uebersetzung passiert seit v2.8.7 eigentlich schon beim Bauen -
+sie kam nur nie beim Kunden an, weil beim Packen ein Erkennungszeichen nicht
+mehr zum Inhalt passte und Qwirbel deshalb sicherheitshalber den alten,
+langsamen Weg nahm. Das ist behoben. Gemessen auf dieser Maschine: die Seite
+ist nach **102 Millisekunden** benutzbar statt nach **2670**.
+
+**Und alles wird jetzt komprimiert ausgeliefert.** Bisher ging jede Antwort
+unverpackt raus. Jetzt werden Oberflaeche, Programmteile und Schriften
+gepackt - dieselben Daten, rund siebzig Prozent weniger Leitung. Der
+Live-Text im Chat ist davon bewusst ausgenommen: der soll Wort fuer Wort
+tropfen, nicht gesammelt ankommen.
+
+**Das Hintergrundbild wurde bei jedem Fensteroeffnen komplett neu geladen.**
+Wer ein Video als Hintergrund gewaehlt hat, zahlte das besonders teuer - im
+Test ein Film von 51 Megabyte, jedes Mal aufs Neue. Qwirbel sagte dem
+Browser woertlich, er duerfe die Datei nicht behalten. Jetzt darf er sie
+behalten und fragt nur kurz nach, ob sie noch aktuell ist: unveraendert
+kostet sie **null Byte**. Ein gewechselter Hintergrund erscheint trotzdem
+sofort - daran aendert sich nichts.
+
+**Das zweite Oeffnen ist jetzt fast leer.** Programmteile bekommen eine
+Adresse, die sich mit ihrem Inhalt aendert. Damit darf der Browser sie
+dauerhaft behalten und holt beim naechsten Mal gar nichts mehr - der lange
+Kreis beim Fensteroeffnen faellt weg. Aendert ein Update etwas, aendert sich
+die Adresse und es wird von selbst neu geholt.
+
+**Die Handy-App holt sich nichts mehr doppelt.** Ihr Hintergrunddienst
+reichte bisher jede einzelne Anfrage nur durch, um sie danach genauso ans
+Netz zu geben - ein Umweg pro Datei, ohne Nutzen. Der ist weg; die App
+bleibt installierbar wie bisher.
+
+**Kleinigkeit am Rande:** Auf dem Anmeldeschirm versuchte Qwirbel im
+Sekundentakt, seine Live-Verbindung aufzubauen, obwohl noch niemand
+angemeldet war - achtzehn Versuche in gut einer Minute. Jetzt wartet er
+zwischen den Versuchen immer laenger. Ein echter Neustart im Hintergrund
+wird weiterhin binnen einer Sekunde bemerkt.
+
+## v2.9.0 - Eine Entscheidung, ein Weg, ein Takt
+
+**Qwirbel hat an vielen Stellen dieselbe Frage verschieden beantwortet.** Wer
+antwortet auf diese Anfrage - die Cloud, dein eigener Klecks, das lokale
+Ollama? Diese Frage wurde bisher an mehreren Orten im Programm getrennt
+entschieden, jeder mit seinen eigenen Wenn-Dann-Zweigen. Das ging lange gut und
+irgendwann nicht mehr: Klecks wurde an einer dieser Stellen als Cloud-Dienst
+eingeordnet und bekam deshalb das Cloud-Limit statt des lokalen - obwohl er auf
+deinem eigenen Rechner rechnet. Jetzt gibt es EINE Weichenstelle, die pro
+Anfrage einmal entscheidet, und alle anderen fragen dort nach. Was erlaubt ist,
+sagt weiterhin dieselbe Stelle wie bisher; es entsteht keine zweite Regel
+daneben.
+
+**Antworten kamen auf zwei verschiedenen Wegen herein.** Eine Antwort, die Wort
+fuer Wort erscheint, und eine, die am Stueck ankommt, liefen durch getrennten
+Code - mit dem Ergebnis, dass Ende, Fehler und Abbruch je nach Weg und je nach
+Motor unterschiedlich behandelt wurden. Beide teilen sich jetzt dieselbe
+Schleife. Eine abgebrochene Antwort verhaelt sich bei jedem Motor gleich, und
+offene Verbindungen werden zugemacht, statt irgendwann von selbst auszulaufen.
+
+**Der Stop-Knopf hat gebeten, nicht gestoppt.** Ein laufender Lauf wurde
+angehalten, indem das Programm hoeflich fragte - die Verbindung selbst lief
+weiter. Jetzt wird sie wirklich abgebrochen. Dazu kommt ein Zeitwaechter: wenn
+im Antwortstrom laengere Zeit gar nichts mehr passiert, bricht Qwirbel von
+selbst ab, statt dich vor einem Kreisel sitzen zu lassen, hinter dem nichts
+mehr kommt.
+
+**Der Denk-Kreisel blieb manchmal haengen.** Wer waehrend einer laufenden
+Antwort den Reiter oder den Motor wechselte, sah unter Umstaenden dauerhaft
+einen arbeitenden Qwirbel, obwohl nichts mehr lief. Der Chat hat jetzt einen
+klaren Zustand - leer, laedt, antwortet, fehler, abgebrochen - und ein Wechsel
+setzt ihn hart zurueck. Ein haengengebliebenes Stueck Antwort kann den Zustand
+nicht mehr faelschen.
+
+**Dutzende Uhren liefen unabhaengig voneinander, auch unsichtbar.** Dienststatus,
+Grafikspeicher, Modellbelegung, Downloads, Token-Zaehler - jede Anzeige fragte
+in ihrem eigenen Takt nach, auch dann, wenn ihr Reiter gar nicht zu sehen war.
+Bei jedem Reiterwechsel summierten sich diese Abfragen. Jetzt gibt es einen
+gemeinsamen Takt: ist das Fenster nicht sichtbar, pausiert er ganz, und beim
+Zurueckkommen holt jede Anzeige genau einmal den frischen Stand nach statt einen
+Stau abzuarbeiten.
+
+**Und Qwirbel verschweigt keine uebersprungenen Fehler mehr.** An
+einhundertsieben Stellen wurde ein Fehler bisher stumm geschluckt - fuer dich
+sah das aus, als sei nichts passiert, obwohl etwas nicht geklappt hatte. Diese
+Stellen sagen jetzt, was sie uebersprungen haben. Drei Faelle sind dabei
+besonders aufgefallen und wurden ehrlich gemacht: ComfyUI wurde mit einem
+geratenen Port angesprochen, wenn in den Einstellungen keiner stand; ein
+fehlender Arbeitsablauf fuer Video oder Musik wurde still durch einen anderen
+ersetzt (du bekamst ein Ergebnis, nur nicht das gemeinte); und eine fehlende
+LoRA-Datei wurde durch eine aehnlich klingende ersetzt. Alles drei meldet sich
+jetzt mit einem klaren Grund, statt heimlich etwas anderes zu tun.
+
 ## v2.8.9 - Symbole, die etwas sagen, und ein Regler, der richtig rechnet
 
 **Auf jeder Stufe stand dasselbe Maennchen.** Ob "Blitz" oder "Maximal", ob im

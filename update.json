@@ -1,7 +1,7 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket.",
-  "_naechster_schritt": "v2.8.9 ist gepackt (27.08.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download. HINWEIS: 2.8.8 wurde seinerzeit nicht nachgezogen, dieser Stand holt sie mit.",
-  "version": "2.8.9",
+  "_naechster_schritt": "v2.9.1 ist gepackt (28.08.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
+  "version": "2.9.1",
   "kanal": [
     "stabil",
     "test",
@@ -14,7 +14,7 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://github.com/Basarbomber/Qwirbel-Info/blob/main/CHANGELOG.md",
-  "hinweise": "v2.8.9 - Symbole, die etwas sagen. Muehe- und Rechte-Regler zeigten auf jeder Stufe und in jedem Reiter dasselbe Maennchen; jetzt hat jede Stufe ihr eigenes Symbol und jeder Reiter seine eigene Bildsprache - der Code-Reiter erzaehlt den Bau-Ablauf, die Rechte-Stufen zeigen, was sie erlauben. Dazu behoben: ein Arm der Figur drehte sich um den Kopf statt um die Schulter; die Modell-Schranke rechnete nach jedem Chatwechsel mit null statt mit dem echten Verlauf, und das Zahnrad in Work/Code nahm den Verlauf eines fremden Reiters; das Modell-Menue liess bis zu fuenf Sekunden auf sich warten und ist jetzt sofort da; ein erzeugtes Video blieb im Generieren-Reiter schwarz, weil es dort nur eine Bild-Anzeige gab; angehaengte Bilder gingen je nach Herkunft zwei verschiedene Wege. Und: mehrere laufende Auftraege lassen sich einzeln einklappen - zwei volle Schrittlisten passten nie zusammen auf den Schirm, und in einem Auftrag sind ueber dreihundert Werkzeug-Zeilen zusammengekommen, von denen etwa ein Zehntel sichtbar war. Enthaelt auch 2.8.8 (Dokumente im Chat, Muehe-Regler im Chat, Absturz im Mehr-Menue). Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
+  "hinweise": "v2.9.1 - Qwirbel ist beim Oeffnen da, nicht nach dem Ladekreis. Beim Start gingen bisher rund fuenf Megabyte ueber die Leitung: die Oberflaeche als ein unuebersetztes Stueck plus den Uebersetzer selbst, den der Browser dann bei JEDEM Oeffnen ueber dreissigtausend Zeilen laufen liess. Vorbereitet war das schon seit v2.8.7, es kam nur nie beim Kunden an - beim Packen passte ein Erkennungszeichen nicht mehr zum Inhalt, und Qwirbel nahm sicherheitshalber den alten, langsamen Weg. Jetzt sind es 624 Kilobyte, und die Seite ist nach 102 statt 2670 Millisekunden benutzbar (auf der Entwicklungsmaschine gemessen). Dazu wird ab sofort alles komprimiert ausgeliefert - der Live-Text im Chat bewusst ausgenommen, der soll weiter Wort fuer Wort tropfen. Das Hintergrundbild wurde bisher bei jedem Fensteroeffnen komplett neu geladen; wer ein Video gewaehlt hatte, zahlte das besonders teuer. Es darf jetzt behalten werden und kostet unveraendert null Byte, ein Wechsel erscheint trotzdem sofort. Und das zweite Oeffnen holt gar nichts mehr - der lange Ladekreis faellt weg. Die Handy-App verliert einen Umweg pro Datei. Enthaelt ausserdem v2.9.0: eine zentrale Weichenstelle statt verstreuter Wenn-Dann-Zweige, EIN Empfangsweg fuer Antworten, ein Stop-Knopf der wirklich stoppt, ein Chat-Zustand der nicht mehr haengen bleibt, ein gemeinsamer Takt statt Dutzender Uhren und 107 Stellen, die Fehler nicht mehr verschweigen. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
   "_felder": {
     "version": "Zielversion. Qwirbel bietet sie nur an, wenn sie NEUER ist als die installierte.",
     "kanal": "Fuer welche Kanaele freigegeben (stabil/test/lts). Wer im Kanal 'lts' sitzt, sieht eine Version nur, wenn 'lts' hier steht.",
@@ -31,32 +31,32 @@
     "windows": {
       "datei": "Qwirbel-Windows-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "7a98c424d167a1ab2df8a3d3b889f4d82b3867b1d6bb3681b1f69d4affb053ca"
+      "sha256": "1caabb84aa9613d44049796973c197a55ee315bd90409d0676d06ef55ab959f3"
     },
     "windows_server": {
       "datei": "Qwirbel-Windows-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "06fdfa42e7a9fef2ad98a7a9aa53943d43ef0022bedcdb783565aaf4a0736fb9"
+      "sha256": "2cf73b3f3b97ee2ebb2dd38c60047298f100d7d73fecb244abc8ea3cc216b73c"
     },
     "linux": {
       "datei": "Qwirbel-Linux-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "4733548fd4b91e7ab33ac0784c6051e92aa24408af9d88230e8437b197726ba4"
+      "sha256": "7afaddd4e391a1316a48994081d3f2e213374e8afe9ff34eedcbcb49fa621c74"
     },
     "linux_server": {
       "datei": "Qwirbel-Linux-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "29de8da8e218fa2875dc5476bd4ae161338119a6690e600edb3a95a428a8f811"
+      "sha256": "993633834516b3cde3cc21d8270f52a84c2e5957b4a8b4350f2e752c775ddb6e"
     },
     "macos": {
       "datei": "Qwirbel-macOS-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "8f67c5f1d6ab7d0798d4941a3904064380fe57bea38585d33c86159813466927"
+      "sha256": "562a181e4f0ab8cb8f967a154f01bf709a6e27883e30f121ef5876aa7c157893"
     },
     "macos_server": {
       "datei": "Qwirbel-macOS-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "6c6b04653ea007a263d795623031ad6afe354e50101e90320d4d143b3b43afbe"
+      "sha256": "ff13b7489b5e306f2933c0fc8124bbe910cb46e03df7f33ac4b7ef07987e44ed"
     }
   }
 }
