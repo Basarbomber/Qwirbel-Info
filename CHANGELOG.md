@@ -1,3 +1,39 @@
+## v2.9.2 - Aufgeraeumt, und drei Zahlen, die man selbst setzen kann
+
+**Im Verkaufspaket lagen 215 Dateien, die niemanden ausser dem Entwickler
+etwas angehen.** Die komplette Testsuite mit ihren einhundertachtundzwanzig
+Dateien, der Werkzeugkasten zum Uebersetzen der Oberflaeche, Bau- und
+Deploy-Skripte, interne Befunde und Code-Reviews - und die Anleitung, wie
+man Qwirbel-Pakete selbst baut. Das Paket schrumpft damit von 898 auf 683
+Dateien. Geprueft wurde vorher, dass nichts davon zur Laufzeit gebraucht
+wird: jeder Verweis darauf im verbleibenden Paket steht in einem Kommentar,
+nicht in einem Aufruf.
+
+**Im Taskmanager stand "Python".** Windows zeigt dort den Dateinamen des
+Programms, und der war nun mal Pythons. Jetzt liegt neben dem Interpreter
+eine gleiche Kopie namens Qwirbel.exe, und im Taskmanager steht, was
+laeuft. Es ist derselbe Interpreter unter anderem Namen, kein zweiter - die
+Umgebung bleibt dieselbe. Die Kopie entsteht beim Start selbst, bestehende
+Installationen bekommen den Namen also ohne neues Setup.
+
+**Neu: eine eigene Untergrenze fuer MCP-Werkzeuge.** Ein kleines Modell
+bekommt mit zugeschalteten MCP-Servern eine zweite, fremde Werkzeugliste in
+den Prompt - es hat mit der eigenen schon genug zu tun und faengt an,
+Aufrufe zu erfinden. In den Einstellungen steht jetzt eine eigene Zahl:
+unter so vielen Milliarden Parametern gibt es in Work und Code keine
+MCP-Werkzeuge. Standard 30, 0 schaltet die Regel ab. Bewusst eine EIGENE
+Zahl neben der Modell-Untergrenze: die eine entscheidet, wer den Reiter
+ueberhaupt fahren darf, die andere nur ueber MCP. Ist die Groesse eines
+Modells nicht zu ermitteln, wird nicht gesperrt - eine stille Sperre waere
+schlimmer als ein Modell, das einmal zu viele Werkzeuge sieht.
+
+**Und wieviele Nachrichten der Chat im Gedaechtnis hat, laesst sich jetzt
+einstellen.** Das war eine feste Zwoelf im Programmtext, an die ohne
+Code-Aenderung niemand herankam. Jetzt steht sie in den Einstellungen,
+Standard fuenfzehn. Das ist Qwirbels Kurzzeitgedaechtnis: "mach noch eins"
+funktioniert nur, wenn genug davon drin ist - mehr kostet aber bei jeder
+Antwort Marken.
+
 ## v2.9.1 - Qwirbel ist beim Oeffnen da, nicht nach dem Ladekreis
 
 **Beim Start kamen fuenf Megabyte ueber die Leitung, jetzt sind es 624

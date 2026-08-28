@@ -1,7 +1,7 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket.",
-  "_naechster_schritt": "v2.9.1 ist gepackt (28.08.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
-  "version": "2.9.1",
+  "_naechster_schritt": "v2.9.2 ist gepackt (28.08.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
+  "version": "2.9.2",
   "kanal": [
     "stabil",
     "test",
@@ -14,7 +14,7 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://github.com/Basarbomber/Qwirbel-Info/blob/main/CHANGELOG.md",
-  "hinweise": "v2.9.1 - Qwirbel ist beim Oeffnen da, nicht nach dem Ladekreis. Beim Start gingen bisher rund fuenf Megabyte ueber die Leitung: die Oberflaeche als ein unuebersetztes Stueck plus den Uebersetzer selbst, den der Browser dann bei JEDEM Oeffnen ueber dreissigtausend Zeilen laufen liess. Vorbereitet war das schon seit v2.8.7, es kam nur nie beim Kunden an - beim Packen passte ein Erkennungszeichen nicht mehr zum Inhalt, und Qwirbel nahm sicherheitshalber den alten, langsamen Weg. Jetzt sind es 624 Kilobyte, und die Seite ist nach 102 statt 2670 Millisekunden benutzbar (auf der Entwicklungsmaschine gemessen). Dazu wird ab sofort alles komprimiert ausgeliefert - der Live-Text im Chat bewusst ausgenommen, der soll weiter Wort fuer Wort tropfen. Das Hintergrundbild wurde bisher bei jedem Fensteroeffnen komplett neu geladen; wer ein Video gewaehlt hatte, zahlte das besonders teuer. Es darf jetzt behalten werden und kostet unveraendert null Byte, ein Wechsel erscheint trotzdem sofort. Und das zweite Oeffnen holt gar nichts mehr - der lange Ladekreis faellt weg. Die Handy-App verliert einen Umweg pro Datei. Enthaelt ausserdem v2.9.0: eine zentrale Weichenstelle statt verstreuter Wenn-Dann-Zweige, EIN Empfangsweg fuer Antworten, ein Stop-Knopf der wirklich stoppt, ein Chat-Zustand der nicht mehr haengen bleibt, ein gemeinsamer Takt statt Dutzender Uhren und 107 Stellen, die Fehler nicht mehr verschweigen. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
+  "hinweise": "v2.9.2 - Aufgeraeumt, schneller, und drei Zahlen zum Selbersetzen. Im Verkaufspaket lagen 215 Dateien, die niemanden ausser dem Entwickler etwas angehen: die komplette Testsuite, der Werkzeugkasten zum Uebersetzen der Oberflaeche, Bau- und Deploy-Skripte, interne Befunde. Das Paket schrumpft von 898 auf 683 Dateien. Im Taskmanager stand bisher 'Python' - jetzt steht dort Qwirbel. Neu einstellbar: eine eigene Untergrenze fuer MCP-Werkzeuge (unter so vielen Milliarden Parametern gibt es in Work und Code keine MCP-Werkzeuge, Standard 30) und wieviele Nachrichten der Chat im Gedaechtnis behaelt (Standard 15, war vorher eine feste Zwoelf im Programmtext). Enthaelt v2.9.1: der Start zog rund fuenf Megabyte ueber die Leitung und liess den Browser bei JEDEM Oeffnen dreissigtausend Zeilen uebersetzen - vorbereitet seit v2.8.7, kam nur nie beim Kunden an. Jetzt 624 Kilobyte und nach 102 statt 2670 Millisekunden benutzbar. Dazu Kompression fuer alles ausser dem Live-Text im Chat, und das Hintergrundbild wird nicht mehr bei jedem Fensteroeffnen neu geladen. Enthaelt v2.9.0: eine zentrale Weichenstelle statt verstreuter Wenn-Dann-Zweige, EIN Empfangsweg fuer Antworten, ein Stop-Knopf der wirklich stoppt, ein Chat-Zustand der nicht mehr haengen bleibt, ein gemeinsamer Takt statt Dutzender Uhren und 107 Stellen, die Fehler nicht mehr verschweigen. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
   "_felder": {
     "version": "Zielversion. Qwirbel bietet sie nur an, wenn sie NEUER ist als die installierte.",
     "kanal": "Fuer welche Kanaele freigegeben (stabil/test/lts). Wer im Kanal 'lts' sitzt, sieht eine Version nur, wenn 'lts' hier steht.",
@@ -31,32 +31,32 @@
     "windows": {
       "datei": "Qwirbel-Windows-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "1caabb84aa9613d44049796973c197a55ee315bd90409d0676d06ef55ab959f3"
+      "sha256": "252b16401579d3b390fa1c7ee1b0059e23976bba8908dd26d60570ff49480a1c"
     },
     "windows_server": {
       "datei": "Qwirbel-Windows-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "2cf73b3f3b97ee2ebb2dd38c60047298f100d7d73fecb244abc8ea3cc216b73c"
+      "sha256": "957a5c6132a2218ac48d0070257a431b06bf800f65b99d3b6389772786bd7d5d"
     },
     "linux": {
       "datei": "Qwirbel-Linux-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "7afaddd4e391a1316a48994081d3f2e213374e8afe9ff34eedcbcb49fa621c74"
+      "sha256": "fc5483ac6bb85a15b7cc0cd6e86ac244fd2f38123aff84f73d91c238e424f4e0"
     },
     "linux_server": {
       "datei": "Qwirbel-Linux-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "993633834516b3cde3cc21d8270f52a84c2e5957b4a8b4350f2e752c775ddb6e"
+      "sha256": "bbeea6214000eff0085fd8c2cc43a976b6d5d970cda5ec31b6827ff38e373f96"
     },
     "macos": {
       "datei": "Qwirbel-macOS-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "562a181e4f0ab8cb8f967a154f01bf709a6e27883e30f121ef5876aa7c157893"
+      "sha256": "aea54a377d66d49a3f74bd150f76d262dbfeb6674ad04ed757e9ce8b98e3e942"
     },
     "macos_server": {
       "datei": "Qwirbel-macOS-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "ff13b7489b5e306f2933c0fc8124bbe910cb46e03df7f33ac4b7ef07987e44ed"
+      "sha256": "8f888b5ca2d64ea0c795417fbce65184a0c639eeb3680eed722f98e143e73406"
     }
   }
 }
