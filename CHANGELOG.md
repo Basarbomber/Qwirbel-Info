@@ -1,3 +1,21 @@
+## v2.9.3 - Qwirbel hoert wieder sofort zu
+
+**In v2.9.1 ist beim Aufraeumen ein Fehler hereingekommen, und der hat
+ausgerechnet das Zuhoeren getroffen.** Auf dem Anmeldeschirm hatte Qwirbel
+im Sekundentakt versucht, seine Live-Verbindung aufzubauen, obwohl noch
+niemand angemeldet war. Dagegen wurde eine Wartezeit eingebaut, die sich
+nach jedem Fehlversuch verdoppelt. Das war zu grob gedacht: sie wuchs bis
+auf dreissig Sekunden, und ueber genau diese Live-Verbindung kommen auch
+Diktat und Hotword. Wer den Diktat-Knopf drueckte, wurde deshalb unter
+Umstaenden erst nach zehn bis siebzehn Sekunden verstanden. Gemessen auf
+dieser Maschine: Verbindungsversuche bei 1,6 - 3,7 - 8,6 - 17,6 Sekunden.
+
+**Jetzt gilt ein Deckel von fuenf Sekunden, und jede Beruehrung hebt die
+Wartezeit sofort auf.** Wer zum Fenster zurueckkommt, es anklickt oder
+tippt, ist wieder verbunden, bevor der Finger unten ist - gemessen eine
+Millisekunde nach dem Klick. Der Schutz gegen das Dauerfeuer auf dem
+Anmeldeschirm bleibt, er trifft nur nicht mehr den Menschen davor.
+
 ## v2.9.2 - Aufgeraeumt, und drei Zahlen, die man selbst setzen kann
 
 **Im Verkaufspaket lagen 215 Dateien, die niemanden ausser dem Entwickler

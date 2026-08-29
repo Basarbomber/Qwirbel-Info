@@ -1,7 +1,7 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket.",
-  "_naechster_schritt": "v2.9.2 ist gepackt (28.08.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
-  "version": "2.9.2",
+  "_naechster_schritt": "v2.9.3 ist gepackt (28.08.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
+  "version": "2.9.3",
   "kanal": [
     "stabil",
     "test",
@@ -14,7 +14,7 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://github.com/Basarbomber/Qwirbel-Info/blob/main/CHANGELOG.md",
-  "hinweise": "v2.9.2 - Aufgeraeumt, schneller, und drei Zahlen zum Selbersetzen. Im Verkaufspaket lagen 215 Dateien, die niemanden ausser dem Entwickler etwas angehen: die komplette Testsuite, der Werkzeugkasten zum Uebersetzen der Oberflaeche, Bau- und Deploy-Skripte, interne Befunde. Das Paket schrumpft von 898 auf 683 Dateien. Im Taskmanager stand bisher 'Python' - jetzt steht dort Qwirbel. Neu einstellbar: eine eigene Untergrenze fuer MCP-Werkzeuge (unter so vielen Milliarden Parametern gibt es in Work und Code keine MCP-Werkzeuge, Standard 30) und wieviele Nachrichten der Chat im Gedaechtnis behaelt (Standard 15, war vorher eine feste Zwoelf im Programmtext). Enthaelt v2.9.1: der Start zog rund fuenf Megabyte ueber die Leitung und liess den Browser bei JEDEM Oeffnen dreissigtausend Zeilen uebersetzen - vorbereitet seit v2.8.7, kam nur nie beim Kunden an. Jetzt 624 Kilobyte und nach 102 statt 2670 Millisekunden benutzbar. Dazu Kompression fuer alles ausser dem Live-Text im Chat, und das Hintergrundbild wird nicht mehr bei jedem Fensteroeffnen neu geladen. Enthaelt v2.9.0: eine zentrale Weichenstelle statt verstreuter Wenn-Dann-Zweige, EIN Empfangsweg fuer Antworten, ein Stop-Knopf der wirklich stoppt, ein Chat-Zustand der nicht mehr haengen bleibt, ein gemeinsamer Takt statt Dutzender Uhren und 107 Stellen, die Fehler nicht mehr verschweigen. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
+  "hinweise": "v2.9.3 - Aufgeraeumt, schneller, und drei Zahlen zum Selbersetzen. Im Verkaufspaket lagen 215 Dateien, die niemanden ausser dem Entwickler etwas angehen: die komplette Testsuite, der Werkzeugkasten zum Uebersetzen der Oberflaeche, Bau- und Deploy-Skripte, interne Befunde. Das Paket schrumpft von 898 auf 683 Dateien. Im Taskmanager stand bisher 'Python' - jetzt steht dort Qwirbel. Neu einstellbar: eine eigene Untergrenze fuer MCP-Werkzeuge (unter so vielen Milliarden Parametern gibt es in Work und Code keine MCP-Werkzeuge, Standard 30) und wieviele Nachrichten der Chat im Gedaechtnis behaelt (Standard 15, war vorher eine feste Zwoelf im Programmtext). Enthaelt v2.9.1: der Start zog rund fuenf Megabyte ueber die Leitung und liess den Browser bei JEDEM Oeffnen dreissigtausend Zeilen uebersetzen - vorbereitet seit v2.8.7, kam nur nie beim Kunden an. Jetzt 624 Kilobyte und nach 102 statt 2670 Millisekunden benutzbar. Dazu Kompression fuer alles ausser dem Live-Text im Chat, und das Hintergrundbild wird nicht mehr bei jedem Fensteroeffnen neu geladen. Enthaelt v2.9.0: eine zentrale Weichenstelle statt verstreuter Wenn-Dann-Zweige, EIN Empfangsweg fuer Antworten, ein Stop-Knopf der wirklich stoppt, ein Chat-Zustand der nicht mehr haengen bleibt, ein gemeinsamer Takt statt Dutzender Uhren und 107 Stellen, die Fehler nicht mehr verschweigen. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
   "_felder": {
     "version": "Zielversion. Qwirbel bietet sie nur an, wenn sie NEUER ist als die installierte.",
     "kanal": "Fuer welche Kanaele freigegeben (stabil/test/lts). Wer im Kanal 'lts' sitzt, sieht eine Version nur, wenn 'lts' hier steht.",
@@ -31,32 +31,32 @@
     "windows": {
       "datei": "Qwirbel-Windows-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "252b16401579d3b390fa1c7ee1b0059e23976bba8908dd26d60570ff49480a1c"
+      "sha256": "ead7a46bfe03ae8b31494c001e3f9cffbd90a471c2ccfbd47fe0ee28e50d8c4b"
     },
     "windows_server": {
       "datei": "Qwirbel-Windows-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "957a5c6132a2218ac48d0070257a431b06bf800f65b99d3b6389772786bd7d5d"
+      "sha256": "b320190ffde8ca5c80ed6696a6df04f28efbe1545e1cc83f4991403ca78844e5"
     },
     "linux": {
       "datei": "Qwirbel-Linux-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "fc5483ac6bb85a15b7cc0cd6e86ac244fd2f38123aff84f73d91c238e424f4e0"
+      "sha256": "5f6e7883d43de8569cee19cbe91bf661273cc35abb1552232a228b04627f6027"
     },
     "linux_server": {
       "datei": "Qwirbel-Linux-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "bbeea6214000eff0085fd8c2cc43a976b6d5d970cda5ec31b6827ff38e373f96"
+      "sha256": "b418f28f6061a5cbb0827008085a618514e174fcad77171f23ed9fee6510b8bb"
     },
     "macos": {
       "datei": "Qwirbel-macOS-Normal-v2.8.9.zip",
       "url": "",
-      "sha256": "aea54a377d66d49a3f74bd150f76d262dbfeb6674ad04ed757e9ce8b98e3e942"
+      "sha256": "a49cbdda22a6998c6574f55676f34d4be28a7c99150a26d2b81eff0bc1d351d4"
     },
     "macos_server": {
       "datei": "Qwirbel-macOS-Server-v2.8.9.zip",
       "url": "",
-      "sha256": "8f888b5ca2d64ea0c795417fbce65184a0c639eeb3680eed722f98e143e73406"
+      "sha256": "bdd1afd09888da7895ef3c823aa5eb7d8def4e2a5ccd3aa0572d75f6bd096551"
     }
   }
 }
