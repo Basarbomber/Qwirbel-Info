@@ -1,7 +1,7 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket.",
-  "_naechster_schritt": "v2.9.4 ist gepackt (31.08.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin und passen zu diesen Dateinamen. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
-  "version": "2.9.4",
+  "_naechster_schritt": "v2.9.5 ist gepackt (31.08.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin und passen zu diesen Dateinamen. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
+  "version": "2.9.5",
   "kanal": [
     "stabil",
     "test",
@@ -14,7 +14,7 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://github.com/Basarbomber/Qwirbel-Info/blob/main/CHANGELOG.md",
-  "hinweise": "v2.9.4 - Was da steht, tut jetzt auch etwas. 'Lokal' hiess an siebzehn Stellen im Programm etwas anderes; daraus wurden zwei klare Fragen mit je einer Antwort. Folgen: GLM Colibri wird nicht mehr als API-Anbieter gefuehrt (er laeuft auf dem eigenen Rechner), 'komplett lokal' ist wieder eine echte Option statt eines Schalters ohne Wirkung, und ein lokaler Chat faellt beim ersten Schluckauf nicht mehr still zu einem Cloud-Anbieter durch. Zwei Knoepfe taten ueberhaupt nichts: PDF/Word/Excel in den Chat ziehen lief ins Leere, und der orangene Update-Punkt in der Kopfleiste fragte eine Adresse ab, die es nicht gab - beide Wege sind jetzt gebaut. Ein frisch geladenes Modell erscheint sofort im Chat statt erst nach einem Neustart. Modelle werden nicht mehr wegen des Kontext-Fensters ausgegraut - der Hinweis bleibt, die Sperre faellt. Der Ein/Aus-Schalter eigener Anbieter ist keine Einbahnstrasse mehr, und der Workflow-Import speichert alle sieben Arten statt vier. Klecks wurde an sechs Stellen wie ein Cloud-Anbieter behandelt, obwohl er auf derselben Grafikkarte rechnet. Dazu ein Test, der alle 282 Aufrufe der Oberflaeche gegen die 384 Adressen des Programms haelt: ein Knopf ins Leere faellt ab sofort beim Bauen auf. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
+  "hinweise": "v2.9.5 - Qwirbel heisst Qwirbel, und das Logo bleibt. Im Taskmanager stand weiterhin 'Python': Windows zeigt dort nicht den Dateinamen, sondern die Beschreibung aus der Versions-Ressource - und die sagte in der bisherigen Kopie unveraendert 'Python'. Ausserdem war es der falsche Interpreter: die venv-Datei ist nur ein Starter, der den echten als zweiten Prozess nachruft; daher standen dort je Lauf zwei Eintraege, und der arbeitende hiess nie Qwirbel. Jetzt wird der echte Interpreter kopiert und beschriftet, mit eigenem Symbol - gemessen: ein Prozess weniger und der richtige Name. Zweitens: nach einem Update war das Desktop-Logo weg und die Startmenue-Anbindung nicht mehr richtig, weil Windows das ersetzte Symbol zwischengespeichert hatte. Qwirbel frischt die Verknuepfungen jetzt nach jedem Update selbst auf - nur die vorhandenen und nur die, die auf diese Installation zeigen. Enthaelt v2.9.4: 'lokal' hiess an siebzehn Stellen etwas anderes; daraus wurden zwei klare Fragen. GLM Colibri gilt nicht mehr als API-Anbieter, 'komplett lokal' ist wieder eine echte Option, und ein lokaler Chat faellt nicht mehr still zu einem Cloud-Anbieter durch. Zwei Knoepfe taten gar nichts (Dokument-Anhang und der Update-Punkt in der Kopfleiste) - beide Wege sind jetzt gebaut. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
   "_felder": {
     "version": "Zielversion. Qwirbel bietet sie nur an, wenn sie NEUER ist als die installierte.",
     "kanal": "Fuer welche Kanaele freigegeben (stabil/test/lts). Wer im Kanal 'lts' sitzt, sieht eine Version nur, wenn 'lts' hier steht.",
@@ -29,34 +29,34 @@
   },
   "pakete": {
     "windows": {
-      "datei": "Qwirbel-Windows-Normal-v2.9.4.zip",
+      "datei": "Qwirbel-Windows-Normal-v2.9.5.zip",
       "url": "",
-      "sha256": "e554996a762713256e8d06855f60241277ea007a911f0f079f5683cc40393106"
+      "sha256": "a4b6f4ee50431763b5be2adc3b31b99a5f1cf7274992d0a18764e9f8f85f108a"
     },
     "windows_server": {
-      "datei": "Qwirbel-Windows-Server-v2.9.4.zip",
+      "datei": "Qwirbel-Windows-Server-v2.9.5.zip",
       "url": "",
-      "sha256": "e40427616e14e2a370ddd2fb4d1c3856f7c2810b1e9b37ca9aee9bda81253fd7"
+      "sha256": "2a2b59df02037c8030aee8cb96923434251cf0b2b11e087b243c35778503b992"
     },
     "linux": {
-      "datei": "Qwirbel-Linux-Normal-v2.9.4.zip",
+      "datei": "Qwirbel-Linux-Normal-v2.9.5.zip",
       "url": "",
-      "sha256": "787ace30f25a79194579250b4cb2727bc6f8d597702b313f5cd0aa74aa556500"
+      "sha256": "cdb242526f55305c5a2150b555f347161c976475f1d7299a9e6ec3e968da7d9c"
     },
     "linux_server": {
-      "datei": "Qwirbel-Linux-Server-v2.9.4.zip",
+      "datei": "Qwirbel-Linux-Server-v2.9.5.zip",
       "url": "",
-      "sha256": "ca1e5aae4d4709bbd59697559c6d8bf8382e218bae4f2614d04cef5598d61df8"
+      "sha256": "bb4110f58f3be8317d86053eb35cbdace5426bdbdd4e0bd376673894646180c3"
     },
     "macos": {
-      "datei": "Qwirbel-macOS-Normal-v2.9.4.zip",
+      "datei": "Qwirbel-macOS-Normal-v2.9.5.zip",
       "url": "",
-      "sha256": "7540ec087677915e6de340ec88a39e5b1bc0f880288f5bbb4297d09574dc6ef5"
+      "sha256": "7ad955de109aef0ff7d8f55b545508c34e31c5d8779a5a5995085f4c9c5ac8f6"
     },
     "macos_server": {
-      "datei": "Qwirbel-macOS-Server-v2.9.4.zip",
+      "datei": "Qwirbel-macOS-Server-v2.9.5.zip",
       "url": "",
-      "sha256": "cb5f9f7d398e1fecead0c87ee5055300ccf45ced353c019d08c13ada5e035cd3"
+      "sha256": "a0644ed3bb0da97c4254486c00535910f1c13cfb0a18f6a481f00667519d8701"
     }
   }
 }

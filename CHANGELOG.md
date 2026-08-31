@@ -1,3 +1,44 @@
+## v2.9.5 - Qwirbel heisst Qwirbel, und das Logo bleibt
+
+**Im Taskmanager stand weiterhin "Python".** In v2.9.2 wurde dagegen eine
+byte-gleiche Kopie von `pythonw.exe` unter dem Namen `Qwirbel.exe`
+angelegt. Gemessen bringt das nichts: Windows zeigt dort nicht den
+Dateinamen, sondern die BESCHREIBUNG aus der Versions-Ressource der Datei -
+und die sagte in der Kopie unveraendert "Python". Ein Name, der nur im
+Explorer stimmt und an der Stelle nicht, um die es ging.
+
+**Und es war der falsche Interpreter.** Unter Windows ist
+`.venv\Scripts\pythonw.exe` kein Interpreter, sondern ein Starter von 263
+Kilobyte, der den echten (104 Kilobyte) als EIGENEN Prozess nachruft.
+Kopiert wurde der Starter. Im Taskmanager standen deshalb je Lauf zwei
+Eintraege, und der, der wirklich rechnet, hiess nie Qwirbel - genau der
+zweite Eintrag, den man dort sah.
+
+**Jetzt wird der echte Interpreter kopiert und beschriftet.** Qwirbel
+schreibt eine eigene Versions-Ressource hinein (Beschreibung und Produkt =
+Qwirbel, dazu die Versionsnummer) und ersetzt das Symbol durch das
+Qwirbel-Logo in allen neun Groessen bis 256 Pixel. Weil die Datei im
+Scripts-Ordner liegt, benutzt sie dieselbe Umgebung wie zuvor -
+nachgemessen: derselbe Interpreter, dieselben Pakete, aber ein Prozess
+weniger und der richtige Name. Windows kann das selbst, es kam keine
+Bibliothek dazu. Klappt es nicht (kein Schreibrecht, Virenscanner), startet
+Qwirbel wie immer und nur der Name bleibt Pythons: ein falscher Name ist
+ein Schoenheitsfehler, ein nicht startendes Programm nicht.
+
+**Nach einem Update war das Desktop-Logo weg und die Startmenue-Anbindung
+nicht mehr richtig.** Das Update legt `frontend/qwirbel.ico` neu ab. Die
+Verknuepfung zeigt weiter auf denselben Pfad - aber Windows hat das Bild
+darunter zwischengespeichert und zeigt danach das alte oder gar keins. Der
+Explorer merkt von sich aus nichts davon, denn fuer ihn hat sich die
+Verknuepfung nicht geaendert.
+
+**Jetzt frischt Qwirbel die Verknuepfungen nach jedem Update selbst auf**
+und sagt dem Explorer Bescheid. Zwei Regeln sind dabei wichtiger als das
+Symbol: Es werden NUR vorhandene Verknuepfungen angefasst - wer beim
+Einrichten keine wollte, bekommt durch ein Update keine. Und nur die, die
+auf DIESE Installation zeigen - wer eine zweite Kopie woanders betreibt,
+dessen Verknuepfung bleibt unberuehrt.
+
 ## v2.9.4 - Was da steht, tut jetzt auch etwas
 
 **"Lokal" hiess an siebzehn Stellen im Programm etwas anderes.** Das klingt
