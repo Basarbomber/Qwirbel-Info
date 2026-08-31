@@ -1,7 +1,7 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket.",
-  "_naechster_schritt": "v2.9.3 ist gepackt (28.08.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
-  "version": "2.9.3",
+  "_naechster_schritt": "v2.9.4 ist gepackt (31.08.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin und passen zu diesen Dateinamen. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
+  "version": "2.9.4",
   "kanal": [
     "stabil",
     "test",
@@ -14,7 +14,7 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://github.com/Basarbomber/Qwirbel-Info/blob/main/CHANGELOG.md",
-  "hinweise": "v2.9.3 - Aufgeraeumt, schneller, und drei Zahlen zum Selbersetzen. Im Verkaufspaket lagen 215 Dateien, die niemanden ausser dem Entwickler etwas angehen: die komplette Testsuite, der Werkzeugkasten zum Uebersetzen der Oberflaeche, Bau- und Deploy-Skripte, interne Befunde. Das Paket schrumpft von 898 auf 683 Dateien. Im Taskmanager stand bisher 'Python' - jetzt steht dort Qwirbel. Neu einstellbar: eine eigene Untergrenze fuer MCP-Werkzeuge (unter so vielen Milliarden Parametern gibt es in Work und Code keine MCP-Werkzeuge, Standard 30) und wieviele Nachrichten der Chat im Gedaechtnis behaelt (Standard 15, war vorher eine feste Zwoelf im Programmtext). Enthaelt v2.9.1: der Start zog rund fuenf Megabyte ueber die Leitung und liess den Browser bei JEDEM Oeffnen dreissigtausend Zeilen uebersetzen - vorbereitet seit v2.8.7, kam nur nie beim Kunden an. Jetzt 624 Kilobyte und nach 102 statt 2670 Millisekunden benutzbar. Dazu Kompression fuer alles ausser dem Live-Text im Chat, und das Hintergrundbild wird nicht mehr bei jedem Fensteroeffnen neu geladen. Enthaelt v2.9.0: eine zentrale Weichenstelle statt verstreuter Wenn-Dann-Zweige, EIN Empfangsweg fuer Antworten, ein Stop-Knopf der wirklich stoppt, ein Chat-Zustand der nicht mehr haengen bleibt, ein gemeinsamer Takt statt Dutzender Uhren und 107 Stellen, die Fehler nicht mehr verschweigen. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
+  "hinweise": "v2.9.4 - Was da steht, tut jetzt auch etwas. 'Lokal' hiess an siebzehn Stellen im Programm etwas anderes; daraus wurden zwei klare Fragen mit je einer Antwort. Folgen: GLM Colibri wird nicht mehr als API-Anbieter gefuehrt (er laeuft auf dem eigenen Rechner), 'komplett lokal' ist wieder eine echte Option statt eines Schalters ohne Wirkung, und ein lokaler Chat faellt beim ersten Schluckauf nicht mehr still zu einem Cloud-Anbieter durch. Zwei Knoepfe taten ueberhaupt nichts: PDF/Word/Excel in den Chat ziehen lief ins Leere, und der orangene Update-Punkt in der Kopfleiste fragte eine Adresse ab, die es nicht gab - beide Wege sind jetzt gebaut. Ein frisch geladenes Modell erscheint sofort im Chat statt erst nach einem Neustart. Modelle werden nicht mehr wegen des Kontext-Fensters ausgegraut - der Hinweis bleibt, die Sperre faellt. Der Ein/Aus-Schalter eigener Anbieter ist keine Einbahnstrasse mehr, und der Workflow-Import speichert alle sieben Arten statt vier. Klecks wurde an sechs Stellen wie ein Cloud-Anbieter behandelt, obwohl er auf derselben Grafikkarte rechnet. Dazu ein Test, der alle 282 Aufrufe der Oberflaeche gegen die 384 Adressen des Programms haelt: ein Knopf ins Leere faellt ab sofort beim Bauen auf. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
   "_felder": {
     "version": "Zielversion. Qwirbel bietet sie nur an, wenn sie NEUER ist als die installierte.",
     "kanal": "Fuer welche Kanaele freigegeben (stabil/test/lts). Wer im Kanal 'lts' sitzt, sieht eine Version nur, wenn 'lts' hier steht.",
@@ -29,34 +29,34 @@
   },
   "pakete": {
     "windows": {
-      "datei": "Qwirbel-Windows-Normal-v2.8.9.zip",
+      "datei": "Qwirbel-Windows-Normal-v2.9.4.zip",
       "url": "",
-      "sha256": "ead7a46bfe03ae8b31494c001e3f9cffbd90a471c2ccfbd47fe0ee28e50d8c4b"
+      "sha256": "e554996a762713256e8d06855f60241277ea007a911f0f079f5683cc40393106"
     },
     "windows_server": {
-      "datei": "Qwirbel-Windows-Server-v2.8.9.zip",
+      "datei": "Qwirbel-Windows-Server-v2.9.4.zip",
       "url": "",
-      "sha256": "b320190ffde8ca5c80ed6696a6df04f28efbe1545e1cc83f4991403ca78844e5"
+      "sha256": "e40427616e14e2a370ddd2fb4d1c3856f7c2810b1e9b37ca9aee9bda81253fd7"
     },
     "linux": {
-      "datei": "Qwirbel-Linux-Normal-v2.8.9.zip",
+      "datei": "Qwirbel-Linux-Normal-v2.9.4.zip",
       "url": "",
-      "sha256": "5f6e7883d43de8569cee19cbe91bf661273cc35abb1552232a228b04627f6027"
+      "sha256": "787ace30f25a79194579250b4cb2727bc6f8d597702b313f5cd0aa74aa556500"
     },
     "linux_server": {
-      "datei": "Qwirbel-Linux-Server-v2.8.9.zip",
+      "datei": "Qwirbel-Linux-Server-v2.9.4.zip",
       "url": "",
-      "sha256": "b418f28f6061a5cbb0827008085a618514e174fcad77171f23ed9fee6510b8bb"
+      "sha256": "ca1e5aae4d4709bbd59697559c6d8bf8382e218bae4f2614d04cef5598d61df8"
     },
     "macos": {
-      "datei": "Qwirbel-macOS-Normal-v2.8.9.zip",
+      "datei": "Qwirbel-macOS-Normal-v2.9.4.zip",
       "url": "",
-      "sha256": "a49cbdda22a6998c6574f55676f34d4be28a7c99150a26d2b81eff0bc1d351d4"
+      "sha256": "7540ec087677915e6de340ec88a39e5b1bc0f880288f5bbb4297d09574dc6ef5"
     },
     "macos_server": {
-      "datei": "Qwirbel-macOS-Server-v2.8.9.zip",
+      "datei": "Qwirbel-macOS-Server-v2.9.4.zip",
       "url": "",
-      "sha256": "bdd1afd09888da7895ef3c823aa5eb7d8def4e2a5ccd3aa0572d75f6bd096551"
+      "sha256": "cb5f9f7d398e1fecead0c87ee5055300ccf45ced353c019d08c13ada5e035cd3"
     }
   }
 }

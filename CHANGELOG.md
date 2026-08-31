@@ -1,3 +1,93 @@
+## v2.9.4 - Was da steht, tut jetzt auch etwas
+
+**"Lokal" hiess an siebzehn Stellen im Programm etwas anderes.** Das klingt
+nach einer Kleinigkeit und war der Grund fuer mehrere Fehler, die sich
+monatelang gehalten haben. Der wichtigste: GLM Colibri lief die ganze Zeit
+auf dem eigenen Rechner, wurde aber ueberall als API-Anbieter gefuehrt -
+in der Anzeige, bei der Schluessel-Pflicht, in der Datenschutz-Einordnung.
+Der zweite: sobald ein paar API-Schluessel hinterlegt waren, war "lokal"
+keine echte Option mehr. Man konnte den Schalter "komplett lokal"
+anschalten und Ollama auswaehlen, und Qwirbel meldete trotzdem, die API
+sei aus.
+
+**Dahinter steckten zwei verschiedene Fragen, die nie sauber getrennt
+waren.** Die eine lautet: laeuft dieser Anbieter auf diesem Rechner? Davon
+haengen Anzeige, Schluessel-Pflicht, Datenschutz und die Ausweich-Kette ab.
+Die andere lautet: welcher Motor rechnet ihn? Davon haengt ab, welcher
+Programmteil ihn faehrt. Colibri antwortet auf beide verschieden - er
+laeuft hier, wird aber ueber den OpenAI-Weg gefahren. Beide Fragen haben
+jetzt je eine Funktion mit einer Antwort, und ueberall im Programm wird
+die passende gestellt statt Namen zu vergleichen.
+
+**Ein Chat, den man fuer lokal hielt, konnte still in die Cloud fallen.**
+Gemessen vor der Behebung: wer Colibri gewaehlt hatte, dessen Anfrage ging
+beim ersten Schluckauf weiter an Anthropic, Google und z.ai. Bei Kimi ging
+sie sogar sofort dorthin, ohne es ueberhaupt bei Kimi zu versuchen. Das war
+kein Schoenheitsfehler, sondern ein Datenschutz-Leck. Lokale Anbieter
+weichen jetzt nur noch auf lokale aus.
+
+**Bilder gehen im Chat wieder, auch mit einem Cloud-Modell.** War ein
+Anbieter ohne Agenten-Faehigkeit gewaehlt, fing ein Zweig jede Nachricht ab
+und machte reinen Text daraus - eine Bitte wie "mach mir ein Bild von einer
+Katze" kam nie bei ComfyUI an. Dabei laeuft die Bilderzeugung ohnehin
+lokal und hat mit dem Chat-Anbieter nichts zu tun.
+
+**Zwei Knoepfe im Programm taten gar nichts.** Wer ein PDF, ein Word- oder
+Excel-Dokument in den Chat zog, bekam "konnte nicht gelesen werden". Der
+Leser dafuer war seit Wochen fertig eingebaut - nur der Weg vom Browser
+dorthin fehlte, der Aufruf lief ins Leere. Und der orangene Punkt in der
+Kopfleiste, der ein bereitliegendes Update anzeigen soll, fragte alle
+fuenfzehn Minuten eine Adresse ab, die es nicht gab. Er ist nie
+erschienen, auch wenn ein Update bereitlag. Beide Wege sind jetzt gebaut.
+
+**Damit so etwas nicht wieder unbemerkt bleibt, prueft ein Test jetzt alle
+282 Aufrufe, die die Oberflaeche kennt, gegen die 384 Adressen des
+Programms.** Ein Knopf, der ins Leere greift, faellt ab sofort beim Bauen
+auf und nicht beim Kaeufer.
+
+**Ein frisch geladenes Modell erschien erst nach einem Neustart.** Die
+Liste im Chat-Chip wurde genau einmal beim Oeffnen des Fensters geholt. Wer
+sich im Models-Tab ein Modell zog, suchte es danach vergeblich - der Chip
+wirkte kaputt. Jetzt meldet jeder fertige Download sich selbst, und beide
+Listen, Ollama und Klecks, ziehen sofort nach.
+
+**Modelle werden nicht mehr wegen des Kontext-Fensters ausgegraut.** In
+einem laengeren Gespraech fiel eines nach dem anderen aus der Auswahl, bis
+gar nichts mehr waehlbar war. Die Information ist geblieben, aber als
+Hinweis am Knopf statt als Schloss. Ausgegraut wird nur noch, was fuer
+Work und Code zu klein ist - und diese Grenze setzt man selbst.
+
+**Der Ein/Aus-Schalter eigener Anbieter war eine Einbahnstrasse.** Er war
+gesperrt, solange kein Schluessel eingetragen war. Ein eigener Server auf
+dem gleichen Rechner braucht keinen - einmal ausgeschaltet, liess er sich
+nie wieder anschalten.
+
+**Der Workflow-Import bot sieben Arten an und speicherte vier davon.** Wer
+einen LTX-Workflow importierte und "Text zu Video" auswaehlte, bekam ein
+freundliches "gespeichert" und die Angabe war weg. Qwirbel fand den
+Workflow danach nie wieder von selbst. Dasselbe galt fuer Stimme und
+Motion-Control.
+
+**"Modell an einen Chat binden" ist aus Work und Code raus.** Der Schalter
+versprach, dass ein Chat bei seinem Anbieter bleibt, bewirkte aber nur
+eine Warnung beim Wechsel - also weder das, was sein Name sagte, noch das,
+was gemeint war.
+
+**Fuenf Fehlermeldungen im Protokoll bestanden aus einer Zeichenkette statt
+aus dem Fehler,** und fuenf Ausnahme-Faenge haetten beim Zuschlagen selbst
+einen Fehler ausgeloest: sie wollten einen Fehler ausgeben, der an dieser
+Stelle gar nicht gesetzt war. Aus einem verschluckten Schoenheitsfehler
+waere dort ein echter Absturz geworden. Ein neuer Test geht ueber alle 137
+Programmdateien und findet Namen, die es zur Laufzeit nicht gibt - etwas,
+das der uebliche Syntax-Check nicht sieht.
+
+**Klecks wurde an sechs Stellen wie ein Cloud-Anbieter behandelt,** obwohl
+er auf derselben Grafikkarte rechnet. Unter anderem versprach der
+Schwarm-Vorschlag viele gleichzeitige Agenten fuer ihn, die sich in
+Wirklichkeit dieselben sechzehn Gigabyte geteilt haetten. Und wer Klecks
+als lokalen Motor einstellte, ohne im Chat noch einmal ausdruecklich zu
+waehlen, landete trotzdem bei Ollama - der Schalter tat nichts.
+
 ## v2.9.3 - Qwirbel hoert wieder sofort zu
 
 **In v2.9.1 ist beim Aufraeumen ein Fehler hereingekommen, und der hat
