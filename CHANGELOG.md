@@ -1,3 +1,80 @@
+## v2.9.6 - Warum bei Klecks nichts ging, und was jetzt passiert wenn er nicht kann
+
+**Wer ein Klecks-Modell auswaehlte, bekam trotzdem Ollama.** Die Wahl hob
+sich an zwei Stellen selbst auf. Erst setzte das Modell-Menue sie korrekt -
+und ein Zuhoerer direkt daneben nahm sie sofort wieder zurueck, weil Klecks
+ein lokaler Motor ist. Und beim Absenden ging fuer jeden lokalen Motor
+`kein Anbieter` ans Programm, worauf dort der eingestellte Standardmotor
+entschied; mitgeschickt wurde sogar Ollamas Modellname statt des
+gewaehlten. Beides stammt aus der Zeit, als "lokal" schlicht "Ollama" hiess.
+Seit es zwei lokale Motoren gibt, ist das falsch: wer Klecks waehlt, meint
+Klecks. Massgeblich ist jetzt nur noch, ob es der Standardmotor ist.
+
+**Und wenn man kein Klecks-Modell waehlt, bleibt alles bei Ollama und
+ComfyUI.** Das ist die Vorgabe im Auslieferungszustand, und kein
+Programmteil stellt sie je von selbst um - ein Test wacht darueber. Bilder
+laufen ohnehin immer ueber ComfyUI: Klecks ist ein Sprachmotor und wird in
+der Bilderzeugung nirgends aufgerufen.
+
+**"Keine Modelle gemeldet - laeuft der Dienst?" - der Dienst lief.** Diese
+Meldung war geraten, und sie hat wochenlang in die falsche Richtung
+gezeigt. Gemessen auf der Entwicklungsmaschine: der Klecks-Dienst
+antwortete einwandfrei mit 22 Sprachmodellen, brauchte dafuer beim ersten
+Mal aber 20,8 Sekunden - er liest je Modell den Dateikopf. Qwirbel wartete
+15 Sekunden. Jeder Aufruf lief also in die Zeitueberschreitung, und ein
+`ausser: nichts zurueckgeben` warf den Grund weg. Zusammen mit dem Umstand,
+dass die Liste frueher nur einmal beim Fensterstart geholt wurde, blieb
+Klecks damit dauerhaft leer.
+
+**Jetzt darf die Liste 90 Sekunden brauchen, und der Grund wird gesagt.**
+Zu langsam ist etwas anderes als nicht erreichbar, und beides ist etwas
+anderes als "keine Modelle da". Alle drei Faelle haben jetzt ihren eigenen
+Satz, und der steht dort, wo vorher die Vermutung stand. Eine geratene
+Ursache ist schlimmer als gar keine: sie schickt Menschen auf die falsche
+Faehrte.
+
+**Kann Klecks nicht, uebernimmt Ollama - und man sieht es.** Bisher flog
+ein Klecks-Fehler durch und die Antwort blieb einfach aus. Jetzt rechnet
+Ollama weiter, und im Chat steht die Zeile "Anbieter gewechselt: Klecks ->
+Ollama" mit dem Grund zum Draufzeigen. Dasselbe gilt fuer Agentenlaeufe -
+dort steht es im Protokoll, weil ein Agent diese Chat-Zeile nicht hat.
+
+**Eine Ausnahme, und die ist wichtig: wer selbst auf Stopp drueckt, bekommt
+keinen Ersatzlauf.** Ein Rueckfall waere dort das Gegenteil dessen, was der
+Mensch gerade gedrueckt hat - und die teuerste Art, ihn zu ignorieren.
+
+**Und noch ein "Python", das eigentlich Qwirbel ist: der Klecks-Dienst.**
+Er wurde mit dem pythonw.exe aus dem Scripts-Ordner gestartet - und das ist
+unter Windows nur ein Starter, der den echten Interpreter als zweiten
+Prozess aufruft. Zwei Eintraege im Taskmanager, beide namenlos, beide
+gehoeren zu Qwirbel. Jetzt laeuft er unter derselben beschrifteten Kopie -
+aber nur, wenn der gewaehlte Interpreter in Qwirbels eigener Umgebung
+liegt. Zeigt er woandershin (Klecks' eigene Umgebung, ein von Hand
+eingetragener Pfad), bleibt er unangetastet: dort waere ein Tausch ein
+stiller Unterschied zwischen "bei mir lief es" und "beim Nutzer nicht".
+
+**Zwei Reste des Colibri-Fehlers waren noch da.** Der LOKAL/API-Schalter
+suchte seine API-Anbieter, indem er "ollama" und "klecks" bei NAMEN
+aussortierte - Colibri und Kimi laufen aber auch auf diesem Rechner und
+standen deshalb als API-Anbieter in der Liste. Und in der Agenten-Anzeige
+stand bei ihnen "ueber deinen API-Schluessel - Grafikkarte bleibt frei".
+Beides falsch: sie rechnen auf genau dieser Karte, und es geht kein
+Schluessel ins Netz. Eine Aussage ueber Datenschutz und Grafikkarte darf
+nicht geraten werden.
+
+**"Ist das lokal?" und "ist das der Standard?" sind zwei Fragen.** Beide
+standen im Programmtext als derselbe Vergleich mit dem Wort "ollama", und
+an dem war nicht zu erkennen, welche gemeint war. Genau diese Verwechslung
+hat GLM Colibri monatelang zum API-Anbieter gemacht. Die zweite Frage hat
+jetzt einen eigenen Namen, der sie ausspricht - der blanke Vergleich steht
+nirgends mehr.
+
+**Der Taskmanager-Name haelt jetzt auch unter Last.** Windows laesst das
+Beschriften einer frisch geschriebenen Datei fehlschlagen, solange ein
+Virenscanner sie noch anfasst. Beim ersten Fehlversuch aufzugeben hiess:
+der Nutzer sieht wieder "Python" und weiss nicht warum. Jetzt sind es drei
+Anlaeufe, und beim naechsten Start wird es ohnehin erneut versucht.
+
 ## v2.9.5 - Qwirbel heisst Qwirbel, und das Logo bleibt
 
 **Im Taskmanager stand weiterhin "Python".** In v2.9.2 wurde dagegen eine
