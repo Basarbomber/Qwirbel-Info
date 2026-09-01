@@ -1,3 +1,107 @@
+## v2.9.7 - Was oben im Modellchip steht, rechnet. Ueberall.
+
+**Man konnte die Oberflaeche nicht uebersetzen lassen, obwohl das Modell
+lief.** Falko hatte Ollama gestartet, oben ein lokales Modell gewaehlt und
+auf "Uebersetzen" gedrueckt. Antwort: "Komplett-lokal-Modus ist an -
+Cloud-Anbieter sind deaktiviert." Also eine Absage, die sich auf eine
+Einstellung berief, die er selbst getroffen hatte - waehrend das Modell,
+das er ausgewaehlt hatte, danebenstand und nichts zu tun hatte.
+
+**Der Grund war, dass die Wahl im Chip nie das Programm erreicht hat.** Sie
+lebte ausschliesslich im Browser und ging nur beim Chatten mit. Jede andere
+Funktion - Uebersetzen, Benennen, Zusammenfassen, Einordnen - stand ohne
+sie da und musste raten. Die Regel dafuer lautete: "irgendwo liegt ein
+aktiver Cloud-Schluessel, also gehoert das in die API." Bei eingeschaltetem
+Komplett-lokal-Modus fuehrte dieses Raten in eine Sackgasse, aus der es
+keinen Ausweg gab: lokal verboten, Cloud verboten.
+
+**Jetzt gibt es genau eine Stelle, die weiss, was im Chip steht.** Die
+Oberflaeche meldet jede Aenderung dorthin, und der laufende Chat schreibt
+zusaetzlich mit, womit wirklich gerechnet wurde - falls die Meldung des
+Browsers einmal ausbleibt. Jede Funktion, die keine eigene Wahl mitbringt,
+fragt dort nach, statt zu raten. Wer selbst eine Wahl hat, behaelt sie: ein
+laufender Chat weiss besser als der Chip, womit er angefangen hat.
+
+**Die Wahl gehoert dem Nutzer, nicht dem Rechner.** In einem Server-Paket
+mit mehreren Menschen haette ein gemeinsamer Stand bedeutet, dass die
+Modellwahl des einen bestimmt, womit die Uebersetzung des anderen rechnet -
+und wer einen bezahlten Anbieter waehlt, laesst seinen Kollegen mitzahlen.
+Jeder hat seinen eigenen Chip, wie jeder seine eigenen Chats hat.
+
+**Nebenbei behoben: Umleitungen landeten beim falschen Anbieter.** Konnte
+eine Nebenaufgabe nicht lokal laufen, ging sie an den ersten Eintrag der
+Anbieterliste. Das ist Anthropic. Wer GLM gewaehlt und bezahlt hatte, bekam
+so eine Rechnung bei Claude. Jetzt geht sie dorthin, wo der Nutzer
+hinzeigt.
+
+**Der Einstellungsknopf im Chat sagte "WORK".** Er ist seit der letzten
+Fassung in allen Tabs zu finden, seine Ueberschrift kannte aber nur zwei
+Faelle - Code oder alles andere. Im Chat stellte man also den Chat ein und
+las dabei "Work". Jetzt nennt sie den Tab, in dem man steht, auf Deutsch
+wie auf Englisch.
+
+**55 Sprachen zum Anklicken.** Wer die Oberflaeche in einer weiteren
+Sprache wollte, musste Kuerzel und Namen von Hand eintippen - und wer nicht
+weiss, dass Ukrainisch "uk" heisst und nicht "ua", legte sie unter dem
+falschen Kuerzel an und merkte es erst, wenn nach ueber sechzig
+Uebersetzungsbloecken der Browser sie nicht erkannte. Jetzt steht die
+Auswahl da, jede Sprache mit ihrem eigenen Namen; ein Klick legt sie an.
+Das Eingabefeld bleibt fuer alles, was nicht dabei ist. Von rechts nach
+links geschriebene Sprachen stehen bewusst nicht im Angebot: die Texte
+liessen sich uebersetzen, die Oberflaeche steht danach aber falsch herum -
+das waere ein Versprechen, das das Programm nicht haelt.
+
+**Dateien, die schon im Kontext stehen, werden nicht noch einmal
+hineingeschrieben.** Es gab bereits einen Schutz gegen mehrfaches Lesen -
+aber er sparte die falsche Haelfte. Er verhinderte den Zugriff auf die
+Platte und schrieb den kompletten Dateiinhalt trotzdem erneut in den
+Verlauf. Fuer das Modell ist das exakt derselbe Preis wie ein echtes Lesen:
+gespart wurde eine Festplattenumdrehung, kein einziger Token. Und der Text
+stand zu diesem Zeitpunkt schon zweimal im Prompt. Jetzt kommt an dieser
+Stelle ein Zeiger von etwa vierhundert Zeichen. Bei einer Datei von
+zwanzigtausend Zeichen, fuenfmal angefordert, sind das gut zweiundzwanzig-
+statt hunderttausend Zeichen.
+
+**Und "hat sich nicht geaendert" wird jetzt geprueft, statt behauptet.** Der
+alte Satz stand da, ohne dass jemand nachgesehen hatte. Wer nebenher im
+Editor speicherte, bekam still den alten Stand serviert. Aenderungszeit und
+Groesse werden beim Merken festgehalten und beim naechsten Zugriff
+verglichen; stimmt etwas nicht, wird wirklich neu gelesen.
+
+**Ist der Kontext voll, wird jetzt zusammengefasst statt abgeschnitten.**
+Bisher schnitt das Programm aeltere Zuege auf Kopf und Ende zurecht - und
+das Ergebnis eines Zuges steht in der Mitte. Genau daher kam, dass der
+Agent spaeter nicht mehr wusste, was er eigentlich getan hatte. Stattdessen
+entsteht nun ein kurzes Protokoll: was fertig ist, was entschieden wurde,
+welche Dateien angefasst sind, was offen ist und wo aufgehoert wurde. Am
+Fenster aendert das nichts, dort stehen weiterhin alle Nachrichten - der
+volle Wortlaut bleibt in der Chat-Datei und im Auto-Export.
+
+**Gerechnet wird das im Hintergrund, mit Absicht.** Die Zusammenfassung
+entsteht waehrend der Chat weiterlaeuft; bis sie da ist, gilt der bisherige
+Schnitt. Ein Modellaufruf an dieser Stelle haette den Server mitten in der
+Antwort fuer Sekunden angehalten. Ueber die API darf die Zusammenfassung
+laenger sein, lokal wird sie knapp gehalten - dort zaehlt vor allem, was
+passiert ist und wo es weitergeht. Scheitert das Modell daran, wird nichts
+behauptet: dann greifen die bisherigen Kuerzungsstufen weiter.
+
+**Zwei Dienste auf einem Port sagen jetzt, dass sie es sind.** Klecks
+erwartet sich auf Port 8199. Wer ComfyUI von Hand auf dieselbe Nummer legt -
+naheliegend genug, es ist ja Qwirbels eigene -, hat zwei Programme, die
+denselben Platz wollen. Wer zuerst startet, gewinnt; der andere meldet
+"antwortet nicht", und das sieht aus wie ein kaputter Dienst. Im
+Auslieferungszustand kollidiert nichts (ComfyUI steht auf 8188), aber wenn
+es passiert, steht es jetzt in der Meldung statt in einer stundenlangen
+Suche.
+
+**Der Agent bekommt eine gemessene Bilanz seiner eigenen Zuege.** Bisher
+stand im Auftrag, was er selbst ueber seine Arbeit berichtet hatte - und
+das hatte niemand nachgeprueft. Daneben steht jetzt eine kurze Liste aus
+den Zuegen selbst: welche Datei geschrieben, welcher Befehl gelaufen ist,
+was dabei herauskam. Wo beide auseinandergehen, gelten die Zuege. Fuenfzehn
+Zeilen kosten ein paar hundert Marken; eine zum zweiten Mal geschriebene
+Datei kostet Zehntausende.
+
 ## v2.9.6 - Warum bei Klecks nichts ging, und was jetzt passiert wenn er nicht kann
 
 **Wer ein Klecks-Modell auswaehlte, bekam trotzdem Ollama.** Die Wahl hob

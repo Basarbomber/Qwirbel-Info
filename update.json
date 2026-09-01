@@ -1,7 +1,7 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket.",
-  "_naechster_schritt": "v2.9.6 ist gepackt (01.09.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin und passen zu diesen Dateinamen. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
-  "version": "2.9.6",
+  "_naechster_schritt": "v2.9.7 ist gepackt (01.09.2026). Die Pakete liegen noch NICHT auf qwirbel.de. SOBALD hochgeladen: in 'pakete' je System nur noch die 'url' eintragen - die 'sha256' stehen schon drin und passen zu diesen Dateinamen. Vorher NICHT: ein Manifest, das eine Datei nennt, die niemand laden kann, schickt Leute ins Leere. ACHTUNG: eine oeffentliche URL macht das Paket fuer JEDEN ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
+  "version": "2.9.7",
   "kanal": [
     "stabil",
     "test",
@@ -14,7 +14,7 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://github.com/Basarbomber/Qwirbel-Info/blob/main/CHANGELOG.md",
-  "hinweise": "v2.9.6 - Warum bei Klecks nichts ging. Wer ein Klecks-Modell auswaehlte, bekam trotzdem Ollama: die Wahl hob sich an zwei Stellen selbst auf, und mitgeschickt wurde sogar Ollamas Modellname. Dazu wartete Qwirbel 15 Sekunden auf eine Modell-Liste, die beim ersten Mal 20,8 braucht - jeder Aufruf lief in die Zeitueberschreitung, der Grund wurde weggeworfen, und die Oberflaeche riet 'Keine Modelle gemeldet - laeuft der Dienst?'. Der Dienst lief, mit 22 Modellen. Jetzt darf die Liste 90 Sekunden brauchen, und zu langsam, nicht erreichbar und keine Modelle da sind drei verschiedene Saetze. Kann Klecks nicht, uebernimmt Ollama - sichtbar im Chat als 'Anbieter gewechselt', mit Grund; nur wer selbst auf Stopp drueckt, bekommt keinen Ersatzlauf. Ollama und ComfyUI bleiben der Standard, und kein Programmteil stellt das je von selbst um. Zwei Reste des Colibri-Fehlers sind auch weg: der LOKAL/API-Schalter fuehrte Colibri und Kimi als API-Anbieter, und die Agenten-Anzeige behauptete bei ihnen 'ueber deinen API-Schluessel - Grafikkarte bleibt frei', obwohl sie auf genau dieser Karte rechnen. Enthaelt v2.9.5: im Taskmanager steht jetzt Qwirbel statt Python, und das Desktop-Logo ueberlebt ein Update. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
+  "hinweise": "v2.9.7 - Was oben im Modellchip steht, rechnet. Ueberall. Bisher lebte diese Wahl nur im Browser und ging allein beim Chatten mit; jede andere Funktion - Uebersetzen, Benennen, Zusammenfassen - stand ohne sie da und musste raten. Wer lokal gewaehlt und den Komplett-lokal-Modus an hatte, bekam beim Uebersetzen der Oberflaeche eine Absage, die sich auf genau diese eigene Einstellung berief. Jetzt gibt es eine Stelle, die die Wahl kennt, je Nutzer getrennt; Umleitungen landen nicht mehr beim erstbesten Anbieter der Liste. Dazu: der Einstellungsknopf im Chat nennt jetzt den Chat statt 'Work', 55 Sprachen stehen zum Anklicken bereit, und der Agent geht deutlich sparsamer mit dem Kontext um - die Werkzeug-Doku (53.537 Zeichen) stand hinter Veraenderlichem und war damit fuer jeden Prompt-Cache unerreichbar; eine schon gelesene Datei wurde bei jedem Zugriff komplett erneut in den Verlauf geschrieben. Ist der Kontext voll, wird jetzt zusammengefasst statt abgeschnitten - im Fenster bleiben alle Nachrichten stehen. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
   "_felder": {
     "version": "Zielversion. Qwirbel bietet sie nur an, wenn sie NEUER ist als die installierte.",
     "kanal": "Fuer welche Kanaele freigegeben (stabil/test/lts). Wer im Kanal 'lts' sitzt, sieht eine Version nur, wenn 'lts' hier steht.",
@@ -29,34 +29,34 @@
   },
   "pakete": {
     "windows": {
-      "datei": "Qwirbel-Windows-Normal-v2.9.6.zip",
+      "datei": "Qwirbel-Windows-Normal-v2.9.7.zip",
       "url": "",
-      "sha256": "37cfd33e627967dbb26db734a17986c3d4ff22e6e78672e0ad252fc9a914310f"
+      "sha256": "bfdcf1e9da278033c5d9511581e84a280d0f8e653690928733b50a8cfcac540e"
     },
     "windows_server": {
-      "datei": "Qwirbel-Windows-Server-v2.9.6.zip",
+      "datei": "Qwirbel-Windows-Server-v2.9.7.zip",
       "url": "",
-      "sha256": "a925cd4ed42376a9c1cdbf1b4f883cf7281200db1c05ab0cc272b2f62bc579cb"
+      "sha256": "07a57f0bc341f4dccd260f3702b80ac1d3d9c25758e78fbcae1e4aebb247aa7f"
     },
     "linux": {
-      "datei": "Qwirbel-Linux-Normal-v2.9.6.zip",
+      "datei": "Qwirbel-Linux-Normal-v2.9.7.zip",
       "url": "",
-      "sha256": "5c4c8e9db8deb585c0b8ea40617fc57696bb2d6f4315e058e757c34fb7307431"
+      "sha256": "818f4ce06706afbd62de3148b0ea0a54630eb27d27fcf4730357b1ed0a238d14"
     },
     "linux_server": {
-      "datei": "Qwirbel-Linux-Server-v2.9.6.zip",
+      "datei": "Qwirbel-Linux-Server-v2.9.7.zip",
       "url": "",
-      "sha256": "269a828b5a72433cbbcbe3c65f7db6099af233c0505c398906ff94fe27a04e6c"
+      "sha256": "17ad767bdd04ac01fe33c982a856078ad1d24d7ab1f4994a8737fc1583003305"
     },
     "macos": {
-      "datei": "Qwirbel-macOS-Normal-v2.9.6.zip",
+      "datei": "Qwirbel-macOS-Normal-v2.9.7.zip",
       "url": "",
-      "sha256": "452a8275d472719c1fdd30ad53727528c9c3c7e3d5ec537a9c98736343effb02"
+      "sha256": "852ca7ec4567c13dc8ba5b48200d194cc1ae2719ab4c16107ef8381815aa7d3d"
     },
     "macos_server": {
-      "datei": "Qwirbel-macOS-Server-v2.9.6.zip",
+      "datei": "Qwirbel-macOS-Server-v2.9.7.zip",
       "url": "",
-      "sha256": "7f1ecdb8f4746c10e820cd0e2b16c6e7e6c07d6e0930712651b373829ede9431"
+      "sha256": "adf67e909419173230a96233121c62b69706aaba5d4d1e0d63287965e76e6cf9"
     }
   }
 }
