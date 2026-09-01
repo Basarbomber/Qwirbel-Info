@@ -85,6 +85,33 @@ laenger sein, lokal wird sie knapp gehalten - dort zaehlt vor allem, was
 passiert ist und wo es weitergeht. Scheitert das Modell daran, wird nichts
 behauptet: dann greifen die bisherigen Kuerzungsstufen weiter.
 
+**Die Kratzordner raeumen sich auf - aber nichts verschwindet ohne
+Rueckweg.** Unter `workspace/` sammeln sich Zwischendateien von
+Agentenlaeufen, Browser-Aufnahmen, Bildschirmfotos und eingefuegte Bilder.
+Niemand hat diese Ordner je angefasst; auf der Entwicklungsmaschine lagen
+dort 1.786 Dateien und 153 MB. Jetzt wandert beim Start, was aelter als
+30 Tage ist, in einen Papierkorb - und **erst der naechste Durchgang
+loescht endgueltig, und auch der nur, was die Frist ein zweites Mal
+ueberdauert hat.** Wer etwas vermisst, hat also mindestens einen Monat
+Zeit, es zu holen. Bildschirmfotos und eingefuegte Bilder bleiben
+unangetastet: die hat ein Mensch gemacht, die gehen nur auf ausdrueckliche
+Ansage. Chats, Wissen, Einstellungen und die erzeugten Bilder und Videos
+sind grundsaetzlich tabu.
+
+**Qwirbel kann jetzt erklaeren, wie Qwirbel funktioniert.** Zum
+mitgelieferten Wissen ist ein Blatt ueber das Programm selbst gekommen:
+was die Tabs unterscheidet, was die Auswahl oben im Modellchip wirklich
+bedeutet, warum "laeuft es hier" und "wer steuert den Motor" zwei
+verschiedene Fragen sind, was beim Komprimieren des Kontexts passiert und
+wo die Dateien liegen. Wer das Programm fragt, bekommt eine Antwort aus
+dem Programm statt einer geratenen.
+
+**Das automatische Einrichten stellt auch den Modellchip.** Bisher setzte
+es Modelle und Speicherprofil - und der Chip blieb leer. Frisch
+eingerichtet stand das Uebersetzen der Oberflaeche also trotzdem ohne Wahl
+da, bis jemand den Chip einmal von Hand angefasst hatte. Nur auf dem
+lokalen Weg und nur, wenn das Modell wirklich installiert ist.
+
 **Zwei Dienste auf einem Port sagen jetzt, dass sie es sind.** Klecks
 erwartet sich auf Port 8199. Wer ComfyUI von Hand auf dieselbe Nummer legt -
 naheliegend genug, es ist ja Qwirbels eigene -, hat zwei Programme, die
