@@ -1,17 +1,19 @@
 ## v2.9.7 - Was oben im Modellchip steht, rechnet. Ueberall.
 
+### Der Modellchip
+
 **Man konnte die Oberflaeche nicht uebersetzen lassen, obwohl das Modell
-lief.** Falko hatte Ollama gestartet, oben ein lokales Modell gewaehlt und
-auf "Uebersetzen" gedrueckt. Antwort: "Komplett-lokal-Modus ist an -
+lief.** Ollama gestartet, oben ein lokales Modell gewaehlt, auf
+"Uebersetzen" gedrueckt. Antwort: "Komplett-lokal-Modus ist an -
 Cloud-Anbieter sind deaktiviert." Also eine Absage, die sich auf eine
-Einstellung berief, die er selbst getroffen hatte - waehrend das Modell,
-das er ausgewaehlt hatte, danebenstand und nichts zu tun hatte.
+Einstellung berief, die man selbst getroffen hatte - waehrend das Modell,
+das man ausgewaehlt hatte, danebenstand und nichts zu tun hatte.
 
 **Der Grund war, dass die Wahl im Chip nie das Programm erreicht hat.** Sie
 lebte ausschliesslich im Browser und ging nur beim Chatten mit. Jede andere
-Funktion - Uebersetzen, Benennen, Zusammenfassen, Einordnen - stand ohne
-sie da und musste raten. Die Regel dafuer lautete: "irgendwo liegt ein
-aktiver Cloud-Schluessel, also gehoert das in die API." Bei eingeschaltetem
+Funktion - Uebersetzen, Benennen, Zusammenfassen, Einordnen - stand ohne sie
+da und musste raten. Die Regel dafuer lautete: "irgendwo liegt ein aktiver
+Cloud-Schluessel, also gehoert das in die API." Bei eingeschaltetem
 Komplett-lokal-Modus fuehrte dieses Raten in eine Sackgasse, aus der es
 keinen Ausweg gab: lokal verboten, Cloud verboten.
 
@@ -34,22 +36,22 @@ Anbieterliste. Das ist Anthropic. Wer GLM gewaehlt und bezahlt hatte, bekam
 so eine Rechnung bei Claude. Jetzt geht sie dorthin, wo der Nutzer
 hinzeigt.
 
-**Der Einstellungsknopf im Chat sagte "WORK".** Er ist seit der letzten
-Fassung in allen Tabs zu finden, seine Ueberschrift kannte aber nur zwei
-Faelle - Code oder alles andere. Im Chat stellte man also den Chat ein und
-las dabei "Work". Jetzt nennt sie den Tab, in dem man steht, auf Deutsch
-wie auf Englisch.
+**Das automatische Einrichten stellt den Chip gleich mit.** Bisher setzte es
+Modelle und Speicherprofil - und der Chip blieb leer. Frisch eingerichtet
+stand das Uebersetzen der Oberflaeche also trotzdem ohne Wahl da, bis jemand
+den Chip einmal von Hand angefasst hatte. Nur auf dem lokalen Weg und nur,
+wenn das Modell wirklich installiert ist.
 
-**55 Sprachen zum Anklicken.** Wer die Oberflaeche in einer weiteren
-Sprache wollte, musste Kuerzel und Namen von Hand eintippen - und wer nicht
-weiss, dass Ukrainisch "uk" heisst und nicht "ua", legte sie unter dem
-falschen Kuerzel an und merkte es erst, wenn nach ueber sechzig
-Uebersetzungsbloecken der Browser sie nicht erkannte. Jetzt steht die
-Auswahl da, jede Sprache mit ihrem eigenen Namen; ein Klick legt sie an.
-Das Eingabefeld bleibt fuer alles, was nicht dabei ist. Von rechts nach
-links geschriebene Sprachen stehen bewusst nicht im Angebot: die Texte
-liessen sich uebersetzen, die Oberflaeche steht danach aber falsch herum -
-das waere ein Versprechen, das das Programm nicht haelt.
+### Was eine Nachricht kostet
+
+**Die Werkzeug-Beschreibung stand an der falschen Stelle im Prompt - und
+das war teuer.** Sie ist 53.537 Zeichen lang, rund 14.900 Marken, und sie
+aendert sich innerhalb einer Aufgabe kein einziges Mal. Nur stand sie hinter
+Textstuecken, die sich bei jedem Schritt aendern. Ein Prompt-Cache arbeitet
+aber ueber den ANFANG: was hinter etwas Veraenderlichem liegt, kann kein
+Anbieter wiederverwenden. Bei dreissig Zuegen sind das rund 450.000 Marken,
+jedes Mal neu bezahlt, obwohl Qwirbel das Caching laengst einschaltet. Jetzt
+steht sie vorn, und sie wird einmal je Aufgabe gebaut statt bei jedem Zug.
 
 **Dateien, die schon im Kontext stehen, werden nicht noch einmal
 hineingeschrieben.** Es gab bereits einen Schutz gegen mehrfaches Lesen -
@@ -85,6 +87,35 @@ laenger sein, lokal wird sie knapp gehalten - dort zaehlt vor allem, was
 passiert ist und wo es weitergeht. Scheitert das Modell daran, wird nichts
 behauptet: dann greifen die bisherigen Kuerzungsstufen weiter.
 
+**Der Agent bekommt eine gemessene Bilanz seiner eigenen Zuege.** Bisher
+stand im Auftrag, was er selbst ueber seine Arbeit berichtet hatte - und
+das hatte niemand nachgeprueft. Daneben steht jetzt eine kurze Liste aus
+den Zuegen selbst: welche Datei geschrieben, welcher Befehl gelaufen ist,
+was dabei herauskam. Wo beide auseinandergehen, gelten die Zuege. Fuenfzehn
+Zeilen kosten ein paar hundert Marken; eine zum zweiten Mal geschriebene
+Datei kostet Zehntausende.
+
+### Oberflaeche
+
+**Der Einstellungsknopf im Chat sagte "WORK".** Er ist seit der letzten
+Fassung in allen Tabs zu finden, seine Ueberschrift kannte aber nur zwei
+Faelle - Code oder alles andere. Im Chat stellte man also den Chat ein und
+las dabei "Work". Jetzt nennt sie den Tab, in dem man steht, auf Deutsch
+wie auf Englisch.
+
+**55 Sprachen zum Anklicken.** Wer die Oberflaeche in einer weiteren
+Sprache wollte, musste Kuerzel und Namen von Hand eintippen - und wer nicht
+weiss, dass Ukrainisch "uk" heisst und nicht "ua", legte sie unter dem
+falschen Kuerzel an und merkte es erst, wenn nach ueber sechzig
+Uebersetzungsbloecken der Browser sie nicht erkannte. Jetzt steht die
+Auswahl da, jede Sprache mit ihrem eigenen Namen; ein Klick legt sie an.
+Das Eingabefeld bleibt fuer alles, was nicht dabei ist. Von rechts nach
+links geschriebene Sprachen stehen bewusst nicht im Angebot: die Texte
+liessen sich uebersetzen, die Oberflaeche steht danach aber falsch herum -
+das waere ein Versprechen, das das Programm nicht haelt.
+
+### Ordnung, Wissen, Installation
+
 **Die Kratzordner raeumen sich auf - aber nichts verschwindet ohne
 Rueckweg.** Unter `workspace/` sammeln sich Zwischendateien von
 Agentenlaeufen, Browser-Aufnahmen, Bildschirmfotos und eingefuegte Bilder.
@@ -106,11 +137,27 @@ verschiedene Fragen sind, was beim Komprimieren des Kontexts passiert und
 wo die Dateien liegen. Wer das Programm fragt, bekommt eine Antwort aus
 dem Programm statt einer geratenen.
 
-**Das automatische Einrichten stellt auch den Modellchip.** Bisher setzte
-es Modelle und Speicherprofil - und der Chip blieb leer. Frisch
-eingerichtet stand das Uebersetzen der Oberflaeche also trotzdem ohne Wahl
-da, bis jemand den Chip einmal von Hand angefasst hatte. Nur auf dem
-lokalen Weg und nur, wenn das Modell wirklich installiert ist.
+**Und mitgeliefertes Wissen erreicht jetzt auch eine BESTEHENDE
+Installation.** Der Wissens-Ordner ist bei einem Update geschuetzt - zu
+Recht, dort liegt alles, was eine Installation sich selbst erarbeitet hat.
+Nur lag das MITGELIEFERTE Wissen im selben Ordner und war damit
+mitgeschuetzt: ein neues Blatt kam nur bei einer frischen Installation an,
+nie bei einem Update. Gemessen an genau diesem Fall - das neue Blatt lag im
+Paket und fehlte danach in der Installation. Jede Verbesserung am
+Kernwissen waere fuer alle Bestandskunden wertlos gewesen. Der mitgelieferte
+Ordner ist jetzt ausdruecklich ausgenommen, auf beiden Update-Wegen; alles
+daneben bleibt unantastbar.
+
+**Die Setup-EXE sagt jetzt, ob sie aktualisiert oder neu installiert.**
+Sie konnte beides immer schon, aber im Konsolenweg stand zwischen den
+Trennlinien nichts - die Meldung kam von der Installationsstufe darunter
+und ging verloren, sobald die Ausgabe umgeleitet oder mitgeschnitten wurde.
+Wer die neue Fassung von der Website ueber seine Installation legt, liest
+jetzt vor dem Kopieren, dass eine eingerichtete Installation gefunden
+wurde, dass AKTUALISIERT wird und dass Chats, eigenes Wissen, Einstellungen
+und Arbeitsordner unangetastet bleiben. Eine neue Pruefung stellt genau
+diesen Fall nach - bestehende Installation mit eigenen Daten, neue EXE
+darueber - und rechnet danach nach, was noch da ist.
 
 **Zwei Dienste auf einem Port sagen jetzt, dass sie es sind.** Klecks
 erwartet sich auf Port 8199. Wer ComfyUI von Hand auf dieselbe Nummer legt -
@@ -120,14 +167,6 @@ denselben Platz wollen. Wer zuerst startet, gewinnt; der andere meldet
 Auslieferungszustand kollidiert nichts (ComfyUI steht auf 8188), aber wenn
 es passiert, steht es jetzt in der Meldung statt in einer stundenlangen
 Suche.
-
-**Der Agent bekommt eine gemessene Bilanz seiner eigenen Zuege.** Bisher
-stand im Auftrag, was er selbst ueber seine Arbeit berichtet hatte - und
-das hatte niemand nachgeprueft. Daneben steht jetzt eine kurze Liste aus
-den Zuegen selbst: welche Datei geschrieben, welcher Befehl gelaufen ist,
-was dabei herauskam. Wo beide auseinandergehen, gelten die Zuege. Fuenfzehn
-Zeilen kosten ein paar hundert Marken; eine zum zweiten Mal geschriebene
-Datei kostet Zehntausende.
 
 ## v2.9.6 - Warum bei Klecks nichts ging, und was jetzt passiert wenn er nicht kann
 
