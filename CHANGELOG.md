@@ -1,3 +1,127 @@
+## v2.9.8 - Erst sehen, dann aendern. Und wofuer die Tokens wirklich gehen.
+
+### Roblox Studio und die Sichtpflicht
+
+**Qwirbel hat in Roblox Studio nie wirklich hineingesehen.** Der Auftrag
+"fix das Menue in meinem Spiel" endete damit, dass er Dateien umschrieb,
+etwas probierte und am Ende sagte, man solle selbst nachsehen. Der Grund
+war gemessen ein einziger: Qwirbel startete die Roblox-Bruecke fuer jeden
+Aufruf frisch, rief sofort und schloss sie wieder. Studio haengt sich aber
+erst ein paar Sekunden nach dem Start an die Bruecke - bei null Sekunden
+antwortet sie "No Roblox Studio instances are connected", bei fuenf
+Sekunden "Studio Mode: Edit". Der Schalter in Studio war die ganze Zeit
+an. Jeder Aufruf traf also eine Bruecke, an der Studio noch nicht dran
+war, und Qwirbel arbeitete nach der Regel "einmal wiederholen, sonst ohne
+sie weiter" blind weiter.
+
+**Jetzt bleibt die Bruecke zu einem Programm offen.** Beim ersten Aufruf
+wartet Qwirbel, bis Studio antwortet (bis zu zwanzig Sekunden), danach
+laufen alle weiteren Aufrufe ueber dieselbe Verbindung in Millisekunden.
+Meldet Studio spaeter "nicht verbunden", weil es geschlossen wurde,
+startet der naechste Aufruf die Bruecke frisch und wartet wieder. Gemessen
+am offenen Studio: erster Aufruf 2,5 Sekunden, jeder weitere unter einer
+Zehntelsekunde.
+
+**Jetzt prueft Qwirbel vor dem ersten Zug, ob das Programm wirklich
+dranhaengt.** Ein einziger billiger Aufruf an die Bruecke sagt, ob Studio
+antwortet. Tut es das nicht, bekommst du sofort den einen Satz, was du
+einschalten musst - in Studio den Assistant oeffnen, im Drei-Punkte-Menue
+"Manage MCP Servers" waehlen und "Enable Studio as MCP server"
+einschalten. Derselbe Waechter sitzt auch mitten in der Arbeit: meldet
+irgendein MCP-Aufruf, dass das Zielprogramm nicht verbunden ist, gilt ab
+diesem Moment die Sichtpflicht.
+
+**Sichtpflicht heisst: was er nicht sehen kann, aendert er nicht.** Solange
+Roblox Studio, Unity, Godot oder Blender nicht an ihrer Bruecke haengen,
+sind bestehende Dateien dieses Ziels fuer ihn gesperrt - nicht als Bitte
+im Prompt, sondern in der Ausfuehrung. Neue Dateien darf er anlegen, die
+kann man wegwerfen. Sein Schlussbericht sagt dann ehrlich "blockiert:"
+und nennt den Satz, statt "gebaut, schau selbst nach".
+
+**Dabei kam ein Altfehler ans Licht.** Der Hinweis, dass ein Ziel nur
+ueber die MCP-Bruecke pruefbar ist, sollte laut Kommentar "in jeden
+Zug-Prompt" - stand aber im Code hinter der Arbeitsschleife. Kein einziger
+Arbeitszug hat ihn je gesehen, erst die Nachbesser-Runde. Jetzt steht er
+vor dem ersten Schritt, und die Suite prueft die Reihenfolge. Und weil
+ein Modell im Probelauf die Sperre prompt ueber ein Python-Skript umging,
+zaehlt auch Code, der eine bestehende Ziel-Datei nennt, als Umschreiben.
+
+**Ab siebzig Milliarden Parametern holt er sich einen fehlenden Server
+selbst.** Fehlt fuer ein Ziel der MCP-Server ganz, sucht ein grosses
+Modell (oder jedes Cloud-Modell) ihn im Store, installiert ihn, schaltet
+ihn ein und holt die Werkzeugliste in die laufende Aufgabe - in einem
+Zug. Die Schwelle steht in den Einstellungen unter "MCP SELBST HOLEN AB";
+darunter sagt er dir in einem Satz, welchen Server du im MCP-Tab
+brauchst.
+
+### Wofuer die Tokens gehen
+
+**Vierzig Millionen Tokens fuer eine Menue-Aenderung - und nirgends stand,
+wofuer.** Der Zaehler kannte je Chat nur die Summe. Jetzt fuehrt Qwirbel
+Faecher: Dateien lesen, Dateien schreiben, Befehle ausfuehren, Hinsehen,
+Web, MCP-Aufrufe, Gedaechtnis, die Grundausstattung aus Werkzeug-Doku und
+System, der Auftrag selbst und die Antworten des Modells. Jeder Modell-
+Zug wird nach dem Anteil seiner Prompt-Teile verteilt, der Cache-Anteil
+von vorn vergeben - so, wie die Anbieter tatsaechlich cachen.
+
+**Zu sehen ist das an zwei Stellen.** Faehrst du waehrend der Arbeit mit
+der Maus ueber die Laufanzeige neben der Denkfigur, stehen dort die
+Faecher dieser Aufgabe als Leisten mit Symbol. Der Kontextkreis oben
+zeigt dasselbe fuer den ganzen Chat - gemessen, nicht geschaetzt. Eigene
+Faecher, die sich die KI anlegt, bekommen ein eigenes Symbol aus einer
+Auswahl von ueber dreissig.
+
+**Und der Prompt ist so sortiert, dass der Cache greift.** Die grossen
+Bloecke, die nur wachsen (was in diesem Chat schon passiert ist, was
+gelesen wurde, der Datei-Wegweiser), stehen jetzt vor den Bloecken, die
+sich jeden Schritt aendern. Vorher stand die Bilanz vorn - und der
+gesamte Lese-Block dahinter war fuer jeden Anbieter ab dem zweiten
+Schritt neu zu bezahlen.
+
+### Kompakt: die KI komprimiert den Chat
+
+**Neben Export, Loeschen und Qwirbeln gibt es jetzt Kompakt.** Ein Klick,
+und das Modell fasst den bisherigen Chat zu einem Protokoll zusammen: was
+fertig ist, was entschieden wurde, welche Dateien angefasst sind, was
+offen ist, wo es weitergeht. Ab dieser Stelle faengt das Kontextfenster
+neu an - der Kopf-Platz oben zaehlt ab da, und das Modell sieht statt des
+alten Wortlauts nur noch die Zusammenfassung. Fuer dich bleibt jede
+Nachricht sichtbar; die Zusammenfassung sitzt als schmale, aufklappbare
+Trennlinie im Verlauf. Anders als Qwirbeln wird nichts archiviert und
+nichts gelernt, der Chat bleibt einfach offen. Das Modell dafuer ist das
+aus dem Chip, wie ueberall.
+
+### Kleine Dinge, die stoerten
+
+**Die fliegende Kopfleiste kam auch, wenn die echte noch zu sehen war.**
+Sie misst jetzt gegen die Unterkante der echten Knopfzeile statt gegen
+feste 200 Pixel - erst wenn die aus dem Bild ist, fliegt die zweite ein.
+
+**Der Pfeil oben links klappte ohne Bewegung ein und sprang beim zweiten
+Druck.** Jetzt wischen die Beschriftungen weg, dann gleitet die Leiste
+schmal; beim Wechsel in die Kopfleiste bleibt sie schmal, waehrend sie
+nach links wegfliegt, und wird erst breit, wenn sie unsichtbar ist. Vorher
+wurde sie im selben Moment breit und weggeschoben - das war der Sprung.
+Auf dem Rueckweg faden die Beschriftungen ein.
+
+**Tabs wechseln jetzt sichtbar.** Ein kurzer Fade mit einem Hauch Bewegung
+von unten, auch fuer die Chat-Reiter innerhalb eines Tabs. Wer Bewegung
+im System abgestellt hat, bekommt wie bisher keine.
+
+### Ein Gedaechtnis mit Index
+
+**Qwirbel wusste nicht, was er weiss.** Sein Wissen lag in fuenf Ablagen,
+ohne Verzeichnis. Also las er Dateien, statt sich zu erinnern. Jetzt gibt
+es ein Gedaechtnis mit Faechern - Projekt, Entscheidung, Fehler, Regel,
+Person, Hardware, Pfad, Werkzeug und beliebige eigene - und einen Index
+mit einer Zeile je Erinnerung, der in jedem Lauf im festen Teil des
+Prompts steht. Passt eine Zeile zum Auftrag, liest er die Erinnerung;
+das kostet einen Bruchteil dessen, was das erneute Lesen der Dateien
+kostet. Neues merkt er sich mit einem Werkzeug, und am Ende jeder
+Aufgabe wird das Projekt-Fach von selbst fortgeschrieben: Datum, Auftrag,
+was getan wurde, welche Dateien. Das alte Wissen bleibt, wo es ist - der
+Index zeigt darauf.
+
 ## v2.9.7 - Was oben im Modellchip steht, rechnet. Ueberall.
 
 ### Der Modellchip
