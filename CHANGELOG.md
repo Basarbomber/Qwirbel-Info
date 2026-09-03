@@ -1,3 +1,141 @@
+## v2.9.9 - Er hoert nicht mehr still auf. Und jeder baut sich seinen Tab.
+
+### Eigene Tabs: der Plus-Knopf links
+
+**Unter der Tab-Leiste steht jetzt ein Plus.** Ein Klick, und du
+beschreibst einen Tab, den es noch nicht gibt - das Modell, das oben im
+Chip steht, baut ihn. Drei Modi, weil nicht jeder gleich viel schreiben
+will: **Einfach** (ein Satz genuegt), **Erweitert** (Wie soll der Tab
+heissen? Was sind seine Funktionen? Wie arbeitet er mit anderen Tabs
+zusammen?) und **Vorgaben** (acht fertige Ideen zum Anklicken, danach
+aenderbar - Rezepte, Lernkarten, Training, Ausgaben, Projekt, Pflanzen,
+Schreiben, Reise).
+
+**Der Bauplan wird gezeigt, bevor er in der Leiste landet.** Du siehst
+Name, Icon, Zweck und jeden Baustein, kannst neu bauen lassen und legst
+ihn erst auf Knopfdruck ab. Ein Tab, der ungefragt in der Leiste steht,
+waere eine Zumutung.
+
+**Ein Tab besteht aus vier Bausteinen, und alle vier tun wirklich
+etwas:** ein erklaerender Absatz, ein Textfeld, dessen Inhalt bleibt,
+eine Liste zum Abhaken (Punkte kommen dazu und weg), und ein Knopf, der
+dein Modell mit dem Inhalt deiner Felder arbeiten laesst. Gemessen am
+03.09.2026 mit GLM-5.3: aus einem Satz ueber Pflanzen entstanden sieben
+Bausteine, und der Knopf "was fehlt ihr?" hat die Gieß-Routine aus der
+Liste mitgelesen und die Diagnose ins Ergebnisfeld geschrieben.
+
+**Was das Modell dabei NICHT tut: Code schreiben, der ausgefuehrt wird.**
+Es liefert eine Beschreibung, die die Oberflaeche zeichnet. Erfindet es
+ein Icon oder einen fuenften Bausteintyp, wird das geradegezogen statt
+abgelehnt - ein Bauplan, der an einer Kleinigkeit scheitert, kostet dich
+sonst einen ganzen Modell-Lauf. Und ein Knopf kann nur den Auftrag
+ausfuehren, der in seinem gespeicherten Bauplan steht: ein erfundener
+Knopftitel wird abgewiesen, sonst waere das ein freier Modell-Zugang an
+Stufe und Tageslimit vorbei. Eigene Tabs liegen je Nutzer getrennt, wie
+alles andere auch.
+
+### Kein "Ziel erreicht" mehr, wenn die Planung abbricht
+
+**Zweite Ursache fuer "er hoert einfach auf" - gefunden beim Durchsehen
+des Agenten.** Nach jedem Schritt fragt Qwirbel das Modell: fertig, oder
+was kommt jetzt? Antwortete das Modell dort nicht (abgestuerzt, Budget
+erreicht, Antwort unlesbar), stand im Tab **"Ziel erreicht"** - genau
+wie bei echter Fertigstellung. Der Lauf ging freundlich in die Pruefung,
+und die halbe Arbeit sah aus wie eine ganze. Jetzt gibt es drei
+Ausgaenge statt zwei: Schritt angehaengt, Ziel erreicht, oder
+**"Planung abgebrochen: ..."** mit dem Grund im Klartext. Ein erreichtes
+Token-Budget beendet den Lauf sogar ausdruecklich, statt still
+weiterzurechnen.
+
+### Uebersetzung: die Seitenleiste bleibt nicht mehr deutsch
+
+**Falko hat auf Polnisch umgestellt, und die ganze linke Leiste blieb
+deutsch.** Grund: die Tab-Namen stehen nicht als uebersetzbarer Text im
+Programm, sondern in einer Tabelle - der Sammler sah sie nie, und die
+Anzeige holte sie direkt von dort. Jetzt gehen Tab- und Untertab-Namen
+durch dieselbe Uebersetzung wie jeder andere Text, und der Sammler liest
+die Tabelle mit.
+
+**Und "vollstaendig" war unerreichbar.** Gezaehlt wurden 2444 Texte,
+uebersetzbar waren 2406: 38 Texte standen mit zwei englischen Fassungen
+doppelt in der Liste, im Woerterbuch aber nur einmal. Der Knopf sagte
+darum ewig "weiter uebersetzen". Jetzt zaehlt, was zaehlbar ist - je
+deutschem Text einmal.
+
+### Sprachpakete: herunterladen statt rechnen
+
+**Wer eine Sprache anlegt, bekommt sie ab jetzt als fertiges Paket, wenn
+es eines gibt.** Qwirbel schaut dort, wo auch das Update-Manifest liegt
+(oder unter der Adresse, die das Manifest selbst nennt), laedt das
+Woerterbuch und mischt es ein; vorhandene Uebersetzungen bleiben. Was
+das Paket nicht abdeckt, rechnet das Modell wie bisher weiter - und
+steht kein Paket bereit, sagt die Anzeige genau das, statt zu schweigen.
+Gebaut werden die Pakete mit `scripts/sprachpakete_bauen.py` (lokales
+Modell) oder `scripts/sprachpakete_teile.py` (in Teilen, mit Pruefung
+auf Anzahl und Platzhalter).
+
+### Kleinigkeiten
+
+- **Die zwei Fenster des Baudialogs sitzen richtig.** Sie hatten nur eine
+  Hoechstbreite, aber keinen Rahmen wie jeder andere Tab - dadurch klebten
+  die Karten oben links am Rand und die Seite scrollte nicht. Jetzt
+  derselbe Rahmen wie in Verbindung, MCP oder Backup, mit dem Abstand
+  INNEN, damit die UI-Groesse ihn mitskaliert.
+- **Der Plus-Knopf steht auch in der Kopfleiste.** Wer mit der fliegenden
+  Kopfleiste arbeitet, hat die Seitenleiste zugeklappt und kam gar nicht
+  an das Plus. Jetzt liegt es unter "Mehr", unten neben Settings.
+- **Das Modell entscheidet nicht ueber das Aussehen.** Es liefert Felder,
+  Listen, Knoepfe und Texte; Farbe, Abstaende und Anordnung macht die
+  Oberflaeche. Die Akzentfarbe eines eigenen Tabs kommt aus einer festen
+  Palette, gewaehlt nach seiner Kennung: gleiche Kennung, gleiche Farbe,
+  jedes Mal. Der Auftrag an das Modell sagt das ausdruecklich, damit es
+  gar nicht erst anfaengt, CSS zu schreiben.
+- **Ein Absturz, der nur im echten Bild zu sehen war.** Der Zustand der
+  eigenen Tabs lag zuerst in der Chat-Komponente statt in der App. Die
+  Leiste zeigte den Tab, aber sein Inhalt lief in "eigenZustand is not
+  defined" und damit in die Absturzseite. Kein Textprueftest findet das -
+  gefunden beim Durchklicken der Web-Demo.
+- **Die Web-Demo zeigt die eigenen Tabs.** Sie steht auf 2.9.9 und bringt
+  einen fertig gebauten Beispiel-Tab mit (Pflanzen, sieben Bausteine, mit
+  Eintraegen und einem abgehakten Punkt), dazu die acht Vorgaben im
+  Baudialog. Schreibende Klicks lehnt die Demo wie ueberall ehrlich ab.
+- **"Kompakt" heisst jetzt "Komprimieren"** (Falko: "Kompakt umbenennen
+  zu komprimieren"). Die Karte im Verlauf heisst entsprechend
+  "KOMPRIMIERT"; die Rolle in gespeicherten Chats bleibt, wie sie ist -
+  ein Umbenennen dort waere ein Datenbruch ohne Gegenwert.
+
+### Herzschlag gegen das stille Aufhoeren
+
+**„Er hoert einfach auf“ – mitten in der Aufgabe, ohne Antwort, ohne
+Fehlermeldung.** Gemessen war die Ursache der Frontend-Zeitwaechter:
+zwei Minuten ohne EIN Stream-Paket gelten als tote Verbindung. So lange
+brauchen RAG-Suche und langes Modell-Denken aber regelmaessig, ohne ein
+einziges Paket zu schicken. Der Waechter brach ab, und fuer den Nutzer
+sah es aus, als haette Qwirbel resigniert.
+
+**Jetzt schickt das Backend in stillen Phasen alle 30 Sekunden ein
+Lebenszeichen.** _mit_herzschlag() wickelt beide langen Streams (/chat
+und /task/stream): solange der echte Generator nichts liefert, fliesst
+ein {"event":"herzschlag"}-Paket. Es fuettert den Waechter zurueck und
+bleibt sonst unsichtbar - die Oberflaeche zeigt nichts davon. Echte
+Chunks und Fehler gehen unveraendert durch, der Lauf dahinter wird nie
+abgebrochen. qwirbeln und komprimieren schicken ohnehin eigene
+Fortschritts-Pakete und brauchten nichts.
+
+### Internes Denken ist jetzt ein eigenes Fach
+
+**Bisher steckte der Gedankengang in „Antworten des Modells“.** Ein
+Modell, das minutenlang denkt, sah in der Faecher-Anzeige aus wie
+Arbeit. Jetzt messen ollama_client und api_manager mit, wie viele
+Zeichen Denken (thinking / reasoning_content) und wie viele sichtbare
+Antwort flossen - die EINE completion-Zahl des Anbieters wird anteilig
+auf die Faecher „denken“ (Gluehbirne) und „antwort“ verteilt, dieselbe
+ehrliche Methode wie beim Prompt. Ohne Messung bleibt alles bei
+„antwort“: kein Bruch, nur keine Aufteilung.
+
+Beides wird erst nach einem Neustart von Qwirbel (window.py) aktiv -
+der laufende Prozess arbeitet noch mit den alten Dateien.
+
 ## v2.9.8 - Erst sehen, dann aendern. Und wofuer die Tokens wirklich gehen.
 
 ### Roblox Studio und die Sichtpflicht
