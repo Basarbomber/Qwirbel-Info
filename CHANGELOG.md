@@ -1,3 +1,327 @@
+## v2.9.14 - Ein Aussetzer legt nicht mehr die ganze Aufgabe still
+
+Diese Fassung kommt aus einem echten Lauf: ein Modell ueber die
+Programmierschnittstelle, im Code-Bereich, mit Roblox Studio ueber MCP.
+Vier Werkzeug-Aufrufe liefen sauber - Instanzen auflisten, Zustand
+abfragen, den laufenden Test stoppen, Skripte durchsuchen. Danach ging
+Studio verloren.
+
+### Die Sperre ging nie wieder auf
+
+**Wenn das Zielprogramm nicht mehr an der Bruecke haengt, setzt Qwirbel
+eine Sperre** - bestehende Dateien dieses Ziels sind dann tabu, und der
+Nutzer bekommt einen Satz, was er einschalten muss. Das ist richtig so:
+blind etwas umschreiben ist schlimmer als anzuhalten.
+
+**Nur ging die Sperre nie wieder auf.** Sie wurde an genau einer Stelle
+entfernt - wenn das Modell einen NEUEN Server dazuholt. Kam das Programm
+von selbst zurueck, blieb sie stehen, und die Aufgabe war tot: im
+gemessenen Lauf drei Minuten lang dieselbe Notiz, kein einziger
+Werkzeug-Aufruf mehr. Jetzt hebt ein gelungener Aufruf an denselben
+Server die Sperre auf - der Beleg ist der Aufruf selbst, kein
+Versprechen, und ein anderer Server zaehlt dafuer nicht.
+
+### Ein kurzer Aussetzer bekommt einen zweiten Anlauf
+
+**Beim Umschalten zwischen Test und Bearbeiten meldet sich Roblox Studio
+kurz ab.** Der erste Aufruf danach lief ins Leere - und weil daraufhin
+sofort die Sperre fiel, sah eine Sekunde Unterbrechung aus wie ein
+geschlossenes Programm.
+
+**Die Bruecke kann warten** - beim Start tut sie das seit einer Weile,
+bis zu zwanzig Sekunden. Jetzt bekommt auch ein bestehender Kanal diese
+Geduld: Bruecke zu, Bruecke auf, Aufruf noch einmal. Ist das Programm
+wirklich weg, kommt derselbe Fehler zurueck und die Sperre greift wie
+bisher - nur belegt statt vermutet.
+
+## v2.9.13 - Bilder kommen an, und MCP-Werkzeuge lassen sich benutzen
+
+### „Liegt nicht mehr auf dem Rechner" - und lag die ganze Zeit da
+
+**Ein eingefuegtes Bild wurde angezeigt und kurz darauf durch einen
+Platzhalter ersetzt, der behauptete, die Datei sei weg.** Sie war es nie.
+Ein Bild-Tag laedt der Browser selbst und kann dabei keinen
+Anmelde-Header mitschicken; dafuer gibt es eine kurze Liste von Adressen,
+die den Schluessel auch aus der Adresszeile annehmen duerfen. Die Adresse
+des Bild-Registers - seit der letzten Fassung der Weg fuer JEDES Chatbild -
+stand nicht darin. Wer ein Passwort gesetzt hatte, bekam damit auf jedes
+Bild eine Absage. Das betraf auch die Bilder an Ergebnissen in Code und
+Work.
+
+**Und der Platzhalter hat geraten.** Er nannte jeden Ladefehler „liegt
+nicht mehr auf dem Rechner" - auch eine abgelaufene Anmeldung, auch eine
+abgerissene Verbindung. Jetzt wird erst beim Server nachgefragt, und zwar
+auf demselben Weg, der gescheitert ist. Danach steht dort, was wirklich
+los ist: Anmeldung, unbekannte Datei, oder tatsaechlich geloescht - dann
+mit Namen und Datum. Dazu ein zweiter Weg zur selben Datei, bevor
+ueberhaupt geklagt wird, und ein Knopf zum Nochmal-Versuchen.
+
+### MCP: das Modell sah nicht, was die Werkzeuge wirklich wollen
+
+**Werkzeuge, die ein fremdes Programm steuern, verlangen genaue
+Argumente - und Qwirbel hat die entscheidende Haelfte davon weggeworfen.**
+Zwei Stellen:
+
+Erstens ein Deckel: nur die ersten sechs Felder eines Werkzeugs kamen in
+die Beschreibung, danach fiel alles weg - auch PFLICHTfelder. Ein Aufruf,
+der dem Beispiel folgte, war unvollstaendig.
+
+Zweitens die erlaubten Werte. Steht im Werkzeug „nimm eines von Edit,
+Client, Server", stand in der Beschreibung nur „Text". Beim Schreiben von
+Skripten in Roblox Studio ist genau ein Wert erlaubt - das Modell konnte
+es nicht wissen, hat geraten, ist abgeprallt und hat danach nur noch
+gelesen statt gearbeitet.
+
+**Beides steht jetzt da.** Pflichtfelder fallen nie mehr heraus, und wo
+das Werkzeug erlaubte Werte kennt, stehen sie im Beispiel. Gemessen an
+einer Installation mit neun Servern und 97 Werkzeugen kostet das zwei
+Prozent mehr Text.
+
+### Nicht stundenlang derselbe Fehler
+
+**Scheitert ein Aufruf an den Argumenten, sagt die Antwort jetzt, woran.**
+Welches Pflichtfeld fehlt, welcher Wert nicht erlaubt ist und welcher es
+waere - aus der Beschreibung des Werkzeugs selbst, nicht geraten. Das
+passiert nur im Fehlerfall; ein Aufruf, der laeuft, bekommt keinen
+Kommentar.
+
+**Und derselbe Fehlschlag wird gezaehlt.** Wird ein Werkzeug ein zweites
+Mal mit exakt denselben Argumenten gerufen und scheitert wieder gleich,
+steht das in der Antwort. Geaenderte Argumente sind Arbeit und bekommen
+keinen Vorwurf. Gesperrt wird dabei nichts - die einzige Grenze fuer
+MCP-Werkzeuge bleibt die Modellgroesse in den Einstellungen.
+
+## v2.9.12 - Standarddienste: wer macht was, und wie kommt einer dazu
+
+### Ein Tab, der sagt, wer der Standard ist
+
+**Bisher stand die Frage „wer rechnet eigentlich?" an vier Stellen und
+nirgends ganz.** Der Motor fuer Sprachmodelle steckte in einer Einstellung
+namens `llm_engine`, die Wahl fuer Bilder in zwei anderen Werten, und wer
+sonst noch bereitsteht, sah man nur im Autostart-Tab. Unter Einstellungen →
+Standarddienste steht das jetzt zusammen: je Aufgabe der Standard, daneben
+das, was sonst mitlaeuft, und ein Punkt, der zeigt, was gerade wirklich
+antwortet.
+
+**Umgestellt wird dabei nichts Neues.** Wer hier den Standard aendert,
+schreibt in genau die Werte, die es vorher schon gab. Ein zweiter Schalter
+daneben waere beim naechsten Update auseinandergelaufen.
+
+**Und Klecks steht jetzt in beiden Rollen.** Er rechnet Sprache UND Bilder -
+in der ersten Fassung dieses Tabs tauchte er unter Bildern gar nicht auf,
+obwohl die Motorwahl ihn seit dem 26.08. ausdruecklich anbietet.
+
+### Der Plus-Knopf: eine Engine dazunehmen, die du gefunden hast
+
+**Neben jeder Aufgabe steht ein Plus.** Du sagst, was du gefunden hast -
+einen Namen oder einen Link -, und ein Modell sieht nach und schlaegt einen
+Steckbrief vor: Name, Adresse, Pruefweg, wofuer der Dienst gut ist. Nennst du
+eine Adresse, wird deren Text wirklich geholt und dem Modell vorgelegt. Du
+siehst den Vorschlag, kannst jedes Feld aendern, und erst dein Klick nimmt
+ihn auf.
+
+**Spricht der Dienst die OpenAI-API - und das tun die meisten -, ist er
+danach ein vollwertiger Anbieter.** Er steht im Modell-Menue und kann alles,
+was ein Anbieter kann: Chat, Aufgaben, Planung, Werkzeuge. Denselben Weg
+geht Colibri seit dem 24.08.; es wurde also kein zweiter LLM-Pfad gebaut.
+
+### Wo die Grenze liegt, und warum sie dort liegt
+
+**Qwirbel laedt dabei kein Programm herunter und fuehrt nichts aus, was ein
+Modell geschrieben hat.** Hinzugefuegt wird eine Beschreibung, keine
+Installation. Das ist keine Bequemlichkeitsgrenze: „kein ferngeladener Code"
+ist eine der Regeln, die in diesem Programm nicht abschaltbar sind, und ein
+Plus, das im Hintergrund ein fremdes Binary zieht und startet, waere genau
+der Weg, den der Web-Filter seit Wochen zumauert. Der Vorschlag sagt dir
+stattdessen, wie du die Engine installierst - und dieser Satz steht sichtbar
+in der Karte, nicht im Kleingedruckten.
+
+**Selbst hinzugefuegte Dienste startet Qwirbel nicht.** Sie werden benutzt,
+sobald sie laufen. Auch das steht dort, statt einen Schalter zu zeigen, der
+nichts tut.
+
+**Drei Stufen halten die Regel, nicht eine.** Das Modell wird angewiesen,
+keinen Befehl zu liefern; die Feldliste uebernimmt ohnehin nur bekannte
+Schluessel; und wenn trotzdem einer mitkam, steht das als Warnung da. Der
+letzte Punkt kam erst durch den eigenen Test dazu - bis dahin wurde ein
+untergeschobener Befehl zwar weggeworfen, aber stillschweigend. Weggeworfen
+und verschwiegen ist fast so schlecht wie gar nicht gemerkt.
+
+### Kleinigkeiten am Rande
+
+**Sicherungskopien fuhren im Paket mit.** Acht Dateien aus dem
+Klecks-Quellstand (885 KB toter Quelltext) lagen in jedem der sechs Pakete;
+der Filter dafuer traf nur eine Schreibweise statt die Sache. Beide Seiten
+benutzen jetzt dieselbe Liste.
+
+**Eine Fehlermeldung, die niemand sah.** Scheiterte die Engine-Recherche -
+etwa weil ein API-Guthaben leer ist -, meldete das Backend das sauber, und
+die Oberflaeche zeigte gar nichts: der Text landete in einer Karte weit
+unterhalb des Blickfelds. Er steht jetzt neben dem Knopf, den man gedrueckt
+hat.
+
+## v2.9.11 - Wo liegen eigentlich meine Modelle? Und wie schiebe ich sie um?
+
+### Die groesste Frage stand ueberhaupt nicht im Programm
+
+**Unter Einstellungen → Dateien & Speicher gab es eine Landkarte - aber nur
+von dem, was im Programmordner liegt.** Der mit Abstand groesste Posten
+stand nirgends: Ollamas Modell-Speicher, weil der in einer
+Umgebungsvariablen wohnt. Genauso wenig ComfyUIs Checkpoints, Colibris
+Experten-Dateien oder Kimis Zwischenspeicher. Wer wissen wollte, warum die
+Platte voll ist, fand die Antwort im Windows-Explorer statt in Qwirbel. Und
+aendern liess sich gar nichts.
+
+**Jetzt steht dort jeder Ordner, den Qwirbel anlegt oder benutzt** - mit
+seinem Laufwerk, dem freien Platz darauf und der gemessenen Groesse. Daneben
+steht, wer den Ordner liest und ob er eingestellt oder nur die Vorgabe ist.
+Eine Zeile weiter unten sagt eine Ampel, ob gerade ein Programm darauf
+zugreift; das wird nachgesehen, nicht geraten.
+
+### Umziehen mit einer Frage vorher, nicht einer Entschuldigung hinterher
+
+**Jeder dieser Ordner laesst sich jetzt aendern - und Qwirbel fragt erst,
+was mit den Dateien passieren soll.** Drei Wege stehen nebeneinander:
+mitnehmen und am alten Ort loeschen, mitnehmen und den alten Ort als
+Sicherung behalten, oder nur den Ordner umstellen und nichts anfassen. Die
+Partition waehlst du per Klick aus der Liste deiner Laufwerke.
+
+**Vorher wird gerechnet, nicht gehofft.** Qwirbel misst den Ordner
+vollstaendig, vergleicht mit dem freien Platz am Ziel und sperrt, was
+schiefgehen wuerde - ein Ziel im Quellordner, derselbe Ordner, ein Pfad ohne
+Laufwerk, zu wenig Platz. Verschoben wird immer in dieser Reihenfolge:
+kopieren, jede einzelne Datei am Ziel gegen das Original pruefen, und erst
+danach den alten Ort raeumen. Bricht etwas ab, kostet das Plattenplatz -
+aber nie Daten. Gleichnamige Dateien am Ziel werden nicht ueberschrieben;
+sie bleiben stehen, die Quelldatei auch, und beides steht danach im Bericht.
+
+### Ein Fund, der Ollama lautlos modell-los gemacht haette
+
+**Ordner koennen ineinander liegen.** Auf dem Entwicklungsrechner zeigte
+`models_dir` auf `E:\Qwirbel models` und Ollamas Speicher auf `E:\Qwirbel
+models\ollama` - der eine steckt im anderen. Wer den aeusseren umgezogen
+haette, haette Ollamas Modelle mitgenommen, waehrend die Einstellung von
+Ollama weiter auf den alten, jetzt leeren Ordner zeigte. Ohne Fehlermeldung,
+einfach keine Modelle mehr. Qwirbel erkennt solche Verschachtelungen jetzt,
+sagt sie im Menue an und stellt den inneren Ordner beim Umzug mit um.
+
+### Das Setup hat etwas versprochen, was es nie getan hat
+
+**Schritt 3 der Installation sagt woertlich: "Setzt OLLAMA_MODELS und traegt
+den Pfad in Qwirbels Einstellungen ein."** Der zweite Halbsatz stimmte
+nicht - eingetragen wurde nie etwas, mit der Begruendung, das lese ohnehin
+niemand. Es liest aber jemand: genau dieser Wert entscheidet, wo Qwirbel
+nach deinen eigenen Modell-Dateien sucht. Fehlt er, sind sie unsichtbar.
+Das Setup loest das Versprechen jetzt ein und sagt ausserdem dazu, was es
+NICHT fragt: ComfyUI und Klecks bringen eigene Ordner mit, und die stellst
+du spaeter im Programm um.
+
+### Und noch eine Falle daneben
+
+**Qwirbel sucht Modelle auch in dem Ordner, der neben Ollamas Speicher
+liegt.** Wer im Setup einen Ordner direkt auf einer Platte waehlt - etwa
+`E:\KI-Modelle` - bekam als Nachbarn das ganze Laufwerk `E:\`. Bei jedem
+Modell-Scan lief Qwirbel dann einmal durch die komplette Platte. Kein
+Fehler, nur zaeh. Der Nachbar ist jetzt nie mehr ein Laufwerk.
+
+## v2.9.10 - Deine Bilder sind wieder da. Und ein Aussetzer wirft ihn nicht mehr um.
+
+### Die Bilder waren nie weg - der Server gab sie nur nicht heraus
+
+**Gemessen ueber 138 Chatdateien: 293 Bildverweise, 283 Dateien lagen noch
+auf der Platte, und herausgegeben wurde keine einzige.** Es gab drei
+verschiedene Erlaubnislisten, und in keiner standen ausgerechnet die beiden
+Ordner, in die Qwirbel selbst schreibt - Bildschirmfotos und Eingefuegtes.
+Dazu ein Pfad, der beim Ausliefern kaputtging, und generierte Bilder, die am
+laufenden ComfyUI hingen. An keinem Bild hing eine Fehlerbehandlung, deshalb
+blieb das Bruchsymbol des Browsers stehen.
+
+**Jetzt entscheidet ein Bild-Register, nicht mehr die Ordnerliste.** Was
+Qwirbel gezeigt oder erzeugt hat, bekommt eine Kennung - und die steht in
+der Adresse statt eines Pfades. Zieht eine Datei um, findet er sie am Namen
+wieder und merkt sich den neuen Ort. Beim Start werden alle Chats
+nachgetragen, auch die archivierten, damit Unterhaltungen von vor Wochen
+ihre Bilder zurueckbekommen. Fehlt eine Datei wirklich, steht dort ein
+Platzhalter mit Namen und Datum statt eines kaputten Symbols. Nach dem Umbau
+gemessen: 146 von 153 Dateien kommen heraus, sieben sind wirklich geloescht.
+
+### Uebersetzung: der Regler und das Menue blieben deutsch
+
+**Zwei Ursachen, beide unsichtbar im Programm.** Die Muehe-Tabellen wurden
+beim Laden der Datei ausgewertet - da war das Woerterbuch noch nicht geholt,
+und der deutsche Text fror fuer immer ein. Und acht Stellen hatten eine
+eigene kleine Uebersetzung, die das Woerterbuch gar nicht kannte; deshalb
+blieben der Mehr-Knopf, die Gruppen-Ueberschriften und der Hinweis unten
+deutsch, obwohl alles andere polnisch war. Beides ist behoben, der Sammler
+findet jetzt 2.693 statt 2.504 Texte, und eine Pruefung wacht darueber, dass
+so etwas nicht wiederkommt. Wer schon eine Sprache angelegt hat, laesst sie
+einmal weiteruebersetzen.
+
+### Ein Netz-Aussetzer beendet keinen Lauf mehr
+
+**Bisher gab es keinen einzigen Wiederholversuch.** Ein Aussetzer von einer
+Sekunde hat einen Auftrag beendet, der schon vier Schritte gearbeitet hatte -
+und weil im Chat deine Modellwahl gilt, stand dort nur ein Anbieter, nach dem
+ersten Fehler war sofort Schluss. Jetzt wird bei Verbindungsproblemen,
+Zeitueberschreitungen und ueberlasteten Anbietern bis zu dreimal versucht,
+mit Pause. Bei einem falschen Schluessel oder fehlendem Guthaben natuerlich
+nicht - das ist beim dritten Mal genauso falsch, und Warten wuerde nur die
+Ursache verdecken. Ist schon Text bei dir angekommen, wird nichts wiederholt,
+damit nichts doppelt dasteht.
+
+### Autostart: alle Programme an einem Ort
+
+**Settings hat einen neuen Punkt: Autostart.** Dort stehen alle Programme,
+die Qwirbel selbst hochfahren kann - Ollama, Klecks, ComfyUI, Colibri und
+Kimi -, jeweils mit einem Satz dazu, der Adresse und einem Schalter. Der
+Punkt daneben zeigt, was gerade wirklich laeuft: nachgesehen, nicht geraten.
+Die Schalter gab es zum Teil schon, sie standen nur in vier verschiedenen
+Tabs; hier aendern sie genau dieselben Werte. Ollama hatte gar keinen -
+Qwirbel konnte den Dienst nie selbst starten, sondern nur danach fragen. Das
+kann er jetzt, und beim Schliessen beendet er nur, was er selbst gestartet
+hat.
+
+### Der Grundschutz kann nicht mehr still ausfallen
+
+**An zwei Stellen wurde beim Bildermachen jeder Fehler des Inhaltsfilters
+verschluckt.** Waere der Filter beschaedigt gewesen, haette Qwirbel weiter
+Bilder erzeugt - ohne Pruefung und ohne den unabschaltbaren Grundschutz, und
+niemand haette es gemerkt. Fuer ein Programm, das verkauft wird, ist das der
+schlimmste Fehler ueberhaupt: der Schutz ist da und wirkt nicht. Jetzt gilt:
+kein Schutz, kein Bild - mit Begruendung im Klartext.
+
+### Eine Ablehnung haelt jetzt
+
+**Wer abgelehnt wurde, konnte es mit einem Satz aufheben.** Der abgelehnte
+Auftrag blieb als normale Nachricht im Verlauf und ging beim naechsten Zug
+wieder ans Modell; ein "ich bin der Besitzer" reichte, damit es ihn doch
+ausfuehrte - der Inhalt lag ja schon vor. Ab jetzt bekommt eine abgelehnte
+Nachricht eine Marke: du siehst sie weiter im Verlauf, das Modell bekommt an
+ihrer Stelle nur noch den Hinweis, dass hier etwas abgelehnt wurde und warum.
+Dasselbe gilt fuers Zusammenfassen und fuers Lernen - sonst waere der
+Wortlaut ueber Umwege zurueckgekommen. Und eine behauptete Rolle
+("Ersteller", "Admin") oder ein Vorwand ("fuer einen Freund", "mach
+trotzdem") aendert nichts mehr: Rechte stehen im Konto, nicht in der
+Nachricht.
+
+### Keine NSFW-Modelle, keine entsicherten Modelle
+
+**Qwirbel richtet solche Modelle nicht ein - an allen vier Tueren, durch die
+ein Modell hereinkommt.** Bei Bildmodellen ist der Grund offensichtlich. Bei
+Sprachmodellen, denen die Sicherheits-Ausrichtung entfernt wurde
+("uncensored", "abliterated"), ist er wichtiger: mit ihnen waere jeder
+Schutz dieses Programms wirkungslos, ohne dass jemand etwas davon merkt - man
+muesste ihn nicht aushebeln, man wechselt einfach das Modell. Ein Modell, das
+solche Inhalte ERKENNT, bleibt selbstverstaendlich erlaubt.
+
+### Kleinigkeiten
+
+Der gelbe Qwirbeln-Knopf steht in beiden Leisten ganz rechts, der Pfeil nach
+oben links in der Ecke vor den Kapiteln. Ein Anbieterwechsel im laufenden
+Auftrag steht jetzt im Protokoll, statt lautlos zu passieren. Und die
+Recherche sagt Bescheid, wenn ihr die Ethik-Leitplanke fehlt, statt still
+ohne sie zu arbeiten.
+
 ## v2.9.9 - Er hoert nicht mehr still auf. Und jeder baut sich seinen Tab.
 
 ### Eigene Tabs: der Plus-Knopf links
