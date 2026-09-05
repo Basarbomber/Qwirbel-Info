@@ -1,3 +1,67 @@
+## v2.9.15 - Die Installation wartete auf eine Taste, die niemand druecken konnte
+
+### Zwei Stunden bei einer Sekunde Rechenzeit
+
+**Der Setup-Test in einem leeren Ordner hat einen Fehler gefunden, der
+die Installation beim Kunden fuer immer anhalten konnte** - und zwar
+NACHDEM alles fertig war.
+
+Gemessen: das Paket war entpackt, die Python-Umgebung stand, 277 Pakete
+waren installiert - Kern, Diktat, Stimme, Hotword, Bildschirm-Sehen,
+Downloader, alles. Und danach passierte nichts mehr. Der letzte Prozess
+stand knapp zwei Stunden lang bei einer Sekunde Rechenzeit an der
+letzten Zeile des Einrichtungs-Skripts:
+
+    [Enter] zum Schliessen ...
+
+Diese Zeile ist fuer den Doppelklick gedacht: sie haelt das Fenster
+offen, damit man die Meldungen noch lesen kann. Wird das Setup aber vom
+Installationsprogramm gestartet, gibt es kein Fenster und keine Tastatur
+- und die Frage bleibt unbeantwortet. Der Nutzer saehe „Installation
+laeuft ..." und wuerde ewig warten, obwohl in Wahrheit schon alles
+fertig installiert war. Dasselbe galt fuer zwei Wartezeilen im
+Fehlerfall eine Stufe hoeher.
+
+**Jetzt wird vorher gefragt, ob ueberhaupt jemand davorsitzt.** Haengt
+eine echte Konsole dran (Doppelklick), bleibt das Fenster offen wie
+bisher. Kommt der Aufruf aus dem Installationsprogramm, laeuft es
+durch.
+
+### Und zwei Dinge, die beim selben Test aufgefallen sind
+
+**Das Einrichtungs-Skript wird jetzt mit vollem Pfad aufgerufen.** Es
+wurde bisher nur mit seinem Namen gestartet - das setzt voraus, dass
+Windows im aktuellen Ordner sucht. Eine gaengige Haertungs-Einstellung
+in Firmen schaltet genau das ab; dann waere die Datei nicht gefunden
+worden, obwohl sie danebenliegt, und die Installation haette „fertig"
+gemeldet, ohne eine Python-Umgebung angelegt zu haben.
+
+**Und wenn sich das Setup-Fenster gar nicht oeffnen laesst, kommt eine
+Meldung.** Bisher fiel das Setup in diesem Fall auf einen Textmodus
+zurueck, den es in einem Fenster-Programm nicht gibt - der Doppelklick
+war ein lautloses Nichts. Jetzt sagt ein Meldefenster, was los ist und
+wie es trotzdem geht.
+
+### Bibliotheken: „Modell hinzufuegen" mit eigener Recherche
+
+**Unter der Modellbibliothek und der Generationsbibliothek steht jetzt
+ein Feld, in das du schreibst, was dir fehlt.** Qwirbel sucht dazu ein
+passendes Modell; nennst du eine Adresse, liest er die Seite mit. Was
+dabei herauskommt, ist ein Vorschlag: Repo, Name, Rolle, Ordner - du
+siehst ihn, kannst jedes Feld aendern, und erst dein Klick nimmt ihn
+auf.
+
+**Dazwischen schlaegt Qwirbel selbst nach.** Ein Sprachmodell nennt
+gelegentlich ein Repo, das es gar nicht gibt - plausibel geschrieben und
+trotzdem erfunden. Deshalb wird vor dem Aufnehmen bei Hugging Face
+geprueft, ob es das Repo wirklich gibt und ob die versprochenen Dateien
+darin liegen. Steht dort nichts, wird nichts aufgenommen.
+
+**Die Regel „nur aus geprueften Quellen laden" bleibt.** Sie wird nicht
+aufgeweicht, sondern waechst um genau den einen Eintrag, den du
+bestaetigt hast - und den du unten in derselben Liste auch wieder
+entfernen kannst.
+
 ## v2.9.14 - Ein Aussetzer legt nicht mehr die ganze Aufgabe still
 
 Diese Fassung kommt aus einem echten Lauf: ein Modell ueber die
