@@ -1,3 +1,45 @@
+## v2.9.16 - Was im Paket nichts zu suchen hat, und der Ordner, der nie aufgeraeumt wurde
+
+### Kassensturz im Paket
+
+**Im Paket lagen Dateien, die niemanden ausser der Werkstatt etwas
+angehen.** Nachgezaehlt am Windows-Paket: 782 Dateien, darunter sechs
+interne Berichte (Pruefungen, Roadmap, Funktionsstand), Oberflaechen-
+Entwuerfe und eine 1,5-MB-Funktionsliste als Tabelle. Dazu lagen Docker
+und Helm samt Firmen-Einrichter auch in der EINZELPLATZ-Ausgabe - fuer
+jemanden, der Qwirbel auf seinem eigenen Rechner benutzt, sind das
+einundzwanzig Dateien Rauschen und eine Einladung, den falschen Starter
+zu druecken.
+
+**Und je System das falsche Werkzeug.** Das mitgelieferte Klecks brachte
+seine Entwickler-Skripte mit: im Linux-Paket lagen zwanzig .bat-Dateien -
+keine davon dort ausfuehrbar.
+
+Jetzt sind es 744 statt 782 Dateien; die Server-Ausgabe behaelt Docker und
+Helm, die Einzelplatz-Ausgabe nicht.
+
+**Und der Filter ist eine Regel, keine Namensliste.** Die alte Liste
+zaehlte einzelne Dateien auf - deshalb fuhren die Berichte vom 3.
+September mit: beim letzten Nachtragen gab es sie noch nicht. Jetzt gilt
+"Berichte im Hauptordner gehoeren der Werkstatt", und das altert nicht
+mit.
+
+### Der Sicherungsordner wuchs ohne Grenze
+
+**Bei jedem Update legt Qwirbel drei Sicherungen an** - Daten, Programm-
+code und einen kompletten Stand. Die ersten beiden werden seit jeher
+aufgeraeumt (die letzten sieben bleiben). Der komplette Stand nicht: er
+wiegt rund 700 MB und kam bei jedem Update dazu. Fuer immer.
+
+Gemessen an einer gewachsenen Installation: **37 Voll-Sicherungen, 25
+Gigabyte** in einem Ordner, von dem niemand wusste. Ab jetzt bleiben die
+fuenf neuesten - das sind gut zwei Wochen Sicherheit und dreieinhalb
+Gigabyte statt fuenfundzwanzig.
+
+**Aufraeumen gehoert zum Schreiben.** Wer eine Datei anlegt, die bei jedem
+Lauf wiederkommt, muss auch sagen, wie viele davon bleiben - sonst merkt
+es niemand, bis die Platte voll ist.
+
 ## v2.9.15 - Die Installation wartete auf eine Taste, die niemand druecken konnte
 
 ### Zwei Stunden bei einer Sekunde Rechenzeit
