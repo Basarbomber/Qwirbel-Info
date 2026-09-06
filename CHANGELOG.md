@@ -28,6 +28,58 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.17 - Grosse Modelle, und alle Funktionen auf allen Systemen
+
+### Ein geteiltes Modell ist ein Modell
+
+Die groessten Sprachmodelle liegen bei Hugging Face nicht als eine Datei
+vor, sondern in mehreren Teilen - eine einzelne Datei darf dort nicht
+beliebig gross sein. Qwirbel hat diese Teile bisher als einzelne Modelle
+behandelt: vier Zeilen in der Liste, und die erste sah mit zehn Megabyte
+aus wie ein winziges Modell, obwohl sie der Anfang von hundert Gigabyte
+ist.
+
+Jetzt steht dort ein Eintrag: der Name, die Gesamtgroesse und die Zahl
+der Teile. Fehlt einer, steht auch das da - sonst faellt es erst beim
+Laden auf. Geoeffnet wird ueber den ersten Teil; die anderen findet
+llama.cpp von allein, sie muessen nur danebenliegen.
+
+### Und man kann sie jetzt auch laden
+
+In der Modellbibliothek fehlten genau diese Modelle. Der Grund war
+nachvollziehbar: Ollamas eingebauter Weg kann ein geteiltes Modell nicht
+als eine Einheit ziehen. Nur heisst das „anders laden", nicht „gibt es
+nicht" - und ausgerechnet die staerksten Modelle liegen so vor.
+
+Sie stehen jetzt in der Liste, mit Gesamtgroesse und Teil-Zahl, und ein
+Knopf holt alle Teile in deinen Modellordner. Geladen wird dabei ueber
+denselben Weg wie in der Generationsbibliothek, und weiterhin nur aus den
+geprueften Repos der Bibliothek.
+
+### Zubehoer ist kein Modell
+
+In denselben Repos liegen Dateien, die keine eigenstaendigen Modelle sind:
+Bild-Encoder und Entwurfs-Modelle, die ein grosses Modell beschleunigen.
+Sie standen bisher als eigene Zeilen zwischen den Quantisierungen - „BF16,
+0,9 GB" direkt neben einem 104-GB-Modell. Wer etwas sucht, das auf seine
+Karte passt, griff genau daneben und lud einen Baustein, der ohne sein
+Modell nichts tut.
+
+Sie stehen jetzt getrennt darunter, jedes mit einem Satz, was es ist.
+
+### Diktat, Stimme und Sehen auch auf Linux und macOS
+
+Das Windows-Setup installiert seit der letzten Fassung die Pakete jeder
+einzelnen Funktion. Die Einrichtungs-Skripte fuer Linux und macOS taten
+das nicht - sie holten nur den Kern. Ein Kunde auf diesen Systemen bekam
+ein Qwirbel, das startet, aber nicht diktiert, nicht spricht, nicht
+zuhoert und nicht auf den Bildschirm sehen kann. Ohne eine einzige
+Fehlermeldung.
+
+Beide holen die Funktions-Pakete jetzt nach, aus derselben Liste wie
+Windows. Sie steht weiterhin an genau einer Stelle im Programm - drei
+Kopien waeren beim naechsten neuen Feature auseinandergelaufen.
+
 ## v2.9.16 - Aufgeraeumte Pakete, begrenzte Sicherungen
 
 ### Im Paket steht nur noch, was zum Programm gehoert
