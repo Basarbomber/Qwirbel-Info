@@ -1,201 +1,199 @@
-## v2.9.16 - Was im Paket nichts zu suchen hat, und der Ordner, der nie aufgeraeumt wurde
+# Qwirbel - Aenderungen
 
-### Kassensturz im Paket
+## Was du einstellen kannst
 
-**Im Paket lagen Dateien, die niemanden ausser der Werkstatt etwas
-angehen.** Nachgezaehlt am Windows-Paket: 782 Dateien, darunter sechs
-interne Berichte (Pruefungen, Roadmap, Funktionsstand), Oberflaechen-
-Entwuerfe und eine 1,5-MB-Funktionsliste als Tabelle. Dazu lagen Docker
-und Helm samt Firmen-Einrichter auch in der EINZELPLATZ-Ausgabe - fuer
-jemanden, der Qwirbel auf seinem eigenen Rechner benutzt, sind das
-einundzwanzig Dateien Rauschen und eine Einladung, den falschen Starter
-zu druecken.
+Diese Liste steht oben, weil sie sagt, was das Programm heute ist - die
+Eintraege darunter sagen, wann es dazugekommen ist.
 
-**Und je System das falsche Werkzeug.** Das mitgelieferte Klecks brachte
-seine Entwickler-Skripte mit: im Linux-Paket lagen zwanzig .bat-Dateien -
-keine davon dort ausfuehrbar.
+- **Eigene Tabs.** Du beschreibst, was ein Tab koennen soll, und dein
+  Modell baut ihn: Textfelder, die bleiben, Listen zum Abhaken, Knoepfe,
+  die mit deinen Eintraegen arbeiten. Den Bauplan siehst du vorher.
+- **Standarddienste.** Je Aufgabe - Sprache, Bilder - steht an einer
+  Stelle, wer sie uebernimmt, was sonst bereitsteht und was gerade
+  wirklich antwortet. Ueber das Plus nimmst du eine gefundene Engine
+  dazu; spricht sie die OpenAI-Schnittstelle, ist sie danach ein
+  vollwertiger Anbieter.
+- **Autostart.** Alle Programme, die mit Qwirbel hochfahren sollen, an
+  einem Ort - einzeln an- und abschaltbar.
+- **Modell- und Generationsbibliothek.** Chat-Modelle und die Modelle je
+  Generations-Ablauf, mit allen Varianten und einer ehrlichen Einordnung,
+  was auf deine Karte passt. Fehlt eins, laesst du es suchen und
+  bestaetigst den Vorschlag.
+- **Speicherorte.** Auf welcher Platte Modelle, Downloads und Daten
+  liegen - aenderbar, mit der Frage, ob das Vorhandene mit umziehen soll.
+- **Werkzeuge fremder Programme (MCP).** Zuschaltbar je Aufgabe, mit
+  einer Untergrenze fuer die Modellgroesse als einziger Sperre.
+- **Modellwahl oben rechts.** Sie gilt im ganzen Programm - Chat,
+  Aufgaben, Planung, Werkzeuge.
 
-Jetzt sind es 744 statt 782 Dateien; die Server-Ausgabe behaelt Docker und
-Helm, die Einzelplatz-Ausgabe nicht.
+---
 
-**Und der Filter ist eine Regel, keine Namensliste.** Die alte Liste
-zaehlte einzelne Dateien auf - deshalb fuhren die Berichte vom 3.
-September mit: beim letzten Nachtragen gab es sie noch nicht. Jetzt gilt
-"Berichte im Hauptordner gehoeren der Werkstatt", und das altert nicht
-mit.
+## v2.9.16 - Aufgeraeumte Pakete, begrenzte Sicherungen
 
-### Der Sicherungsordner wuchs ohne Grenze
+### Im Paket steht nur noch, was zum Programm gehoert
 
-**Bei jedem Update legt Qwirbel drei Sicherungen an** - Daten, Programm-
-code und einen kompletten Stand. Die ersten beiden werden seit jeher
-aufgeraeumt (die letzten sieben bleiben). Der komplette Stand nicht: er
-wiegt rund 700 MB und kam bei jedem Update dazu. Fuer immer.
+Beim Kassensturz im Windows-Paket kamen 38 Dateien heraus, die dort nichts
+zu suchen hatten: interne Entwicklungsberichte, Oberflaechen-Entwuerfe und
+eine Funktionsliste als Tabelle. Dazu lagen die Server-Bausteine - Docker,
+Helm und der Firmen-Einrichter - auch in der Einzelplatz-Ausgabe, obwohl
+sie dort niemand braucht.
 
-Gemessen an einer gewachsenen Installation: **37 Voll-Sicherungen, 25
-Gigabyte** in einem Ordner, von dem niemand wusste. Ab jetzt bleiben die
-fuenf neuesten - das sind gut zwei Wochen Sicherheit und dreieinhalb
-Gigabyte statt fuenfundzwanzig.
+Ausserdem gilt jetzt je System, was dort auch laeuft. Das mitgelieferte
+Klecks brachte bisher seine Entwickler-Skripte mit; im Linux-Paket lagen
+dadurch zwanzig Windows-Batchdateien.
 
-**Aufraeumen gehoert zum Schreiben.** Wer eine Datei anlegt, die bei jedem
-Lauf wiederkommt, muss auch sagen, wie viele davon bleiben - sonst merkt
-es niemand, bis die Platte voll ist.
+Die Pakete sind dadurch von 15,5 auf 13,9 MB geschrumpft. Die
+Server-Ausgabe behaelt Docker und Helm, die Einzelplatz-Ausgabe nicht.
 
-## v2.9.15 - Die Installation wartete auf eine Taste, die niemand druecken konnte
+Der Filter dahinter ist eine Regel, keine Namensliste: Berichte im
+Hauptordner gehoeren zur Entwicklung und nicht ins Paket. Eine Liste
+einzelner Dateinamen war der Grund, warum die Berichte der letzten Woche
+ueberhaupt mitfahren konnten - sie war schlicht aelter als sie.
 
-### Zwei Stunden bei einer Sekunde Rechenzeit
+### Der Sicherungsordner hat jetzt eine Grenze
 
-**Der Setup-Test in einem leeren Ordner hat einen Fehler gefunden, der
-die Installation beim Kunden fuer immer anhalten konnte** - und zwar
-NACHDEM alles fertig war.
+Vor jedem Update legt Qwirbel drei Sicherungen an: Daten, Programmcode und
+einen vollstaendigen Stand. Die ersten beiden wurden immer schon begrenzt,
+der vollstaendige Stand nicht - und der wiegt rund 700 MB.
 
-Gemessen: das Paket war entpackt, die Python-Umgebung stand, 277 Pakete
-waren installiert - Kern, Diktat, Stimme, Hotword, Bildschirm-Sehen,
-Downloader, alles. Und danach passierte nichts mehr. Der letzte Prozess
-stand knapp zwei Stunden lang bei einer Sekunde Rechenzeit an der
-letzten Zeile des Einrichtungs-Skripts:
+Auf einer laenger gewachsenen Installation waren daraus 37 Staende mit 25
+Gigabyte geworden. Es bleiben jetzt die fuenf neuesten: gut zwei Wochen
+Sicherheit in dreieinhalb statt fuenfundzwanzig Gigabyte.
 
-    [Enter] zum Schliessen ...
+Wer eine Datei anlegt, die bei jedem Lauf wiederkommt, muss auch sagen,
+wie viele davon bleiben. Sonst faellt es erst auf, wenn die Platte voll
+ist.
 
-Diese Zeile ist fuer den Doppelklick gedacht: sie haelt das Fenster
-offen, damit man die Meldungen noch lesen kann. Wird das Setup aber vom
-Installationsprogramm gestartet, gibt es kein Fenster und keine Tastatur
-- und die Frage bleibt unbeantwortet. Der Nutzer saehe „Installation
-laeuft ..." und wuerde ewig warten, obwohl in Wahrheit schon alles
-fertig installiert war. Dasselbe galt fuer zwei Wartezeilen im
-Fehlerfall eine Stufe hoeher.
 
-**Jetzt wird vorher gefragt, ob ueberhaupt jemand davorsitzt.** Haengt
-eine echte Konsole dran (Doppelklick), bleibt das Fenster offen wie
-bisher. Kommt der Aufruf aus dem Installationsprogramm, laeuft es
-durch.
+## v2.9.15 - Die Installation laeuft ohne Aufsicht durch
 
-### Und zwei Dinge, die beim selben Test aufgefallen sind
+### Sie wartete auf einen Tastendruck, den es nicht geben konnte
 
-**Das Einrichtungs-Skript wird jetzt mit vollem Pfad aufgerufen.** Es
-wurde bisher nur mit seinem Namen gestartet - das setzt voraus, dass
-Windows im aktuellen Ordner sucht. Eine gaengige Haertungs-Einstellung
-in Firmen schaltet genau das ab; dann waere die Datei nicht gefunden
-worden, obwohl sie danebenliegt, und die Installation haette „fertig"
-gemeldet, ohne eine Python-Umgebung angelegt zu haben.
+Das Einrichtungs-Skript endete mit „[Enter] zum Schliessen". Das ist
+sinnvoll, wenn jemand es doppelklickt und die Meldungen noch lesen
+moechte. Startet das Installationsprogramm es aber selbst, gibt es weder
+Fenster noch Tastatur - und die Frage blieb unbeantwortet stehen.
 
-**Und wenn sich das Setup-Fenster gar nicht oeffnen laesst, kommt eine
-Meldung.** Bisher fiel das Setup in diesem Fall auf einen Textmodus
-zurueck, den es in einem Fenster-Programm nicht gibt - der Doppelklick
-war ein lautloses Nichts. Jetzt sagt ein Meldefenster, was los ist und
-wie es trotzdem geht.
+Die Folge war der unangenehmste aller Faelle: die Installation war
+vollstaendig fertig - Python-Umgebung, Kern, Diktat, Stimme, Hotword,
+Bildschirm-Sehen, Downloader - und der Fortschritt blieb trotzdem bei
+„Installation laeuft ..." stehen. Ab jetzt wird vorher geprueft, ob
+ueberhaupt jemand davorsitzt. Beim Doppelklick bleibt das Fenster offen
+wie bisher.
 
-### Bibliotheken: „Modell hinzufuegen" mit eigener Recherche
+### Zwei weitere Stellen aus derselben Pruefung
 
-**Unter der Modellbibliothek und der Generationsbibliothek steht jetzt
-ein Feld, in das du schreibst, was dir fehlt.** Qwirbel sucht dazu ein
-passendes Modell; nennst du eine Adresse, liest er die Seite mit. Was
-dabei herauskommt, ist ein Vorschlag: Repo, Name, Rolle, Ordner - du
-siehst ihn, kannst jedes Feld aendern, und erst dein Klick nimmt ihn
-auf.
+Das Einrichtungs-Skript wird jetzt mit vollem Pfad aufgerufen. Bisher
+genuegte sein Name - das setzt voraus, dass Windows im aktuellen Ordner
+sucht. Eine in Firmen uebliche Haertung schaltet genau das ab; die Datei
+waere dann nicht gefunden worden, obwohl sie danebenliegt, und die
+Installation haette „fertig" gemeldet, ohne eine Python-Umgebung
+angelegt zu haben.
 
-**Dazwischen schlaegt Qwirbel selbst nach.** Ein Sprachmodell nennt
-gelegentlich ein Repo, das es gar nicht gibt - plausibel geschrieben und
-trotzdem erfunden. Deshalb wird vor dem Aufnehmen bei Hugging Face
-geprueft, ob es das Repo wirklich gibt und ob die versprochenen Dateien
-darin liegen. Steht dort nichts, wird nichts aufgenommen.
+Und laesst sich das Setup-Fenster auf einem Rechner gar nicht oeffnen,
+kommt jetzt eine Meldung mit dem Grund und dem Weg ueber die
+Eingabeaufforderung. Vorher war der Doppelklick in diesem Fall ein
+lautloses Nichts.
 
-**Die Regel „nur aus geprueften Quellen laden" bleibt.** Sie wird nicht
-aufgeweicht, sondern waechst um genau den einen Eintrag, den du
-bestaetigt hast - und den du unten in derselben Liste auch wieder
-entfernen kannst.
+### Bibliotheken: Modelle finden lassen statt suchen
 
-## v2.9.14 - Ein Aussetzer legt nicht mehr die ganze Aufgabe still
+Unter der Modellbibliothek und der Generationsbibliothek steht jetzt ein
+Eingabefeld. Du beschreibst, was dir fehlt; Qwirbel sucht ein passendes
+Modell und schlaegt es vor - mit Repo, Name, und bei Generations-Modellen
+auch mit Rolle und Zielordner. Nennst du eine Adresse, wird die Seite
+mitgelesen. Jedes Feld ist aenderbar, aufgenommen wird erst mit deinem
+Klick.
 
-Diese Fassung kommt aus einem echten Lauf: ein Modell ueber die
-Programmierschnittstelle, im Code-Bereich, mit Roblox Studio ueber MCP.
-Vier Werkzeug-Aufrufe liefen sauber - Instanzen auflisten, Zustand
-abfragen, den laufenden Test stoppen, Skripte durchsuchen. Danach ging
-Studio verloren.
+Dazwischen prueft Qwirbel selbst nach: Gibt es das Repo wirklich, und
+liegen die versprochenen Dateien darin? Sprachmodelle nennen gelegentlich
+Repos, die es nicht gibt - plausibel geschrieben und trotzdem erfunden.
+Faellt die Pruefung durch, wird nichts aufgenommen.
 
-### Die Sperre ging nie wieder auf
+Der Grundsatz bleibt: geladen wird nur aus geprueften Quellen. Die Liste
+waechst um genau den einen Eintrag, den du bestaetigt hast, und du kannst
+ihn an derselben Stelle wieder entfernen.
 
-**Wenn das Zielprogramm nicht mehr an der Bruecke haengt, setzt Qwirbel
-eine Sperre** - bestehende Dateien dieses Ziels sind dann tabu, und der
-Nutzer bekommt einen Satz, was er einschalten muss. Das ist richtig so:
-blind etwas umschreiben ist schlimmer als anzuhalten.
 
-**Nur ging die Sperre nie wieder auf.** Sie wurde an genau einer Stelle
-entfernt - wenn das Modell einen NEUEN Server dazuholt. Kam das Programm
-von selbst zurueck, blieb sie stehen, und die Aufgabe war tot: im
-gemessenen Lauf drei Minuten lang dieselbe Notiz, kein einziger
-Werkzeug-Aufruf mehr. Jetzt hebt ein gelungener Aufruf an denselben
-Server die Sperre auf - der Beleg ist der Aufruf selbst, kein
-Versprechen, und ein anderer Server zaehlt dafuer nicht.
+## v2.9.14 - Werkzeug-Verbindungen erholen sich von Aussetzern
 
-### Ein kurzer Aussetzer bekommt einen zweiten Anlauf
+### Ein kurzer Abriss legte bisher die ganze Aufgabe still
 
-**Beim Umschalten zwischen Test und Bearbeiten meldet sich Roblox Studio
-kurz ab.** Der erste Aufruf danach lief ins Leere - und weil daraufhin
-sofort die Sperre fiel, sah eine Sekunde Unterbrechung aus wie ein
-geschlossenes Programm.
+Haengt ein Zielprogramm nicht mehr an der Werkzeug-Bruecke, sperrt
+Qwirbel den Zugriff auf dessen Dateien und sagt, was einzuschalten ist.
+Das ist richtig so: blind etwas umschreiben waere schlimmer als
+anzuhalten.
 
-**Die Bruecke kann warten** - beim Start tut sie das seit einer Weile,
-bis zu zwanzig Sekunden. Jetzt bekommt auch ein bestehender Kanal diese
-Geduld: Bruecke zu, Bruecke auf, Aufruf noch einmal. Ist das Programm
-wirklich weg, kommt derselbe Fehler zurueck und die Sperre greift wie
-bisher - nur belegt statt vermutet.
+Diese Sperre ging bisher nur an einer einzigen Stelle wieder auf. Kam das
+Programm von selbst zurueck, blieb sie stehen - und die Aufgabe lief ins
+Leere, obwohl laengst wieder alles bereit war. Jetzt hebt ein
+gelungener Aufruf an denselben Server die Sperre auf. Der Beleg ist der
+Aufruf selbst, nicht die Zusicherung eines Modells; ein anderer Server
+zaehlt dafuer nicht.
 
-## v2.9.13 - Bilder kommen an, und MCP-Werkzeuge lassen sich benutzen
+### Und die Bruecke bekommt einen zweiten Anlauf
 
-### „Liegt nicht mehr auf dem Rechner" - und lag die ganze Zeit da
+Roblox Studio meldet sich beim Umschalten zwischen Test und Bearbeiten
+kurz ab. Der erste Aufruf danach lief ins Leere, und schon fiel die
+Sperre. Beim Verbindungsaufbau wartet die Bruecke seit laengerem bis zu
+zwanzig Sekunden auf das Programm - diese Geduld gilt jetzt auch mitten
+in der Arbeit: Bruecke schliessen, neu oeffnen, Aufruf wiederholen. Ist
+das Programm wirklich beendet, kommt derselbe Fehler und die Sperre
+greift wie bisher.
 
-**Ein eingefuegtes Bild wurde angezeigt und kurz darauf durch einen
-Platzhalter ersetzt, der behauptete, die Datei sei weg.** Sie war es nie.
-Ein Bild-Tag laedt der Browser selbst und kann dabei keinen
-Anmelde-Header mitschicken; dafuer gibt es eine kurze Liste von Adressen,
-die den Schluessel auch aus der Adresszeile annehmen duerfen. Die Adresse
-des Bild-Registers - seit der letzten Fassung der Weg fuer JEDES Chatbild -
-stand nicht darin. Wer ein Passwort gesetzt hatte, bekam damit auf jedes
-Bild eine Absage. Das betraf auch die Bilder an Ergebnissen in Code und
-Work.
 
-**Und der Platzhalter hat geraten.** Er nannte jeden Ladefehler „liegt
-nicht mehr auf dem Rechner" - auch eine abgelaufene Anmeldung, auch eine
-abgerissene Verbindung. Jetzt wird erst beim Server nachgefragt, und zwar
-auf demselben Weg, der gescheitert ist. Danach steht dort, was wirklich
-los ist: Anmeldung, unbekannte Datei, oder tatsaechlich geloescht - dann
-mit Namen und Datum. Dazu ein zweiter Weg zur selben Datei, bevor
-ueberhaupt geklagt wird, und ein Knopf zum Nochmal-Versuchen.
+## v2.9.13 - Bilder im Chat, und Werkzeuge mit vollstaendigen Angaben
 
-### MCP: das Modell sah nicht, was die Werkzeuge wirklich wollen
+### Bilder wurden angezeigt und kurz darauf fuer verschwunden erklaert
 
-**Werkzeuge, die ein fremdes Programm steuern, verlangen genaue
-Argumente - und Qwirbel hat die entscheidende Haelfte davon weggeworfen.**
-Zwei Stellen:
+Ein eingefuegtes Bild erschien und wurde Sekunden spaeter durch einen
+Platzhalter ersetzt, der behauptete, die Datei liege nicht mehr auf dem
+Rechner. Sie lag die ganze Zeit da.
+
+Ein Bild-Tag laedt der Browser selbst und kann dabei keine Anmeldung
+mitschicken. Dafuer gibt es eine kurze Liste von Adressen, die den
+Schluessel auch aus der Adresszeile annehmen - und die Adresse des
+Bild-Registers stand nicht darin. Wer ein Passwort gesetzt hatte, bekam
+damit auf jedes Chatbild eine Absage. Das betraf auch die Bilder an
+Ergebnissen in Code und Work.
+
+Der Platzhalter selbst hat ausserdem geraten: er nannte jeden Ladefehler
+„liegt nicht mehr auf dem Rechner", auch eine abgelaufene Anmeldung oder
+eine abgerissene Verbindung. Jetzt wird beim Server nachgefragt, bevor
+etwas behauptet wird, und zwar auf demselben Weg, der gescheitert ist.
+Danach steht dort, was wirklich los ist - und nur bei einer tatsaechlich
+geloeschten Datei faellt der alte Satz, dann mit Name und Datum. Dazu
+wird ein zweiter Weg zur selben Datei probiert, und ein Knopf laesst es
+erneut versuchen.
+
+### Werkzeuge zeigen jetzt, was sie wirklich verlangen
+
+Werkzeuge, die ein fremdes Programm steuern, erwarten genaue Argumente.
+Zwei Angaben gingen bisher verloren, bevor das Modell sie sehen konnte.
 
 Erstens ein Deckel: nur die ersten sechs Felder eines Werkzeugs kamen in
-die Beschreibung, danach fiel alles weg - auch PFLICHTfelder. Ein Aufruf,
-der dem Beispiel folgte, war unvollstaendig.
+die Beschreibung - auch Pflichtfelder fielen weg. Ein Aufruf nach diesem
+Muster war unvollstaendig.
 
 Zweitens die erlaubten Werte. Steht im Werkzeug „nimm eines von Edit,
 Client, Server", stand in der Beschreibung nur „Text". Beim Schreiben von
-Skripten in Roblox Studio ist genau ein Wert erlaubt - das Modell konnte
-es nicht wissen, hat geraten, ist abgeprallt und hat danach nur noch
-gelesen statt gearbeitet.
+Skripten in Roblox Studio ist genau ein Wert zulaessig - das Modell
+konnte es nicht wissen, prallte ab und beschraenkte sich danach aufs
+Lesen.
 
-**Beides steht jetzt da.** Pflichtfelder fallen nie mehr heraus, und wo
-das Werkzeug erlaubte Werte kennt, stehen sie im Beispiel. Gemessen an
-einer Installation mit neun Servern und 97 Werkzeugen kostet das zwei
-Prozent mehr Text.
+Beides steht jetzt da. Gemessen an einer Konfiguration mit neun Servern
+und 97 Werkzeugen kostet die Vollstaendigkeit zwei Prozent mehr Text.
 
-### Nicht stundenlang derselbe Fehler
+### Und ein Fehlschlag sagt, woran er lag
 
-**Scheitert ein Aufruf an den Argumenten, sagt die Antwort jetzt, woran.**
-Welches Pflichtfeld fehlt, welcher Wert nicht erlaubt ist und welcher es
-waere - aus der Beschreibung des Werkzeugs selbst, nicht geraten. Das
-passiert nur im Fehlerfall; ein Aufruf, der laeuft, bekommt keinen
-Kommentar.
+Scheitert ein Aufruf an den Argumenten, nennt die Antwort das fehlende
+Pflichtfeld, den unzulaessigen Wert und die zulaessigen - aus der
+Beschreibung des Werkzeugs selbst. Das geschieht nur im Fehlerfall.
 
-**Und derselbe Fehlschlag wird gezaehlt.** Wird ein Werkzeug ein zweites
-Mal mit exakt denselben Argumenten gerufen und scheitert wieder gleich,
-steht das in der Antwort. Geaenderte Argumente sind Arbeit und bekommen
-keinen Vorwurf. Gesperrt wird dabei nichts - die einzige Grenze fuer
-MCP-Werkzeuge bleibt die Modellgroesse in den Einstellungen.
+Wird ein Werkzeug ein zweites Mal mit genau denselben Argumenten gerufen
+und scheitert wieder gleich, steht auch das in der Antwort. Geaenderte
+Argumente sind Arbeit und werden nicht kommentiert. Gesperrt wird dabei
+nichts - die einzige Grenze fuer diese Werkzeuge bleibt die
+Modellgroesse in den Einstellungen.
 
 ## v2.9.12 - Standarddienste: wer macht was, und wie kommt einer dazu
 
