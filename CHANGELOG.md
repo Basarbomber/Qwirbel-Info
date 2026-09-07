@@ -25,8 +25,179 @@ Eintraege darunter sagen, wann es dazugekommen ist.
   einer Untergrenze fuer die Modellgroesse als einziger Sperre.
 - **Modellwahl oben rechts.** Sie gilt im ganzen Programm - Chat,
   Aufgaben, Planung, Werkzeuge.
+- **Sicherung.** Eine Voll-Sicherung anlegen und im Programm wieder
+  einspielen - der aktuelle Stand wird vorher selbst gesichert.
+- **Grundschutz und Filter.** Je Thema steht, was geprueft wird, wie viele
+  Muster dahinterstehen und was ausdruecklich erlaubt bleibt; ein lokales
+  Protokoll haelt fest, was geblockt wurde (Thema und Datum, nie der Text).
+- **Grafikkarte beim Generieren.** Solange ComfyUI rechnet, bleibt das
+  Sprachmodell im Arbeitsspeicher - abschaltbar fuer grosse Karten.
 
 ---
+
+## v2.9.18 - Handy, sichtbarer Grundschutz, und was ein Kunde beim Einrichten erlebt
+
+### Die Kopfzeile auf dem Handy
+
+Auf einem Handy-Bildschirm standen oben rechts vier Dinge in einer Zeile,
+die dort nicht hineinpassten: der Schalter Lokal/API, die Modellwahl, der
+Fuellstand und das Zahnrad. Nachgemessen bei 375 Pixel Breite: die
+Modellwahl war 119 Pixel breit, ihr Kasten 54 - der Rest schob sich unter
+das Zahnrad. Dazu lag die Klapp-Lasche der Aufgaben-Spalte ueber dem Titel
+der ersten Karte.
+
+Jetzt ist die Kopfzeile eine Zeile, in der nichts ueberlappt: Lokal/API
+zeigt auf dem Handy nur seine zwei Zeichen, die Modellwahl bekommt den
+Platz dazwischen und schneidet ab, statt zu ueberlaufen, der Fuellstand
+weicht (er steht unten in der Eingabe ohnehin). Die Aufgaben-Spalte ist
+in der App zunaechst zugeklappt; ihre Lasche ist ein schmaler Reiter am
+rechten Rand. Karten mit einem Knopf oben rechts lassen dem Titel Platz.
+
+### Weichere Farben und weniger Akku auf dem Handy
+
+In der App und in schmalen Fenstern gilt eine eigene Abstimmung: die
+Flaechen sind einen Ton heller als das harte Schwarzblau des Desktops, der
+Akzent ein Fuenftel weicher. Und drei Dinge, die auf dem Handy jeden Frame
+kosten, sind dort aus: die Glas-Unschaerfe hinter Kopfzeile und Panels,
+die animierten Hintergruende (Standard ist jetzt der schlichte), und die
+Leuchtfilter am Maskottchen. Die Android-App haelt ausserdem ihre
+Weboberflaeche an, sobald sie in den Hintergrund geht - vorher liefen
+Zeitgeber und Abfragen weiter, waehrend das Handy in der Tasche lag.
+
+### Der Grundschutz ist jetzt sichtbar - und protokolliert
+
+Unter „KI & Filter" stand bisher eine feste Liste mit vier Zeilen, die
+mit dem Code nichts zu tun hatte. Jetzt kommen die Themen aus denselben
+Konstanten, mit denen wirklich geprueft wird: dreizehn Themen, je Thema
+aufklappbar - was genau geprueft wird, wo (Chat, Agent, Bild, Modelle),
+wie viele Muster dahinterstehen, und was ausdruecklich erlaubt bleibt,
+mit den Beispielen aus der Fehlalarm-Liste („Bombenwetter" ist kein
+Waffenbau).
+
+Darunter ein Protokoll: was der Filter geblockt hat, mit Thema, Datum und
+Weg. Nie der Text der Anfrage. Es bleibt auf dem Rechner - fuer jemanden,
+der belegen will, dass sein Programm greift, ohne dass irgendwo steht,
+was jemand geschrieben hat.
+
+### Selbstverletzung hat ein eigenes Gate
+
+Bisher stand das Thema nur als Stichwort in der Stufenliste und als Regel
+im Prompt. Jetzt gibt es ein Gate, das genau die Bitte um Methoden
+abfaengt - wie, welche, wie viele, schmerzlos - und mit Hilfsnummern
+antwortet statt mit einer Ablehnung. Wer in Not schreibt, ohne nach einer
+Methode zu fragen, wird nicht abgefangen: das geht ans Modell, und dort
+gilt die Regel, zugewandt zu antworten und keine Methoden zu nennen. Ein
+Gespraech hilft mehr als ein fester Text. Wer fuer einen Freund fragt,
+Warnzeichen erkennen will oder eine Hotline sucht, kommt immer durch.
+
+### Sicherung im Programm einspielen
+
+Eine Voll-Sicherung anzulegen ging schon lange; sie wieder einzuspielen
+hiess bisher: Dienst stoppen, Kommandozeile, Skript. Jetzt steht unter
+„Dateien & Speicher" (Server: in der Betriebs-Karte) die Liste der
+Sicherungen mit einem Knopf. Vor dem Einspielen wird der aktuelle Stand
+selbst gesichert - der Schritt laesst sich also rueckgaengig machen.
+
+### Auftraege fuer Code und Work - und Vorschlaege vom Modell
+
+Der Knopf „Auftraege" im Work- und Code-Tab hatte eine einzige eingebaute
+Vorlage. Jetzt sind es je Tab vier feste - Code nach Fehlern durchsuchen,
+Tests schreiben, Abhaengigkeiten pruefen, Doku nachziehen; Ordner
+aufraeumen, Recherche als Bericht, Dateien nach Schema umbenennen,
+Wochenbericht - jeweils mit deinem Arbeitsordner im Text. Darunter
+schlaegt das gewaehlte Modell drei weitere vor, aus dem, was in deinem
+Arbeitsordner liegt und was du zuletzt in diesem Tab aufgetragen hast.
+Sie tragen einen orangenen Punkt; ein Klick auf den Pfeil holt neue.
+Ohne Modell oder ohne brauchbare Antwort steht dort ehrlich, warum -
+erfunden wird nichts.
+
+### Der Bauplan bleibt an der Antwort
+
+Nach einer Planung standen die Knoepfe „In Work bauen" und „In Code bauen"
+nur so lange da, wie der Chat offen war. Nach einem Neuladen war es
+Text ohne Knoepfe, weil der Verlauf die Plan-Datei nicht gespeichert
+hatte. Jetzt haengt sie an der Antwort - auch Monate spaeter.
+
+### Waehrend ComfyUI rechnet, bleibt das Sprachmodell im RAM
+
+Vor einer Generierung raeumt Qwirbel das Sprachmodell aus dem
+Grafikspeicher, danach holt es es zurueck. Dazwischen war eine Luecke:
+wer waehrend der Generierung im Chat schrieb, lud das Modell sofort
+wieder auf die Karte - neben die Bildmodelle. Auf sechzehn Gigabyte ist
+das der Moment, in dem beides abbricht. Jetzt rechnet das Sprachmodell
+in dieser Zeit im Arbeitsspeicher, langsamer, aber die Karte bleibt
+ComfyUI. Fuer Karten mit viel Speicher laesst sich das unter Ollama
+abschalten.
+
+### ffmpeg auf Windows kommt von selbst
+
+Linux holt ffmpeg ueber apt, macOS ueber brew - Windows holte es gar
+nicht, obwohl der Setup-Tab es als fehlend zeigte. Jetzt laedt Qwirbel
+beim ersten Start den offiziellen statischen Build in seinen eigenen
+Werkzeug-Ordner. Kein Installer, kein Eintrag im System, kein Aendern
+des Suchpfads: der Ordner gilt nur fuer Qwirbel, und Loeschen ist
+Deinstallieren.
+
+### Linux: die Einrichtung stirbt nicht mehr an Ollama
+
+Das Ubuntu-Skript wurde in einer frischen Ubuntu-24.04-Umgebung
+unbeaufsichtigt durchgespielt. Ergebnis: Ollamas Installer braucht seit
+kurzem das Packprogramm zstd, das dort fehlte - und weil das Skript bei
+jedem Fehler abbricht, war damit die ganze Einrichtung zu Ende: kein
+Python-Umfeld, keine Funktionen, kein Start. zstd wird jetzt mitinstalliert,
+und ein scheiternder Ollama-Installer beendet das Setup nicht mehr -
+Qwirbel wird eingerichtet, Ollama laesst sich spaeter nachholen. Im
+zweiten Lauf: Ollama da, alle Funktions-Pakete da, Server antwortet nach
+zwei Sekunden.
+
+### Geteilte Modelle und Ollama - was wirklich geht
+
+„In Ollama importieren" schrieb bei einem geteilten Modell den ersten
+Teil ins Modelfile. Ollama lehnt das ab: „1 shards, expected 4". Es nimmt
+aber einen Ordner, in dem alle Teile liegen - Qwirbel baut ihn jetzt mit
+Hardlinks (kein zusaetzlicher Platz, gleiche Platte) und raeumt ihn nach
+dem Lauf weg. Gemessen mit einem 104-GB-Modell: Ollama kopiert alle Teile
+in seinen Modellordner. Ehrlich dazu: dieses eine Modell (Qwen3.8 Flash
+Next) kennt Ollama 0.33 danach trotzdem nicht - „llama-quantize failed";
+die Zeile steht jetzt im Fehler statt eines nackten „Code 1". Ueber Klecks
+laeuft es. Und Ollama laesst nach so einem Abbruch die kopierten Bloecke
+liegen - hundert Gigabyte, die man von Hand entfernen muss.
+
+### Der Setup-Tab zeigt, was gerade nachgeholt wird
+
+Seit der letzten Fassung holt Qwirbel nach dem ersten Start die Pakete der
+einzelnen Funktionen im Hintergrund. Der Setup-Tab wusste davon nichts.
+Jetzt steht ueber den Faehigkeiten, was gerade geholt wird, was noch
+fehlt und was beim letzten Mal danebenging - mit einem Knopf zum
+Nachholen.
+
+### Eine beschaedigte config.json wird beiseitegelegt
+
+Liess sich die Einstellungsdatei nicht lesen - ein abgebrochener
+Schreibvorgang, ein Stromausfall - schrieb Qwirbel still die Standardwerte
+darueber. Alle Einstellungen weg, ohne Meldung. Jetzt wird die kaputte
+Datei mit Zeitstempel beiseitegelegt, es steht laut im Protokoll, und
+erst dann gelten die Standardwerte.
+
+### Tokenzaehler: eigene Arbeit, und Prompt-Cache
+
+Der Takt im Chat zeigt jetzt, wie viele Marken Qwirbel selbst gedacht und
+geschrieben hat - ohne das, was er aus Dateien und Werkzeugen gelesen
+hat. Und er zeigt, wie viel aus dem Prompt-Cache kam: lokal bleibt das
+Modell mit seinem Kontext laenger geladen (ein Folgeauftrag am selben
+Anfang lief in der Messung 27-mal schneller), bei GLM zaehlt der Anbieter
+die gecachten Marken selbst (in der Messung 99,8 Prozent eines
+33.000-Zeichen-Anfangs).
+
+### Kleineres
+
+- Die Recherche-Zusammenfassung laeuft nicht mehr ohne Inhaltsfilter
+  weiter, wenn der Filter sich nicht laden laesst - sie bricht ab und
+  sagt es (fail closed, wie beim Bildweg).
+- Der eingestellte Hyperspace-Suchport wurde angezeigt, aber von der
+  Suche nicht benutzt. Jetzt schon.
+- Die Landkarte der Schnittstellen in der Doku kennt alle neuen
+  Endpunkte.
 
 ## v2.9.17 - Grosse Modelle, und alle Funktionen auf allen Systemen
 
