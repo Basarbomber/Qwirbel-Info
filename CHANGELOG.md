@@ -35,6 +35,23 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.19 - Eine Automatik abbrechen
+
+### Der Knopf, der gefehlt hat
+
+Lief eine Automatik, gab es im Automatik-Tab keinen Weg, sie zu beenden -
+nur den grossen Stopp-Knopf, der alles stoppt, auch eine Aufgabe im
+Work-Tab, die gerade laeuft. Jetzt steht ueber der Agenten-Welt eine
+Laufzeile mit dem Namen des Agenten, seinem aktuellen Schritt und einem
+roten Knopf „Abbrechen". Derselbe Knopf steht in der Karte des gewaehlten
+Agenten, solange er laeuft. Er beendet genau diesen Lauf: der Lauf steht
+danach als „abgebrochen" im Protokoll, der naechste Agent in der
+Warteschlange kommt dran, andere Aufgaben laufen weiter.
+
+Ehrlich dazu: ein Modell-Aufruf, der in diesem Moment rechnet, rechnet
+seine Antwort noch zu Ende - danach passiert nichts mehr, kein Werkzeug,
+kein weiterer Schritt.
+
 ## v2.9.18 - Handy, sichtbarer Grundschutz, und was ein Kunde beim Einrichten erlebt
 
 ### Die Kopfzeile auf dem Handy
