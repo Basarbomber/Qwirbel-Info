@@ -35,6 +35,48 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.20 - Klecks rechnet Qwen3.8 Flash Next auf der Grafikkarte
+
+### Ein 104-GB-Modell auf einer 16-GB-Karte
+
+Qwen3.8 Flash Next ist ein Experten-Modell: 512 Experten je Schicht,
+von denen je Wort nur zehn rechnen. Die dichten Teile - Aufmerksamkeit,
+Zustandsraum, geteilter Experte, Ausgabekopf - sind zusammen 4,5 GB; die
+Experten 72 GB; dazu 27 GB Einbettungs-Tabellen, die je Wort nur eine
+Zeile liefern. Bisher plante Klecks „so viele Schichten wie moeglich auf
+die Karte" - bei einem solchen Modell die falsche Achse: vier von 48
+Schichten passten, der Rest waere je Wort ueber den Bus gegangen.
+
+Jetzt liest der Planer alle Teile einer geteilten Modelldatei (Teil 1
+traegt nur die Felder, die Tensoren liegen in den Teilen 2 bis 4),
+fuehrt die Experten-Bytes je Schicht getrennt und plant anders: alle
+Schichten rechnen auf der Karte, die Experten von so vielen Schichten
+wie noetig liegen im Hauptspeicher, die Einbettungs-Tabellen ebenfalls.
+Gemessen auf der RX 9060 XT (16 GB) mit 9,4 GB frei: 46 von 48
+Schichten geben ihre Experten in den RAM, die Karte traegt 7,6 GB. Das
+Modell laedt in 31 Sekunden und antwortet mit 6,4 Woertern je Sekunde -
+gemessen, waehrend nebenbei ein Spiel lief und mit gedrosselter
+Prioritaet. Der Hauptspeicher (128 GB) haelt 97 GB davon; was nicht
+hineinpasst, holt das System von der Platte.
+
+Das ist derselbe Weg, den Colibri fuer GLM geht - nur dass Klecks ihn
+ueber seinen eigenen Vulkan-Bau von llama.cpp faehrt: er laeuft auf AMD
+wie NVIDIA, ohne CUDA.
+
+### Zwei Dinge, die vorher im Weg standen
+
+Klecks holt sich sein Rechenwerk (llama.cpp) selbst von GitHub. Seit
+September nennt GitHub dort als „neueste" Veroeffentlichung einen Tag
+ohne fertige Bauten; die Bauten sind Vorabversionen. Klecks sagte
+ehrlich „kein fertiger Bau" - und blieb ohne Rechenwerk. Jetzt nimmt er
+die neueste Veroeffentlichung, die Bau-Dateien traegt.
+
+Und Klecks kannte Qwirbels Modellordner nicht: ein Modell stand in
+Qwirbels Bibliothek, in Klecks' Liste aber nicht. Qwirbel gibt Klecks
+seine Modellordner jetzt beim Start mit; Klecks liest ausserdem den
+Ordner, den Ollama selbst benutzt (OLLAMA_MODELS), wenn er dort suchen
+soll.
+
 ## v2.9.19 - Eine Automatik abbrechen
 
 ### Der Knopf, der gefehlt hat
