@@ -31,32 +31,32 @@
     "windows": {
       "datei": "Qwirbel-Windows-Normal-v2.9.21.zip",
       "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.21/Qwirbel-Windows-Normal-v2.9.21.zip",
-      "sha256": "9175b7fe0854a64b461e35aed4c7514b82ff642268a704d451a7c0a9c0cb878b"
+      "sha256": "953b8b47cbd38d680881e0fbd78fa0159c6df7f0fec5c65fe18d1a1e8708f681"
     },
     "windows_server": {
       "datei": "Qwirbel-Windows-Server-v2.9.21.zip",
       "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.21/Qwirbel-Windows-Server-v2.9.21.zip",
-      "sha256": "0a8ad2b0a7829e9b23f868744858331e9e3303b8f8ac269847a7229f70906ed7"
+      "sha256": "d7fa3e2fb1e50da3078f259510a02fd5743d2a4cc4fcb496b687af41ba07336a"
     },
     "linux": {
       "datei": "Qwirbel-Linux-Normal-v2.9.21.zip",
       "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.21/Qwirbel-Linux-Normal-v2.9.21.zip",
-      "sha256": "9b7248cd0d99d49710c6226e5ac7121d12ac482a33e1b2616e5e5f041a1846ce"
+      "sha256": "48c1bafe6a4d846eaf55fd7110a14221bd6fdac0b4f903a68c7a2d07819de7f9"
     },
     "linux_server": {
       "datei": "Qwirbel-Linux-Server-v2.9.21.zip",
       "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.21/Qwirbel-Linux-Server-v2.9.21.zip",
-      "sha256": "5ec09b65f7a9e447de592a3d97c6d5f1b60e158b191a94ac7c819d6a239da365"
+      "sha256": "2a32b4ab777906ffd53e3edf41f5421effd91e76218c23c3a292a665a132a880"
     },
     "macos": {
       "datei": "Qwirbel-macOS-Normal-v2.9.21.zip",
       "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.21/Qwirbel-macOS-Normal-v2.9.21.zip",
-      "sha256": "b8e34ab47c2cc3cdb2dfd0da58a73b139be309aa7e42558eb3568f7af11b2279"
+      "sha256": "c1bbd79c54d57f63a67e8f1eda7a3fee99e92ac137b62313b91867074422b3b4"
     },
     "macos_server": {
       "datei": "Qwirbel-macOS-Server-v2.9.21.zip",
       "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.21/Qwirbel-macOS-Server-v2.9.21.zip",
-      "sha256": "8fc64ed031c8910ef03cb3fece5bc735b15c08ee996cc70328c8b65d5877b168"
+      "sha256": "788b0a3502186a9569f958f660b0f9eaae721eff7217fccf135f099188256897"
     }
   }
 }
