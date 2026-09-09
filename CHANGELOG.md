@@ -35,6 +35,70 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.21 - ComfyUI ist ComfyUI, Klecks ist Klecks
+
+### Keine Mix-Tabs
+
+Der Tab heisst wieder ComfyUI - ein fruehere Aenderung hatte ihn in
+„Generation Workflows" umbenannt. Und er zeigt nur noch ComfyUI: Klecks
+ahmt fuer die Bild-Workflows die ComfyUI-Schnittstelle nach, und bisher
+galt diese Nachahmung dem Programm als „ComfyUI laeuft" - der Tab war
+gruen, waehrend ComfyUI aus war, und zeigte mal das eine, mal das
+andere. Jetzt zaehlt nur ein echtes ComfyUI; ist es aus, steht das da.
+
+Dahinter steckte eine geteilte Adresse: wer Klecks als Bildrechner
+gewaehlt hatte, bekam ComfyUIs Adresse auf Klecks umgebogen. Klecks
+steht jetzt mit seiner eigenen Adresse in der Liste der Bildrechner
+(je nach Motorwahl: ComfyUI, Klecks oder beide), ComfyUIs Adresse
+bleibt ComfyUIs Adresse. Teilen sich beide in einer bestehenden
+Einrichtung noch eine Adresse, trennt der Start-Knopf im Klecks-Tab
+sie und speichert das: antwortet dort Klecks, bekommt ComfyUI seinen
+Standard 8188 zurueck; antwortet dort ComfyUI, weicht Klecks auf den
+naechsten freien Port ab 8299 aus. Vorher tat der Knopf in diesem Fall
+nichts - der Dienst kam auf einem belegten Port nicht hoch.
+
+### Nichts geht mehr ueber deinen Bildschirm auf
+
+Die Regel „Konsolenfenster oeffnen sich leise" gab es - sie haengt an der
+Stelle, an der das Programm Prozesse startet. Eine Automatik ist daran
+vorbeigegangen: sie liess die Windows-Verwaltung (WMI, Win32_Process.Create)
+ihre Skripte starten, und die kennt diese Regel nicht - ein schwarzes
+Fenster, mitten im Spiel. Jetzt lehnt die Befehlspruefung solche Starts ab
+(WMI-Create, Start-Process ohne verstecktes Fenster, `start` ohne /b,
+WScript.Shell.Run) und nennt den Weg, der geht: das neue Werkzeug
+„hintergrund_starten" startet Skripte und Dienste ohne Fenster, losgeloest
+von der Sandbox, mit Logdatei und Prozessnummer. Die Browser-Erweiterung
+holt das Browserfenster nicht mehr nach vorn; fuer Uploads bleibt nur der
+Tab in seinem Fenster aktiv. Der Klecks-Dienst bekommt denselben Schalter.
+Geprueft an einem echten Kindprozess, der selbst meldet, ob sein Fenster
+sichtbar ist.
+
+### Klecks: eine Zeitgrenze ist kein „nicht erreichbar"
+
+Ein Experten-Modell liefert fuenf bis sechs Woerter je Sekunde und denkt
+vor der Antwort. Nach 180 Sekunden meldete der Klecks-Weg „Dienst nicht
+erreichbar" und Ollama lud sein eigenes Modell DAZU - waehrend Klecks auf
+der Karte weiterrechnete; die Antwort kam vom falschen Modell. Jetzt ist
+eine ausgebliebene Antwort eine Zeitueberschreitung (Einstellung
+klecks.chat_timeout_s, Standard 900 Sekunden), kein Rueckfall. Und die
+Gesundheitsauskunft des Klecks-Dienstes nennt oben das Modell, das
+llama-server gerade haelt - vorher stand dort „kein Modell", waehrend 80 GB
+im Speicher lagen; der VRAM-Knopf und das Entladen sahen nichts.
+
+### Die Modell-Liste kommt in Sekunden
+
+Klecks liest den Kopf jeder Modelldatei, um Architektur, Kontext und
+Chat-Vorlage zu kennen. Die Woerterlisten darin (150.000 bis 250.000
+Eintraege je Datei, drei Listen je Modell) wurden zwar nicht
+uebernommen, aber Eintrag fuer Eintrag uebersprungen - fuer 16 Dateien
+elf Millionen Schritte. In der Werkstatt dauerte die Liste 17 Sekunden,
+in der Installation ueber vier Minuten, und so lange wartete auch die
+Modellwahl im Chat. Jetzt springt der Leser ueber die Listen hinweg;
+die Felder danach bleiben lesbar (geprueft gegen eine Datei mit
+300.000 Eintraegen vor der Chat-Vorlage). Gemessen: 17,6 auf 4,8
+Sekunden fuer dieselben 16 Dateien; der Rest ist die Abfrage der
+Grafikkarte durch das Rechenwerk.
+
 ## v2.9.20 - Klecks rechnet Qwen3.8 Flash Next auf der Grafikkarte
 
 ### Ein 104-GB-Modell auf einer 16-GB-Karte
