@@ -35,6 +35,178 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.29 - Modelle suchen, Ornith empfohlen, Setup in deinen Ordner
+
+### Bibliotheken: selbst suchen, ohne KI-Umweg
+
+"Modell hinzufuegen" ging bisher nur ueber ein Sprachmodell, das ein
+passendes Repo vorschlagen sollte - ohne funktionierenden Anbieter kam nichts.
+Jetzt sucht der Knopf "Bei Hugging Face suchen" direkt dort: in der
+Chat-Bibliothek nur GGUF-Textmodelle, in der Generationsbibliothek Bild-,
+Video- und LoRA-Repos. Ein Treffer wird nachgeschlagen, Rolle, Ordner und
+Unterordner werden aus den Dateinamen vorgeschlagen, und du bestaetigst wie
+bisher. Erst dann ist genau dieses Repo ladbar.
+
+### Mehr in der Generationsbibliothek
+
+Neu, mit allen Quantisierungen, die es gibt: FLUX.2 (dev, klein 4B, klein 9B,
+Encoder, VAE, Turbo-LoRA), HunyuanVideo 1.5 (GGUF und fp8, Encoder, VAE,
+Bild-Leser, 4-Schritt-LoRA), Qwen-Image 2512, Qwen-Image-Edit 2511, Chroma1-HD
+aus den aktuellen Repos und Z-Image in der vollen Fassung. Jede Quelle ist bei
+Hugging Face nachgeschlagen. LTX-2.5 fehlt bewusst: das Repo verlangt eine
+Anmeldung bei Hugging Face, daraus kann Qwirbel nicht laden.
+
+### Empfohlene Chat-Modelle
+
+Neben Gemma 4 26B stehen jetzt Ornith 1.5 35B-A3B und Qwen3.8 27B als
+Empfehlung - im Setup und oben in der Chat-Bibliothek. Zu jedem steht die
+Stufe, die auf deine Karte passt, und die Q2-Stufe daneben. Auf 16 GB heisst
+das zum Beispiel Ornith Q2_K mit 13,1 GB; auf 24 GB IQ4_XS mit 19,3 GB.
+
+### Lokale Modelle rufen Werkzeuge richtig
+
+Mehrere Formen, in denen lokale Modelle Werkzeuge aufrufen, kamen nicht an:
+- Ornith und Qwen3.8 schreiben Aufrufe als `<tool_call>` mit XML statt JSON.
+- Manche Modelle schicken die Argumente als Text statt als Objekt.
+- Die OpenAI-Form `function` mit Name und Argumenten wurde nicht verstanden.
+- Argumente namens `name`, `aktion` oder `notiz` gingen verloren.
+- Das Gedaechtnis-Werkzeug "merken" landete bei der Notiz.
+
+Ein roher Zeilenumbruch in einem Dateiinhalt liess ausserdem einen Schnipsel
+aus dem Inhalt als Aufruf laufen. Denken ohne oeffnende Marke und die
+Denk-Kanaele von Gemma 4 werden jetzt entfernt, bevor der Aufruf gelesen wird.
+Das Kontextfenster, mit dem Ornith und Qwen3.8 geladen werden, ist jetzt rund
+viermal groesser: nur jede vierte Schicht braucht dort Speicher fuer den
+Verlauf.
+
+### Grafikkarten-Wahl
+
+Stecken eingebaute Grafik und eine richtige Karte im Rechner, nimmt "Auto"
+nur noch die richtige Karte. Die Wahl einer bestimmten Karte trifft jetzt auch
+bei gemischten Rechnern die gewaehlte: bisher zaehlte der Index ueber alle
+Hersteller. Bei einem Laptop mit Intel-Grafik und RTX sah Ollama so gar keine
+Karte. Die Auswahl erscheint weiter nur, wenn mehr als eine Karte erkannt ist;
+eingebaute Grafik ist dort markiert.
+
+### Setup: alles dorthin, wo du es haben willst
+
+- Mac- und Linux-Setup fragen jetzt nach dem Modell-Ordner, wie das
+  Windows-Setup. Ollama merkt sich den Ordner dauerhaft, auf Linux auch als
+  Systemdienst.
+- Bild- und Video-Modelle landen im gewaehlten Ordner, solange ComfyUI nicht
+  installiert ist. Bisher gingen sie nach C:\ComfyUI.
+- Auf Windows holt Qwirbel Ollama selbst, wenn es fehlt: tragbar in den
+  Programmordner, ohne Installer.
+- Der ffmpeg-Hinweis nennt auf dem Mac brew statt apt.
+- Der Knopf fuer die eigene Stimme sagt auf dem Mac ehrlich, dass es sie dort
+  noch nicht gibt.
+
+### Handy: die Kopfzeile bleibt eine Zeile
+
+Laengere Tab-Namen wie "Automatik" oder "Settings › Verbindung" rutschten in
+eine eigene Zeile und schoben Modellchip und Knoepfe nach unten aus der
+Leiste. Jetzt kuerzt sich der Name, und alles bleibt in einer Zeile - gemessen
+bei 375 Pixel Breite.
+
+## v2.9.28 – Handy-Menues bleiben im Bild, F11-Vollbild am PC
+
+### Nichts klappt mehr aus dem Handy-Bildschirm raus
+
+Auf dem Handy liefen aufgeklappte Menues seitlich aus dem Bild – vor allem, wenn an der Eingabeleiste mehrere Knoepfe an waren; das Einstellungs-Menue stand dann zur Haelfte ausserhalb des Bildschirms. Grund: sechs Menues (unter ihnen das Zahnrad an der Eingabe, Auswahl-Menues unter Kopf-Chips, das Hochskalier-Menue und der VRAM-Hinweis) positionierten sich starr am eigenen Knopf und wurden nie ins Fenster geklemmt. Eine zentrale Klemme misst jetzt jedes geoeffnete Menue und haelt es im sichtbaren Bereich: ragt es rechts oder links ueber den Rand, klappt es zurueck; Breite und Hoehe passen sich dem Bildschirm an, und beim Drehen des Geraets oder Fenstergroessen-Aendern wird nachgemessen. Die Kopfzeile mit dem Modell-Chip bricht bei Platzmangel in eine zweite Zeile um, statt den Chip aus der Leiste zu draengen. Die Knoepfe per Sync passend zu machen, damit die Menues richtig stehen, ist damit nicht mehr noetig.
+
+### Vollbild am PC ueber F11
+
+F11 schaltet das Programmfenster am PC zwischen Fenstermodus und randlosem Vollbild um – und wieder zurück. Ein kleiner Vollbild-Knopf in der Kopfzeile macht dasselbe per Klick. Auf dem Handy aendert sich nichts.
+
+### Geprueft
+
+Ein eigener Regressionstest haelt die Klemme, den F11-Weg und die Version in Werkstatt und Installation fest; der Frontend-Parse laeuft fuer beide Kopien gruen.
+
+---
+
+## v2.9.27 - Fragefenster offen, Chat-Deckel flexibel, echtes Ornith-Fenster
+
+### Das Fragefenster zeigt sich im Live-Chat immer
+
+Bei lokalen Modellen unter 100B oeffnete sich das Fragefenster nicht. Im Code
+stand dafuer keine Modell-Grenze: die Stufen-8-Regel „nie fragen“ hat jedes
+Panel still in eine Selbstentscheidung verwandelt - fuer jedes Modell, auch
+im laufenden Chat. Diese Regel gilt jetzt nur noch fuer unbeaufsichtigte
+Laeufe (Automatik, Hintergrund-Jobs), in denen ohnehin niemand klickt. Im
+Live-Chat oeffnet sich das Panel immer - auch dann, wenn das Modell die
+Frage als Text formuliert statt das Frage-Werkzeug zu rufen, was gerade
+kleinen lokalen Modellen passiert.
+
+### Der Chat darf je Aufgabe mehr Schritte machen
+
+Der Deckel der Chat-Stufe war starr auf zwoelf Werkzeug-Zuege - grosse
+Auftraege (mehrere Seiten ansehen, eine laengere Recherche) rissen mitten
+drin ab. Der Deckel wachst jetzt mit dem Auftrag: kurze Fragen bleiben bei
+zwoelf, mittlere bekommen achtzehn, grosse bis zu vierundzwanzig Zuege; der
+Werkzeug-Chat des Programms bekommt vier bis acht Zuege je nach Umfang
+der Anfrage. Websites darf der Chat bei Lesebedarf immer wieder aufrufen:
+Der aufgabenweite Lese-Stopp, der im Work- und Code-Tab endloses Nachschauen
+beendet, greift im Chat nicht mehr - Nachschauen ist dort die Arbeit selbst.
+Die Trennung der Tabs bleibt unberuehrt: der Chat baut weiterhin nichts.
+
+### Ornith rechnet mit seinem echten Fenster
+
+Das Kontext-Budget mass fuer lokale Modelle allein agent_num_ctx (16k) -
+Ornith (262.144 Token Kapazitaet, rund 80.896 tatsaechlich geladen) bekam
+damit dasselbe knappe Verlaufs-Budget wie ein 16k-Modell, und der Chat
+wurde frueher gekappt, als noetig. Das Budget wachst jetzt mit dem Fenster,
+mit dem der Agent das Modell wirklich laedt (das kleinere aus Koennen und
+Lade-Fenster); agent_num_ctx bleibt Untergrenze, kleinere Modelle merken
+keinen Unterschied. Gemessen am installierten Ornith: 19.464 Zeichen
+Verlaufs-Budget vorher, 96.104 danach.
+
+### Geprueft
+
+Neuer Regressionstest (Frage-Panel gegen Selbstentscheidung, Deckel-Stufen,
+Lese-Ausnahme im Chat, Budget-Rechnung mit gehaltenem Modell-Fenster); die
+bestehenden Suiten der letzten Fixes laufen weiter gruen.
+
+## v2.9.26 - Grafikkarte waehlen, Test-Reste raus
+
+### Ollama auf die richtige Karte schicken
+
+Rechner mit zwei Grafikkarten: Ollama verteilte sich bisher ueber alle
+Karten, und auf der falschen fehlte der Speicher fuer grosse Modelle.
+Jetzt waehlst du, auf welcher Karte Ollama rechnet - mit einem Knopf
+direkt im Modell-Menue oben im Chat und mit einem Abschnitt in den
+Einstellungen. Beide stellen dieselbe Wahl (keine zweite Wahrheit):
+Auto laesst Ollama alle Karten nutzen, oder du legst genau eine fest.
+Die Wahl wirkt beim Start von Ollama; hat Qwirbel ihn selbst gestartet,
+startet es ihn dafuer gleich neu. Laeuft er als externer Dienst, wird
+er nicht angefasst - dann steht da ehrlich, dass ein Neustart von Hand
+noetig ist.
+
+### Keine Test-Reste mehr in der Werkzeug-Beschreibung
+
+In der Beschreibung eines Werkzeugs steckte noch eine Zeile aus alten
+Prueflaeufen: sie hiess den Agenten ohne jeden Anlass dazu auf, Roblox-
+Werkzeuge zu benutzen - mitten in Auftraegen, die mit Roblox nichts zu
+tun hatten. Die Zeile ist entfernt, in der Werkstatt wie in der
+ausgelieferten Fassung (kein Treffer mehr). Der Agent greift Werkzeuge
+wieder wegen des Auftrags auf, nicht wegen eines alten Testrests.
+
+### Kein schwarzes Fenster uebers Spiel
+
+Auftraege, die im Hintergrund Befehle ausfuehren, duerfen kein sichtbares
+Konsolenfenster mehr auf den Bildschirm legen - egal welcher Tab sie
+startet und egal wie hoch die Rechte-Stufe steht. Die Regel steht jetzt
+auch in der Werkzeug-Beschreibung des Agenten: Skripte und Dienste
+laufen ueber den leisen Hintergrund-Weg, und Start-Wege, die am
+Leise-Schalter vorbeifuehren (Start-Process ohne Hidden, `start` ohne
+/b, Win32_Process.Create, WScript.Shell.Run), sind gesperrt. Zaehlt fuer
+die Werkstatt wie fuer die ausgelieferte Fassung.
+
+### Geprueft
+
+Fuer die Karten-Wahl liegt ein eigener Regressionstest an (Endpunkte,
+Start-Verhalten, Knopf und Einstellungen an derselben Quelle); die
+bestehenden Suiten laufen weiterhin gruen.
+
 ## v2.9.21 - ComfyUI ist ComfyUI, Klecks ist Klecks
 
 ### Keine Mix-Tabs
