@@ -35,6 +35,87 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.30 - Handy-Bildschirm, alle Workflows sichtbar, LTX-2.5
+
+### Handy: den PC-Bildschirm sehen und steuern
+
+- **Unter Windows kam kein Bild.** Qwirbel nahm fuer die Aufnahme den
+  Linux-Weg (PipeWire), den es auf Windows und macOS nicht gibt, und jedes
+  Bild endete als Fehler. Windows und macOS nehmen jetzt die direkte
+  Bildschirmaufnahme.
+- **Mehrere Monitore.** Die Handy-Ansicht zeigt den Hauptbildschirm und hat
+  oben Knoepfe fuer jeden weiteren Monitor. Die Wahl bleibt gemerkt. Vorher
+  waeren alle Monitore zu einem schmalen Streifen zusammengequetscht worden.
+- **Tippen trifft.** Ein Fingertipp landete immer oben links in der Ecke.
+  Jetzt wird die Stelle auf den gezeigten Monitor umgerechnet - auch auf
+  Monitore links oder oberhalb des Hauptschirms.
+- Die Pruefung unter Setup fragt jetzt, ob wirklich ein Bild kommt. Vorher
+  stand dort "installiert", obwohl nichts ankam.
+- macOS: Ohne die Freigabe "Bildschirmaufnahme" bleibt das Bild schwarz. Die
+  Meldung sagt jetzt, wo man sie erteilt.
+
+### Alle Workflows sichtbar
+
+- **Qwirbel erkennt die Art eines Workflows an seinen Bausteinen.** Dadurch
+  stehen LTX-Video, alle drei Motion-Control-Fassungen, die schnellen
+  Video-Varianten und beide Hochskalierer im Workflow-Chip. Vorher fehlten
+  8 von 16 mitgelieferten Workflows. Eine von Hand festgelegte Art gewinnt
+  weiter.
+- **LTX-Video mit Ton laeuft jetzt wirklich ueber LTX.** Vorher wurde die
+  Wahl still als Bild ausgefuehrt. Ohne Laengenwunsch werden es 4 Sekunden.
+- **Hochskalieren ueber den Chip.** Workflow waehlen, Bild anhaengen bzw.
+  Video waehlen, "HOCHSKALIEREN". Fuer Videos erscheint dasselbe Video-Feld
+  wie bei Motion Control. Vorher lief auch hier still ein Bild-Auftrag.
+- **Eigene Workflows** aus dem Workflow-Ordner stehen in der
+  Generationsbibliothek als Karte mit Modell-Liste und fehlenden Dateien,
+  statt als Textzeile. Was keine erkennbare Art hat, steht im Chip mit dem
+  Hinweis, wo man sie festlegt.
+- Im Workflows-Tab ist "Hochskalieren (Bild/Video)" als Art waehlbar.
+
+### Generationsbibliothek: mehr drin
+
+- **LTX-2.5 (neu):** Transformer (int8, nvfp4, bf16), Gemma-4-Encoder,
+  Video- und Audio-VAE, LoRA, Latent-Upscaler. Die Dateien kommen aus einem
+  offenen Spiegel mit denselben Dateien - das Original verlangt eine
+  Hugging-Face-Anmeldung. Einen mitgelieferten Workflow gibt es dafuer noch
+  nicht; die Vorlage kommt aus ComfyUI.
+- **LTX-2.3:** Jede Datei des mitgelieferten Workflows hat jetzt einen Platz
+  unter genau dem Namen, den er erwartet (Gemma-GGUF, Video- und Audio-VAE,
+  LoRA). Dazu GGUF von QuantStack, fp8/int8 von Kijai, die Text-Projektion
+  und die Latent-Upscaler.
+- **WAN Animate:** die fp8-scaled-Fassung, mit der die Motion-Control-
+  Workflows laufen, CLIP-Vision H, die Pose-Erkennung (ViTPose, YOLOv10m) und
+  die beiden LoRAs. SAM2 laedt ComfyUI beim ersten Lauf selbst.
+- **4x-UltraSharp** (und V2) fuer den Bild-Hochskalierer.
+- Fehler behoben: Eine Datei mit anderer Endung als der Workflow-Name (etwa
+  .safetensors statt .gguf) wurde unter dem falschen Namen gespeichert und
+  war dann fuer ComfyUI unlesbar. Sie behaelt jetzt ihren eigenen Namen.
+
+### Nebenbei: Auslagerung (Swap)
+
+- Unter Setup gibt es eine kleine Karte "Auslagerungsspeicher": auf 32 GB
+  auffuellen, nur nach einem zweiten Klick, nie von selbst. Windows fragt
+  nach Admin-Rechten, die neue Groesse gilt nach dem naechsten Neustart des
+  Rechners. Linux legt eine Swap-Datei an, sofort aktiv. macOS verwaltet das
+  selbst - dort steht nur, ob genug Platz frei ist.
+- Vorausgewaehlt ist das nur bei wenig Arbeitsspeicher (unter 64 GB). Das
+  Windows-Setup und das Linux-Setup bieten es ebenfalls an, Vorgabe aus.
+
+### Geprueft - und was nicht
+
+- Bildschirmaufnahme an einem Windows-PC mit drei Monitoren gemessen, jeder
+  Monitor einzeln. Die Mausbewegung ist nachgerechnet, nicht ausgefuehrt.
+  Nicht getestet: macOS und Linux ohne Portal (X11).
+- Auslagerung: am Windows-PC nur gelesen; das Einstell-Skript besteht die
+  PowerShell-Pruefung, wurde aber nicht ausgefuehrt. Das Linux-Skript ist nur
+  auf Syntax geprueft, kein echter Lauf.
+- LTX- und Hochskalier-Weiche mit nachgestellten Auftraegen geprueft, keine
+  echte Generierung. Die neuen Bibliotheks-Quellen liefern bei Hugging Face
+  nachweislich Dateien.
+- Diesmal kein vollstaendiger Linux-Installationslauf in WSL.
+
+---
+
 ## v2.9.29 - Modelle suchen, Ornith empfohlen, Setup in deinen Ordner
 
 ### Bibliotheken: selbst suchen, ohne KI-Umweg
