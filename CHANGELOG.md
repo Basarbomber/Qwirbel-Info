@@ -35,6 +35,115 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.31 - Modelle richten sich selbst ein, Werkzeuge je Modellfamilie
+
+### Heruntergeladene Modelle kommen von selbst in Ollama und Klecks
+
+- **Neue Sprachmodelle im Modellordner werden automatisch eingerichtet.**
+  Vorher kam eine GGUF-Datei aus einem Klecks-Download oder von Hand nie
+  nach Ollama - dafuer gab es nur einen Knopf. Jetzt schaut Qwirbel leise
+  alle 10 Minuten nach (und kurz nach dem Start), liest den Kopf der Datei
+  und traegt ein neues Chat-Modell in Ollama ein. Die Modell-Listen frischen
+  sich danach selbst auf.
+- **Gesucht wird nur dort, wo Chat-Modelle hingehoeren:** in der obersten
+  Ebene des Modellordners und in einem Unterordner `LLM`/`chat`. Die
+  ComfyUI-Ordner bleiben unberuehrt - dort liegen auch Sprachmodelle, die als
+  Text-Encoder dienen und nicht in Ollama gehoeren. Bild- und Video-Modelle,
+  Projektoren und Einbettungen werden erkannt und uebersprungen. Geteilte
+  Modelle werden erst eingerichtet, wenn alle Teile da sind; eine Datei, die
+  noch herunterlaedt, wartet.
+- **Keine doppelten Kopien.** Was Ollama schon hat, erkennt Qwirbel an der
+  exakten Groesse in Ollamas eigener Modell-Liste auf der Platte - auch wenn
+  es dort unter einem anderen Namen steht.
+- **Nichts Unnoetiges auf die Platte.** Kopiert wird nur, wenn Ollama die
+  Architektur des Modells auf diesem Rechner nachweislich ausfuehren kann.
+  Ganz neue Architekturen laufen ueber Klecks und werden mit Grund als "nur
+  Klecks" gefuehrt - ohne Kopie. Vorher haette ein gescheiterter Import bis
+  zur vollen Modellgroesse an Resten in Ollamas Speicher liegen lassen. Vor
+  jeder Kopie wird der freie Platz geprueft (Modell + 20 GB).
+- **Beim ersten Mal nur eine Bestandsaufnahme.** Modelle, die schon vor
+  diesem Update im Ordner lagen und noch nicht in Ollama sind, bleiben
+  unberuehrt - dafuer gibt es weiter den Knopf im Models-Tab. Automatisch
+  eingerichtet wird, was danach dazukommt.
+- Abschaltbar in der config: `modelle.auto_einrichten`. Zusaetzliche
+  Architekturen fuer Ollama: `modelle.ollama_architekturen`.
+- **Klecks sieht Ollamas Modelle auch in einem verlegten Speicherort**, und
+  Downloads ueber Klecks laden jetzt auch Modelle mit einer Architektur, die
+  Klecks nur ueber llama.cpp ausfuehrt.
+- **Eindeutige Namen.** Der Import haengt die Quantisierung als Tag an
+  (`gemma-4-26b-a4b-it:ud-q2_k_xl`). Vorher hiessen zwei Quantisierungen
+  desselben Modells gleich, und die zweite ueberschrieb die erste. Unter
+  Windows scheiterte der Import bei solchen Namen zudem am Dateinamen.
+
+### Werkzeuge: jede Modellfamilie bekommt ihren Zuschnitt
+
+- **Ornith schrieb keine Datei.** Im Protokoll zu sehen: Statt eines
+  Werkzeug-Aufrufs antwortete das Modell mit Text, und Qwirbel wertete
+  diesen Text als erledigten Schritt. Der Ordner stand, die HTML-Datei kam
+  nie. Jetzt gilt Text in einem Arbeitsschritt nicht mehr als erledigt:
+  Qwirbel fragt bis zu zweimal nach und sagt dem Modell genau, was fehlt.
+  Die Rohantwort landet im Protokoll.
+- **Grosse Modelle mit wenigen aktiven Parametern** (Mixture-of-Experts wie
+  Ornith 35B-A3B oder Gemma 4 26B-A4B) bekommen die kompakte
+  Werkzeug-Beschreibung, die zu ihren aktiven Parametern passt. Vorher zaehlte
+  nur die Zahl im Namen - Ornith bekam die volle, rund 15.000 Tokens lange
+  Beschreibung, und die Regeln rutschten aus dem Blick.
+- **Hinweise je Familie** fuer lokale Modelle in Aufgaben und Code:
+  Qwen-Modelle (auch Ornith und QwQ) duerfen ihr gewohntes Aufruf-Format
+  benutzen, andere Familien bekommen eine klare Werkzeug-Pflicht. Gemma bleibt
+  unveraendert, weil es schon lief. Cloud-Modelle und der normale Chat
+  bekommen keinen Zusatz.
+- **Abgeschnittene Antworten** (Ausgabelimit erreicht) werden erkannt. Das
+  Modell wird gebeten, grosse Dateien in Teilen zu schreiben, statt dass ein
+  halber Aufruf als fertig durchgeht.
+- Die Planung fragt bei einer unlesbaren Antwort einmal nach, statt die
+  Aufgabe abzubrechen. Klecks-Modelle nutzen jetzt dieselbe Antwort-Erkennung
+  wie Ollama.
+- "index.html im Ordner X erstellen" fuehrt jetzt zuerst zum Datei-Schreiben,
+  nicht zum Ordner-Anlegen.
+
+### Kontext: ein Fenster je Modell, ueberall
+
+- Der normale Chat schickte Ollama keine Fenstergroesse, Ollama nahm also
+  seinen kleinen Standard. Klecks-Chats liefen mit 8.192 Tokens. Jetzt
+  bekommt jedes lokale Modell ein gerechnetes Fenster - Chat, Aufgaben und
+  Klecks gleich. Das verhindert zugleich, dass Ollama das Modell zwischen zwei
+  Aufrufen neu laedt, weil die Fenstergroesse wechselt.
+- Nachgerechnet am Beispiel Ornith (Q2_K, 14 GB auf einer 16-GB-Karte): Das
+  Fenster liegt bei rund 96.000 Tokens, nicht bei 16.000. Das Modell kann bis
+  zu 262.000; wie viel davon nutzbar ist, bestimmt der Grafikspeicher.
+- Unveraendert und bewusst so: Ein Modell, das groesser ist als der
+  Grafikspeicher, behaelt die Untergrenze von 16.384 Tokens. Ein groesseres
+  Fenster wuerde weitere Schichten auf den Prozessor schieben und alles
+  langsamer machen.
+
+### Setup
+
+- **Eine Probe-Installation laesst den Eintrag unter "Apps & Features" in
+  Ruhe.** Wer die Setup-Datei zum Ausprobieren in einen anderen Ordner
+  installierte, bog damit den Eintrag der eigentlichen Installation um.
+  Nach dem Loeschen des Probe-Ordners fuehrte "Deinstallieren" dann ins
+  Leere. Auch eine vorhandene Autostart-Verknuepfung wurde dabei entfernt.
+  Der neue Schalter `--probe` laesst beides unberuehrt. Eine normale
+  Installation schreibt den Eintrag wie bisher.
+
+### Geprueft - und was nicht
+
+- Kein echter Modell-Lauf: Die Werkzeug-Aenderungen sind mit den
+  nachgestellten Antworten aus dem Ornith-Protokoll geprueft, nicht mit Ornith
+  selbst. Ob Ornith jetzt die Website schreibt, zeigt erst der naechste
+  echte Auftrag.
+- Die Einrichtung ist mit winzigen echten GGUF-Dateien geprueft. Dazu kam
+  ein Trockenlauf an einem echten Modellordner (nur gelesen): Die erste
+  Fassung haette 127 GB kopiert (zwei Modelle waren laengst in Ollama, eins
+  kennt Ollama nicht). Die ausgelieferte Fassung kopiert dort 0 GB.
+- Ein echter Import ueber die Automatik lief nicht. Er nutzt denselben Weg
+  wie der bestehende Knopf.
+- Noch offen: Modelle, die nur Klecks kennt, bekommen ihre Kontextlaenge
+  noch nicht aus der Datei selbst.
+
+---
+
 ## v2.9.30 - Handy-Bildschirm, alle Workflows sichtbar, LTX-2.5
 
 ### Handy: den PC-Bildschirm sehen und steuern
