@@ -35,6 +35,78 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.32 - Motion Control: Zeitfenster, LoRA und Ton; lokale Modelle ohne Leerlauf
+
+### Motion Control
+
+- **Den Teil des Videos auswählen.** Unter dem Bewegungsvideo steht jetzt eine
+  Leiste für das ganze Video. Das weiße Fenster darauf hat die gewählte Länge
+  (oben angezeigt, Vorgabe 5 Sekunden). Du ziehst es mit Maus oder Finger nach
+  links oder rechts und bestimmst so, welche Sekunden die Bewegung vorgeben.
+  Mit den Pfeiltasten geht es in Zehntelsekunden, mit Shift in ganzen
+  Sekunden. Die Vorschau darüber springt an den Anfang des Fensters und spielt
+  per Klick genau diesen Teil in Schleife. Vorher nahm Motion Control immer
+  den Anfang des Videos.
+- Liegt der gewählte Teil zu nah am Ende, sagt Qwirbel, wie viele Sekunden
+  übrig sind, und kürzt ehrlich.
+- Die Länge, die der Regler anzeigt, gilt jetzt auch. Unberührt lief vorher
+  die im Workflow hinterlegte Länge (7 bzw. 8 Sekunden), obwohl 5 angezeigt
+  wurden.
+- **"Motion Control ohne Hintergrund" nutzte keine LoRA.** Der Workflow
+  rechnet mit 4 Schritten ohne Guidance. Das funktioniert nur mit der
+  Beschleunigungs-LoRA (lightx2v), und die war nicht eingetragen. Beide LoRAs
+  sind jetzt drin, wie beim normalen Motion-Control-Workflow.
+- **Derselbe Workflow speicherte ohne Ton.** Die Tonspur des Bewegungsvideos
+  war nicht mit dem Video-Ausgang verbunden. Jetzt ist sie es, und Qwirbel
+  zeigt die Fassung mit Ton. Bei den anderen beiden Motion-Workflows war das
+  schon so.
+- Der Knopf "Aussehen vom Bild übernehmen" bleibt, wie er ist.
+
+### Lokale Modelle: kein Leerlauf mehr, nichts Unerledigtes als erledigt
+
+Ausgewertet wurde ein Code-Auftrag über zwei Tage (Boss-Plugin, Ornith
+35B-A3B Q2_K): vier Durchläufe, zusammen rund 12 Stunden.
+
+- **Endlosschleifen werden abgebrochen.** In 13 Zügen schrieb das Modell nur
+  noch dieselbe Zeile untereinander, bis zur Längengrenze. Das dauerte jeweils
+  rund 15 Minuten, zusammen über drei Stunden. Qwirbel erkennt so eine
+  Schleife jetzt, während sie entsteht, und bricht die Rechnung ab. Das Modell
+  bekommt einen klaren Hinweis und schreibt den Aufruf neu. Echte Inhalte,
+  etwa gleiche Zahlenreihen in einer Datei, sind davon ausgenommen.
+- **"Erledigt" nur noch, wenn etwas passiert ist.** Lieferte ein Modell auch
+  nach zwei Nachfragen nur Text statt eines Werkzeug-Aufrufs, galt dieser
+  Text als Ergebnis des Schritts. Am Ende stand "Erledigt", obwohl Dateien
+  fehlten. Jetzt steht dort "NICHT ERLEDIGT", und es wird gesagt, dass nichts
+  ausgeführt wurde. Planung und Prüfung sehen das.
+- **Jeder lokale Zug wird gemessen.** Im Protokoll steht je Zug: Fenstergröße,
+  Tokens, Ladezeit, Rechenzeit, warum die Antwort endete und die
+  keep_alive-Einstellung. So ist der nächste langsame Lauf messbar statt
+  geschätzt.
+- Hinweis zur eigenen Einstellung: Steht unter Leistung "entlasten" auf der
+  Stufe "Modell gar nicht im Grafikspeicher halten", lädt Ollama das Modell
+  vor jedem Zug neu und rechnet den ganzen Prompt neu. Das ist gewollt, um
+  Grafikspeicher fürs Spielen freizugeben. Qwirbel überstimmt diese
+  Einstellung nicht. Die neuen Messzahlen zeigen, was sie kostet.
+
+### Geprüft - und was nicht
+
+- Motion Control: Workflows, Zeitfenster-Rechnung (Startpunkt in Bilder
+  umgerechnet, für alle drei Motion-Workflows) und die Kürzung sind mit Tests
+  geprüft. Die Leiste wurde zusätzlich im Browser an einer eigenen
+  Probe-Installation bedient: Ziehen, Tippen neben das Fenster und
+  Pfeiltasten, in PC-Breite und in schmaler Handy-Breite. Dabei fiel ein
+  Fehler auf und ist behoben: Schnell hintereinander gedrückte Pfeiltasten
+  blieben vor der Grenze stehen. Keine echte Generierung.
+- Lokale Modelle: Schleifen-Erkennung und Abbruch mit nachgestellten
+  Ollama-Antworten geprüft, darunter lange echte Datei-Inhalte, die nicht
+  abgebrochen werden dürfen. Kein echter Modell-Lauf.
+- Nicht behoben: Dateien, die der Lauf kaputt geschrieben hat (eine
+  Java-Datei mit einer Zeile hinter der Klassenklammer, eine YAML-Datei mit
+  mehrfach angehängten Blöcken), bleiben, wie sie sind. Eine Syntaxprüfung
+  nach dem Schreiben gibt es noch nicht.
+
+---
+
 ## v2.9.31 - Modelle richten sich selbst ein, Werkzeuge je Modellfamilie
 
 ### Heruntergeladene Modelle kommen von selbst in Ollama und Klecks
