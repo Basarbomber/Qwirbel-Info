@@ -35,6 +35,89 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.33 - Dateien im Chat öffnen, viel weniger Tokens, Gedankengang sichtbar
+
+### Dateien aus dem Chat öffnen
+
+- **Ein Klick auf einen Datei-Chip öffnet die Datei.** HTML, SVG und PDF gehen
+  im Standardprogramm deines PCs auf, bei einem Browser also in dem, den du
+  eingestellt hast. Textdateien (md, txt, log, json, csv, yaml, ini, toml, xml)
+  öffnen in einem Fenster in Qwirbel; Markdown wird dabei gesetzt dargestellt.
+  Vorher war ein Klick immer nur ein Download.
+- Das Herunterladen bleibt als eigenes Symbol daneben.
+- Geöffnet wird nur, was Qwirbel ohnehin herausgeben darf, und **niemals**
+  etwas Ausführbares wie .exe, .bat oder .ps1.
+- Vom Handy oder aus der Ferne würde ein Fenster am PC niemandem helfen. Dort
+  wird die Datei heruntergeladen, und das Gerät öffnet sie selbst. Qwirbel
+  sagt das auch.
+
+### Deutlich weniger Tokens je Zug
+
+Ausgewertet wurden die eigenen Zähler über zehn Tage: Ein Zug im Code-Tab
+schickte im Schnitt rund 236.000 Tokens an GLM und rund 55.000 an ein lokales
+Modell - für rund 4.000 Tokens Antwort.
+
+- **Der größte Posten war das Lese-Gedächtnis.** Jeder Zug hängte die Inhalte
+  **aller** Dateien an, die in diesem Chat jemals gelesen wurden, auch aus
+  längst erledigten Aufträgen. Gemessen: bis zu 1,4 MB Text pro Chat, rund
+  70 Prozent aller Tokens. Jetzt geht der laufende Auftrag weiter vollständig
+  mit, aus früheren Aufträgen nur noch das Neueste bis 40.000 Zeichen. Alles
+  bleibt gespeichert, steht im Datei-Wegweiser und kann jederzeit neu gelesen
+  werden. Einstellbar über `agent.lesegedaechtnis_frueher_zeichen`.
+- **"Was Qwirbel über dich weiß"** war durch das automatische Lernen auf
+  68.000 Zeichen gewachsen und ging in jeden Zug, jede Planung und jede
+  Prüfung. Jetzt gilt ein Deckel von 6.000 Zeichen, und zwar auf das Neueste
+  jeder Datei (`agent.wissen_zeichen`).
+- **Gelerntes** kommt mit den 20 neuesten Einträgen statt mit 40.
+- Überschlagen mit den gemessenen Dateigrößen sinkt ein GLM-Zug damit von rund
+  236.000 auf grob 30.000 bis 40.000 Tokens. Das ist eine Hochrechnung, kein
+  gemessener Lauf - der nächste echte Auftrag zeigt den wahren Wert, und jeder
+  lokale Zug wird seit 2.9.32 einzeln protokolliert.
+
+### Gedankengang
+
+- **Lokale Modelle zeigen ihr Denken jetzt auch dann, wenn sie es selbst
+  öffnen.** Modelle wie Ornith, Qwen3.8, QwQ oder AgentWorld schreiben ihren
+  Gedankengang direkt in die Antwort und schließen ihn mit `</think>`. Ollama
+  trennt das bei diesen Modellen nicht, und in Qwirbel verschwand der Text
+  beim Schließen einfach. Jetzt landet er im aufklappbaren Gedankengang, live
+  beim Schreiben. Kommt nie ein `</think>`, war es doch die Antwort - dann
+  wird sie sauber als Antwort angezeigt.
+- **Fehler behoben:** Im Chat mit zugeschalteten MCP-Werkzeugen fielen alle
+  Antwort-Stücke weg, sobald der Gedankengang getrennt lief, und das
+  Denk-Ereignis hatte einen Namen, auf den die Oberfläche nie gehört hat.
+- **Vor der Aufgabe in Work und Code** stand bisher der Satz über den
+  Projekt-Befund als eigene Zeile mit Gehirn-Symbol, direkt neben dem echten
+  Gedankengang. Er steht jetzt in der Zeile der Erkundung selbst.
+- **Das Gehirn-Symbol gehört ab jetzt nur dem Gedankengang.** Qwirbels eigene
+  Zwischenansagen tragen eine Sprechblase. Vorher sah beides gleich aus.
+
+### Eigene Workflows: Regeln und Prüfung
+
+- Im Workflow-Berater stehen aufklappbar die **Regeln für eigene Workflows**:
+  Speed-LoRA bei wenigen Schritten mit CFG 1, LoRA-Loader zwischen Modell und
+  Sampler, Tonspur von "Load Video" an "Video Combine", Dateinamen so lassen,
+  wie sie im models-Ordner liegen.
+- **Qwirbel prüft das selbst** - beim Import eines Workflows und im Berater.
+  Gemeldet werden: ein leerer oder nicht verbundener LoRA-Loader, ein
+  Destillations-Aufbau ohne Speed-LoRA und ein gespeicherter Video-Ausgang
+  ohne Ton, obwohl ein Video geladen wird. Hilfsausgaben wie POSE, FACE oder
+  BACKGROUND sind ausgenommen.
+- Gegenprobe: Bei allen 16 mitgelieferten Workflows meldet die Prüfung nichts;
+  beim fehlerhaften Motion-Control-Workflow von vor 2.9.32 alle drei Punkte.
+
+### Geprüft - und was nicht
+
+- Dateien öffnen: mit Tests geprüft, auch dass ausführbare Dateien abgelehnt
+  werden und dass nichts außerhalb der freigegebenen Ordner geöffnet wird. Es
+  wurde dabei kein Browserfenster wirklich geöffnet.
+- Tokens: an nachgestellten Daten geprüft (1,2 MB Lese-Gedächtnis, große
+  Wissensdateien). Die Ersparnis im echten Lauf ist hochgerechnet.
+- Gedankengang: mit nachgestellten Antwort-Strömen geprüft, darunter ein
+  `</think>`, das über zwei Stücke verteilt ankommt. Kein echter Modell-Lauf.
+
+---
+
 ## v2.9.32 - Motion Control: Zeitfenster, LoRA und Ton; lokale Modelle ohne Leerlauf
 
 ### Motion Control
