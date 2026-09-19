@@ -35,6 +35,59 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.35 - Warum lokale Modelle scheiterten: das Fenster, die Rolle, die Regeln
+
+Nach einem Blick in die eigenen Protokolle von zwei gescheiterten Auftraegen
+(ein ComfyUI-Workflow, eine Website) - beides lag nicht am Modell.
+
+### Das Fenster war zur Haelfte fuer die Antwort reserviert
+
+- Qwirbel gab jedem Arbeitszug bis zu 8.192 Marken fuer die Antwort - bei
+  einem 16.384er Fenster blieb genau so viel fuer alles andere. Der Zug-Prompt
+  war aber 23.000 bis 26.000 Marken gross. Der eigene Rechner lehnte deshalb
+  ab, und Ollama schnitt den Prompt still auf 8.194 Marken ab: das Modell sah
+  in 37 Zuegen nie seine eigenen Ergebnisse, suchte dieselbe Datei viermal und
+  schrieb dieselbe Datei achtmal um.
+- Jetzt bekommt die Antwort hoechstens ein Viertel des Fensters, und der Prompt
+  wird vorher auf das gekuerzt, was wirklich hineinpasst - in der Mitte, mit
+  einem ehrlichen Hinweis, damit Auftrag und letzter Stand stehen bleiben.
+
+### Die Rolle und die Regeln passten nicht zum Auftrag
+
+- "ui" steckt in "comfyui": ein Auftrag fuer einen ComfyUI-Workflow bekam die
+  Designer-Rolle samt Farb-Regeln. Stichwoerter zaehlen jetzt nur noch als
+  ganze Woerter.
+- Die Auswahl der Regel-Dateien sah nur die letzte Nachricht. "designn blau
+  schwarz runde ecken" traf kein Stichwort - ausgerechnet die Website-Regeln
+  (Stylesheet gehoert nach static/ und wird ueber url_for eingebunden) blieben
+  ungelesen, und genau daran ist die Website gescheitert. Jetzt zaehlt der
+  Gespraechsverlauf mit.
+
+### Werkzeugaufrufe werden in allen Schreibweisen gelesen
+
+- Dieselben Modelle schreiben mal `<function=name>`, mal `<function:name>`,
+  mal `<parameter>name>`. Bisher zaehlte nur die erste Form - Zuege gingen als
+  "unlesbar" verloren. Jetzt zaehlen alle drei, auch wenn die Antwort mitten
+  im Aufruf abgeschnitten wurde.
+
+### Geschriebene Dateien werden geprueft
+
+- Eine .json wird gegen den JSON-Aufbau geprueft, eine .css auf HTML-Kommentare
+  und `<style>`-Tags, eine HTML-Seite darauf, ob der static-Ordner ueberhaupt
+  existiert, aus dem sie laedt. Die Datei wird trotzdem geschrieben - die
+  Warnung geht sofort an das Modell zurueck, statt dass es Stunden spaeter
+  auffaellt.
+- Die KI-Kennzeichnung liess eine Datei in Ruhe, sobald irgendeine Marke oben
+  stand - auch in der falschen Kommentarform. So ueberlebte ein HTML-Kommentar
+  in einer .css-Datei, und der Browser brach beim ersten Zeichen ab. Jetzt
+  zaehlt nur die Form, die zu dieser Dateiendung gehoert.
+
+### Kleinigkeiten
+
+- Der Lern-Schritt am Ende eines Auftrags hatte 400 Marken - bei denkenden
+  Modellen ging das Budget vollstaendig ins Denken, geantwortet wurde nie.
+  Jetzt 1.200 Marken und fuer diesen mechanischen Schritt kein Denken.
+
 ## v2.9.34 - Steps gelten, Workflows selbst bauen, frei arbeitende Modelle
 
 ### Die eingestellten Steps gelten wieder - ueberall
