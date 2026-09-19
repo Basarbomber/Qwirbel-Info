@@ -35,6 +35,100 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.34 - Steps gelten, Workflows selbst bauen, frei arbeitende Modelle
+
+### Die eingestellten Steps gelten wieder - ueberall
+
+- **Motion Control** rechnete bei acht Steps trotzdem nur vier: der Sampler
+  hoerte fest bei Schritt vier auf. Jetzt wandert dieser Endpunkt mit, und bei
+  Workflows aus zwei Samplern (WAN 2.2 hoch/niedrig) wird die Aufteilung im
+  selben Verhaeltnis mitgezogen - ohne Luecke dazwischen.
+- **Bild bearbeiten** lief immer mit vier Steps, egal was eingestellt war, und
+  hatte gar kein Steps-Feld. Beides behoben: das Feld ist da, deine Zahl gilt,
+  und ohne eigene Zahl bleibt es beim schnellen Wert des Workflows.
+- **Video aus Bild (WAN 2.2)** verwarf deine Steps stillschweigend. Jetzt
+  gelten sie; nur Qwirbels automatische Zahl bleibt weiterhin draussen, damit
+  ein getunter Workflow nicht ungefragt langsamer wird.
+- **LTX (Video mit Ton)** kennt keine Steps-Zahl, sondern einen Schritt-Plan.
+  Waehlst du selbst eine Zahl, wird der Plan sauber darauf umgerechnet - Anfang
+  und Ende bleiben, die Form der Kurve auch.
+- **Mehrere Generationen auf einmal** ("mach mir drei Bilder") bekamen deine
+  Einstellungen gar nicht erst. Jetzt schon - Steps, Aufloesung, Workflow.
+- **Steps in den Workflow-Einstellungen:** stehen "Steps min" und "Steps max"
+  auf derselben Zahl, ist das eine feste Vorgabe und keine Obergrenze mehr.
+  Das Steps-Feld im Work-Tab geht weiterhin vor.
+
+### Workflows werden jetzt gebaut, nicht nur begutachtet
+
+- **Der Knopf ERSTELLEN** unter Workflows sucht die passende Vorlage auf
+  deinem eigenen Rechner - deine ComfyUI-Workflows zuerst, danach Blueprints,
+  mitgelieferte Vorlagen und Beispiele von Zusatz-Knoten. Ohne Internet.
+- **Unter-Graphen (Subgraphs)** werden dabei aufgeloest. Neue ComfyUI-Vorlagen
+  bestehen fast nur daraus; bis jetzt liess sich so eine Datei gar nicht
+  einlesen.
+- **Deine Modelle werden zugeordnet:** ist die Datei aus der Vorlage nicht da,
+  nimmt Qwirbel die aehnlichste vorhandene - auch eine GGUF-Fassung, dann wird
+  der passende Lader eingesetzt. Was wirklich fehlt, wird beim Namen genannt
+  und nie erfunden.
+- Danach steht der Workflow in der Liste und im Workflow-Chip, mit erkannten
+  Eingaengen (Prompt, Bild, Video, Seed) und der Verdrahtungs-Pruefung.
+
+### Modelle arbeiten so, wie sie gebaut sind
+
+- **Frei arbeiten ist neu der Standard** im Work- und Code-Tab: kein
+  Planungs-Aufruf vor der Arbeit und keiner nach jedem Schritt. Das Modell
+  bekommt den ganzen Auftrag und teilt ihn sich selbst ein. Werkzeuge,
+  Zwischenmeldungen, Fragefenster und die Rechte-Stufen bleiben, wie sie sind.
+  Wer den alten Weg will, schaltet in den Einstellungen "Frei arbeiten" aus.
+- **Auf Vollberechtigung wird nicht mehr gefragt.** Stellt das Modell trotzdem
+  eine Frage, entscheidet es selbst weiter und nennt seine Annahme am Ende; die
+  Frage steht als Notiz im Verlauf. Sicherheitsabfragen bleiben.
+- Die Rechte-Stufe des Tabs steht jetzt fest, BEVOR der Auftrag losgeht.
+
+### Bild bearbeiten: mehrere Bilder bleiben mehrere Bilder
+
+- Ein zweites Bild ersetzte bisher das erste, weil die Bild-Grenze vom
+  Chat-Modell kam - obwohl die Bilder an ComfyUI gehen. Beim Bearbeiten sind es
+  jetzt immer drei Plaetze, neue Bilder fuellen freie Plaetze, und das x
+  entfernt genau das Bild, auf das du klickst. Einfuegen mit Strg+V geht auch.
+
+### Hochskalieren
+
+- Ueber den Workflow-Chip kam das Bild nie beim Hochskalieren an - jetzt schon.
+- Ein Latent-Upscaler eines Video-Modells stand in der Liste der Bild-Upscaler
+  und machte aus einem Foto Matsch. Solche Dateien stehen dort nicht mehr.
+- Beim Video wird die Bildrate der Quelle uebernommen (vorher fest 16 - ein
+  30er-Video lief als Zeitlupe, der Ton passte nicht mehr).
+- RealESRGAN x2 stand als "holt ComfyUI selbst" im Modell-Menue. Das stimmte
+  nicht: ComfyUI laedt keine Hochskalierer. Jetzt gibt es dort einen
+  Laden-Knopf.
+
+### Klecks: mehr Marken je Sekunde
+
+- **Ein Platz statt vier.** llama-server suchte sich bisher einen von vier
+  Plaetzen aus; der naechste Zug traf oft einen fremden Zwischenspeicher und
+  rechnete den ganzen Prompt neu. Mit einem Platz bleibt der Anfang stehen.
+- **Alle Kerne fuer den Vorlauf**, die echten Kerne fuer die Antwort.
+- **Kein mmap, wenn das Modell sicher in den Arbeitsspeicher passt** - sonst
+  liest Windows Teile des Modells immer wieder von der Platte nach.
+  Einstellbar ueber KLECKS_THREADS, KLECKS_THREADS_BATCH, KLECKS_UBATCH und
+  KLECKS_MMAP.
+- **Denken abschaltbar je Anfrage:** fuer Zuege, in denen ohnehin nur eine
+  Werkzeug-Wahl herauskommt, spart das bei denkenden Modellen die halbe
+  Rechenzeit. Kennt die Vorlage des Modells den Schalter nicht, laeuft derselbe
+  Zug einmal ohne ihn weiter.
+- Ein langer Zug starb bisher nach zehn Minuten in Klecks, obwohl Qwirbel noch
+  gewartet haette - die Rechenzeit war weg. Die Grenze passt jetzt zusammen.
+
+### Kleinigkeiten
+
+- **Der Klecks-Tab zeigte ComfyUI**, wenn Klecks auf einen anderen Port
+  ausgewichen war. Er zeigt jetzt die Adresse, die auch der Status meint - und
+  ohne laufenden Klecks weiterhin nichts ausser dem Startknopf.
+- ComfyUIs eigener "Load Video"-Knoten bekam das Bewegungsvideo nicht (falsches
+  Feld). Workflows mit mehreren Abschnitten bekommen deinen Prompt jetzt in
+  jedem Abschnitt, und ihr Seed wechselt wieder.
+
 ## v2.9.33 - Dateien im Chat öffnen, viel weniger Tokens, Gedankengang sichtbar
 
 ### Dateien aus dem Chat öffnen
