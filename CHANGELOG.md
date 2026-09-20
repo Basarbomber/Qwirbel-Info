@@ -35,6 +35,35 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.43 - Klecks sagt, mit welchem Fenster er wirklich geladen hat
+
+Beim Ausmessen, was Qwirbel auf einem 8-GB-Laptop braucht, sind drei Dinge
+aufgefallen. Auf einem grossen Rechner faellt keines davon auf - auf einem
+kleinen waere jedes davon der Grund, warum nichts funktioniert.
+
+- **Das geladene Fenster wird gemeldet.** Bisher antwortete Klecks beim
+  Laden nur "hat geklappt". Gemessen: 1.000.000 Marken angefragt, "hat
+  geklappt" geantwortet, 40.960 geladen - mehr gab das Modell nicht her.
+  Niemand erfuhr es; das Modell vergisst dann vorne, und man sucht den
+  Grund woanders. Jetzt steht in der Antwort und im Protokoll, was
+  wirklich geladen wurde, und bei einer Kuerzung auch, was angefragt war.
+- **Und es wird nicht mehr vor jeder Antwort neu geladen.** Wollte etwas
+  ein groesseres Fenster, als das Modell hergibt, lud Qwirbel bei JEDEM
+  Zug erneut - rund fuenf Sekunden, ohne dass sich etwas aenderte. Jetzt
+  merkt es sich, was das Modell kann.
+- **Der freie Grafikspeicher wird gemessen statt geerbt.** Klecks meldete
+  dafuer eine Zahl der anderen Engine, die auf diesem Weg gar nicht laeuft
+  - ueber sechs Messungen konstant dieselbe, auch waehrend 8 GB belegt
+  waren. Jetzt steht die gemessene Zahl dort, mit dem Hinweis, wie alt sie
+  ist; ist sie nicht messbar, bleibt das Feld leer statt falsch.
+- **"Ohne Grafikkarte" heisst jetzt wirklich ohne Grafikkarte.** Die
+  Einstellung dafuer wurde auf Klecks' eigenem Rechenwerk stillschweigend
+  ignoriert. Auf Geraeten mit eingebauter Grafik, die sich den
+  Hauptspeicher teilt, ist das der einzig sinnvolle Weg.
+- Und ein Absturz nebenbei: waehlte man ein Modell, das keine der beiden
+  Engines kennt, kam ein Programmfehler statt der Liste der verfuegbaren
+  Namen.
+
 ## v2.9.42 - Colibri sagt sein Kontextfenster selbst
 
 - Fuer GLM-5.2 auf der Colibri-Engine stand im Zaehler eine nach dem Namen
