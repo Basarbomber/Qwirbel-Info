@@ -35,6 +35,42 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.38 - Gefundenes bleibt, Dateien werden geprueft, Modelle behalten ihre Werte
+
+### Was die Werkzeuge gefunden haben, geht nicht mehr verloren
+
+- Im Protokoll stand: Das Modell fand seine Modell-Datei um 04:04 und suchte um
+  04:22 wieder am falschen Ort - null Treffer. Der Fund stand nur im Verlauf,
+  und der wird gekuerzt, wenn der Platz eng wird.
+- Jetzt stehen alle Pfade, die ein Werkzeug wirklich geliefert hat, ganz oben
+  im Arbeitsauftrag - kurz, wachsend und vom Kuerzen ausgenommen.
+
+### Der Abschluss-Check sieht in die Dateien
+
+- Bisher fragte er nur, OB eine genannte Datei existiert. Eine Workflow-Datei
+  ohne Aufbau und ein Stylesheet mit HTML-Kommentaren existierten - und galten
+  als erledigt.
+- Jetzt wird auch der Inhalt geprueft, mit genau derselben Pruefung wie beim
+  Schreiben. Passt er nicht zur Dateiendung, steht das im Ergebnis: "Datei da,
+  aber unbrauchbar".
+
+### Klecks laedt das Fenster nach, statt auszuweichen
+
+- Passte ein Prompt nicht ins geladene Fenster, wich Qwirbel auf Ollama aus -
+  und dort wurde er still gekuerzt. Das ist 32-mal passiert.
+- Jetzt laedt Klecks einmal mit dem Fenster nach, das der Prompt wirklich
+  braucht. Passt das nicht mehr ins Modell oder auf die Karte, scheitert es
+  ehrlich und der bisherige Weg greift wie vorher.
+
+### Jedes Modell rechnet mit seinen eigenen Werten
+
+- Qwirbel hat jeden lokalen Zug mit derselben Temperatur gerechnet. Bringt ein
+  Modell eine eigene mit - wie qwq mit 0.6 - gilt jetzt seine. Bei denkenden
+  Modellen ist das kein Detail: eine zu niedrige Temperatur fuehrt zu genau den
+  Endlos-Wiederholungen, die im Protokoll zehnmal abgebrochen wurden.
+- Modelle ohne eigene Angabe bleiben bei Qwirbels Wert - erfunden wird nichts.
+- Die Werte werden auch gelesen, wenn Ollama gerade nicht laeuft.
+
 ## v2.9.37 - Das Modell bleibt waehrend eines Auftrags geladen
 
 - Steht der Leistungs-Regler auf "entlasten", warf Ollama das Modell nach
