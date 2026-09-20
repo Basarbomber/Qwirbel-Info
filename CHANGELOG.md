@@ -35,6 +35,18 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.41 - Der Einnahmen-Tab ist weg
+
+- Der Tab war an die Frage gekoppelt, ob eine Kopie lizenzpflichtig ist - er
+  erschien also mal und mal nicht, je nachdem, wie die Kopie markiert war.
+- Jetzt gibt es ihn nicht mehr: nicht in der Navigation, nicht im Programm,
+  nicht als Endpunkt. Auch die Einstellungen, die nur er gelesen hat, sind
+  raus - eine Einstellung, die niemand liest, gehoert nicht in die Liste.
+- Was dein Lizenz-Server selbst kann, kann er weiter; das ist ein eigenes
+  Programm und wurde nicht angefasst.
+- Die Diagnose-Datei streicht die Lizenz-Zugangsdaten weiterhin heraus, falls
+  sie noch in deiner Einstellungsdatei stehen.
+
 ## v2.9.40 - Ein Motor auf deinem Rechner bleibt ein Motor auf deinem Rechner
 
 - Eine Engine, die hier laeuft, aber (noch) keinen Eintrag in deiner
