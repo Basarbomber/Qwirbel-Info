@@ -35,6 +35,16 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.40 - Ein Motor auf deinem Rechner bleibt ein Motor auf deinem Rechner
+
+- Eine Engine, die hier laeuft, aber (noch) keinen Eintrag in deiner
+  Anbieter-Liste hat, wurde beim Kontextfenster als Cloud behandelt. Dann haette
+  die Anzeige ein Fenster versprochen, das niemand gemessen hat, und die
+  Rechnung "was passt auf die Karte" waere ausgefallen.
+- Jetzt gilt dieselbe Namensliste wie im Rest des Programms. Ohne Eintrag gibt
+  es nichts zu messen - dann steht dort ehrlich nichts, statt einer Zahl aus
+  der Cloud.
+
 ## v2.9.39 - Die Zahl oben gehoert wieder zu dem Modell, das daneben steht
 
 ### Der Zaehler sprach ueber ein anderes Modell
