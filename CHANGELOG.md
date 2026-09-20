@@ -35,6 +35,33 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.36 - Jedes Modell bekommt sein eigenes Kontextfenster
+
+### Woher die Zahl kommt
+
+- Die Fenster-Zahl kam aus einer Tabelle nach Modellnamen, sobald Ollama nicht
+  antwortete (Dienst aus, Modell frisch geholt). Jedes aehnlich heissende
+  Modell bekam dieselbe Zahl.
+- Jetzt gilt die Reihenfolge: gemessen (Ollama antwortet) vor einmal gemessen
+  (steht in der Einstellungsdatei) vor **dem Kopf der Modelldatei selbst** -
+  und erst ganz zuletzt die Namens-Tabelle. Im GGUF-Kopf steht das Fenster
+  drin; gelesen wird nur der Kopf, nichts wird geladen.
+- Beim Drueberfahren steht jetzt dabei, woher die Zahl stammt: gemessen,
+  einmal gemessen, aus der Modelldatei oder geschaetzt.
+
+### Das wirklich geladene Fenster
+
+- Die Leiste zeigte, was das Modell KANN - geladen wurden aber 16.384 Marken,
+  fuer jedes Modell gleich. Das war der Grund, warum ueberall dieselbe grosse
+  Zahl stand.
+- Jetzt zeigt die Leiste das Fenster, das wirklich gilt, und nennt daneben,
+  was das Modell koennte.
+- Und das geladene Fenster wird je Modell gerechnet - auch ohne laufendes
+  Ollama, aus der Modelldatei und ihrer Groesse. Auf einer 16-GB-Karte heisst
+  das zum Beispiel: ein 27B-Modell bekommt statt 16.384 rund 92.000 Marken,
+  ein grosses 35B-MoE rund 142.000 - und ein Modell, das die Karte selbst fast
+  fuellt, bleibt ehrlich klein, statt eine grosse Zahl zu behaupten.
+
 ## v2.9.35 - Warum lokale Modelle scheiterten: das Fenster, die Rolle, die Regeln
 
 Nach einem Blick in die eigenen Protokolle von zwei gescheiterten Auftraegen
