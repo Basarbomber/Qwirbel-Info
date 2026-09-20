@@ -35,6 +35,44 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.39 - Die Zahl oben gehoert wieder zu dem Modell, das daneben steht
+
+### Der Zaehler sprach ueber ein anderes Modell
+
+- Oben stand `glm-5.2-colibri` und daneben `23k / 102k`. Die 102.400 waren
+  richtig gerechnet - nur fuer Ornith 35B, ein ganz anderes Modell. Im Chat
+  fragte die Leiste immer nach Ollama und dem Ollama-Modell, auch wenn der
+  Chat ueber einen anderen Motor lief. Genau das waren die "260k", die bei
+  jedem zweiten Modell gleich aussahen.
+- Jetzt rechnet die Oberflaeche ihre Motorwahl genau einmal aus. Was du
+  gewaehlt hast, rechnet - und ueber genau das spricht der Zaehler.
+
+### Dein eigener Server wird gefragt, statt geraten
+
+- Fuer eine Engine, die auf deinem Rechner ueber die OpenAI-Schnittstelle
+  laeuft (Colibri, ein eigener llama.cpp- oder vLLM-Server), stand bisher eine
+  nach dem Namen geratene Zahl - bei allem, was "glm-5" heisst, rund eine
+  Million. Angezeigt wurde sie als "laut Anbieter".
+- Jetzt wird der Server gefragt. Er nennt sein Fenster selbst, und beim Start
+  steht es fest. Antwortet er nicht, sagt die Anzeige das, statt eine Zahl zu
+  erfinden.
+
+### Cloud-Modelle werden nicht mehr auf deine Grafikkarte heruntergerechnet
+
+- Die kleinere der beiden Zahlen ist die Rechnung "wieviel Kontext passt neben
+  dieses Modell auf die Karte". Fuer ein Cloud-Modell ergibt sie keinen Sinn -
+  dort rechnet die Karte des Anbieters. Sie greift jetzt nur noch dort, wo
+  wirklich auf deiner Karte geladen wird.
+
+### Eine Frage, eine Antwort, eine Herkunft
+
+- Das Fenster wurde an vier Stellen halb beantwortet, die Namens-Tabelle stand
+  zweimal (Programm und Oberflaeche), und die Leiste stellte fuer jede Anzeige
+  zwei Anfragen an Ollama - alle 15 Sekunden, je offenem Reiter.
+- Jetzt beantwortet eine Stelle die ganze Frage, in einem Zug: gemessen vor
+  einmal gemessen vor Modelldatei vor geraten. Beim Drueberfahren steht, welche
+  davon gilt.
+
 ## v2.9.38 - Gefundenes bleibt, Dateien werden geprueft, Modelle behalten ihre Werte
 
 ### Was die Werkzeuge gefunden haben, geht nicht mehr verloren
