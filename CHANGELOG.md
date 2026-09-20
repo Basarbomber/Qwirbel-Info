@@ -35,6 +35,23 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.37 - Das Modell bleibt waehrend eines Auftrags geladen
+
+- Steht der Leistungs-Regler auf "entlasten", warf Ollama das Modell nach
+  JEDEM Zug von der Karte - der naechste Zug lud es wieder. Im Protokoll
+  standen 13 bis 19 Sekunden Ladezeit vor jedem Zug; in einer Woche kamen so
+  rund 50 Minuten zusammen, und der Prompt-Zwischenspeicher war jedes Mal weg.
+- Jetzt bleibt das Modell geladen, solange ein Auftrag laeuft, und wird danach
+  freigegeben. Der Regler behaelt damit sein Wort: wenn du nicht arbeitest,
+  gehoert die Karte wieder dir.
+- Jeder Zug schiebt die Frist weiter, auch ein Lauf ueber anderthalb Stunden
+  bleibt warm. Der Stop-Knopf beendet den Zustand sofort (er raeumt die Karte
+  ohnehin), und bricht etwas ab, laeuft die Frist von selbst aus - die Karte
+  bleibt nie versehentlich belegt.
+- Wie lange waehrend eines Auftrags gehalten wird, steht in den Einstellungen
+  (ressourcen.ollama_keep_alive_auftrag, leer = 10 Minuten). Wer sein Modell
+  ohnehin warm haelt, merkt von der Aenderung nichts.
+
 ## v2.9.36 - Jedes Modell bekommt sein eigenes Kontextfenster
 
 ### Woher die Zahl kommt
