@@ -35,6 +35,17 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.42 - Colibri sagt sein Kontextfenster selbst
+
+- Fuer GLM-5.2 auf der Colibri-Engine stand im Zaehler eine nach dem Namen
+  geratene Zahl. Der Server nennt sein Fenster naemlich ueber keine
+  Schnittstelle - er liefert nur seinen Modellnamen und seine Speicherstufen.
+- Jetzt liest Qwirbel beim Start der Engine die Angabe aus dem Modellordner
+  selbst (bei GLM-5.2: 1.048.576) und merkt sie sich. Der Zaehler zeigt sie
+  danach als gemessen an, nicht mehr als Schaetzung.
+- Laesst sich die Angabe nicht lesen, bleibt es bei der ehrlichen Schaetzung -
+  erfunden wird nichts.
+
 ## v2.9.41 - Der Einnahmen-Tab ist weg
 
 - Der Tab war an die Frage gekoppelt, ob eine Kopie lizenzpflichtig ist - er
