@@ -35,6 +35,20 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.44 - Der Platz fuer das Kontextfenster wird richtig gerechnet
+
+- Beim Planen, was auf die Grafikkarte passt, zaehlte Klecks bei Qwen3.5 und
+  neuer JEDE Schicht als Cache-Traeger. Diese Modelle sind gemischt gebaut:
+  nur jede vierte Schicht haelt ueberhaupt einen Zwischenspeicher, die
+  uebrigen arbeiten ohne. Gerechnet wurde also das Vierfache.
+- Die Folge war kein Fehler, sondern Langsamkeit ohne Grund: der Plan legte
+  Platz beiseite, den niemand braucht, und schob dafuer Modellteile in den
+  Hauptspeicher.
+- An deinen eigenen Modelldateien gerechnet, bei 32k Kontext: Qwen3.8-27B
+  braucht 2,00 statt 8,12 GB - **6 GB weniger** auf einer 16-GB-Karte.
+  Ornith 1.5: 0,62 statt 2,56 GB. Modelle ohne gemischten Aufbau (qwen3:14b,
+  glm4:9b, gemma-4) aendern sich um keinen Wert.
+
 ## v2.9.43 - Klecks sagt, mit welchem Fenster er wirklich geladen hat
 
 Beim Ausmessen, was Qwirbel auf einem 8-GB-Laptop braucht, sind drei Dinge
