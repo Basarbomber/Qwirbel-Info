@@ -35,6 +35,44 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.46 - Qwirbel vom Sofa: Controller, Bildschirmtastatur, Fernseh-Ansicht
+
+Der zweite Teil der Bedienung ohne Maus. Alles davon steht unter
+Darstellung → „Bedienung ohne Maus" und gilt nur auf dem Geraet, an dem du
+es einschaltest.
+
+### Controller
+
+- Stick und Steuerkreuz bewegen die Auswahl, X loest aus, Kreis steigt aus -
+  dieselben Wege wie die Pfeiltasten, keine zweiten Regeln.
+- **Standardmaessig aus**, und zwar richtig aus: solange der Schalter nicht
+  an ist, wird der Controller nicht einmal abgefragt. Er stoert also nichts,
+  waehrend du spielst.
+- Die Einstellung zeigt, ob ueberhaupt einer angeschlossen ist und wie er
+  heisst - ein Schalter, bei dem man raten muss, warum nichts passiert,
+  waere keiner.
+
+### Bildschirmtastatur
+
+- Im Stil einer Konsolen-Tastatur: Buchstaben, Grossschreibung, Zahlen und
+  Zeichen, deutsche Umlaute, Leerzeichen, Loeschen und Senden.
+- Auf geht sie mit X auf einem Textfeld oder - ohne Controller - mit der
+  Kontext-Taste bzw. Rechtsklick auf dem ausgewaehlten Eingabefeld. Am PC
+  bekommst du ausserhalb der Pfeil-Bedienung weiter dein normales
+  Rechtsklick-Menue.
+- Die Auswahl bleibt waehrend des Tippens in der Tastatur; der Rahmen wandert
+  ueber die Tasten.
+
+### Fernseh-Ansicht
+
+- Fuer drei Meter Abstand: groessere Trefferflaechen, ein deutlicherer
+  Auswahl-Rahmen, und Knoepfe, die sonst erst beim Drueberfahren erscheinen,
+  bleiben sichtbar - auf dem Sofa faehrt niemand mit der Maus drueber.
+- **Groesser macht sie nicht.** Dafuer gibt es die Groessen-Einstellung, die
+  es laengst gibt. Steht die noch auf 100 %, hebt der Schalter sie einmalig
+  auf 130 % und nimmt das beim Ausschalten zurueck; hast du selbst eine
+  Groesse eingestellt, bleibt sie unangetastet.
+
 ## v2.9.45 - Das Diktat endet von selbst, und die Pfeiltasten kommen ueberall hin
 
 ### Diktat
