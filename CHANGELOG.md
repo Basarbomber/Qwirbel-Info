@@ -35,6 +35,50 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.45 - Das Diktat endet von selbst, und die Pfeiltasten kommen ueberall hin
+
+### Diktat
+
+- **Stille beendet das Diktat.** Bisher lief das Diktat im Chat, bis du den
+  Knopf noch einmal gedrueckt hast - der Regler „Stille beendet die
+  Aufnahme" gehoerte zu einem anderen Weg (Test-Diktat und Hotword) und
+  konnte fuer den Chat gar nichts bewirken. Jetzt endet es nach **45
+  Sekunden**, in denen du nichts sagst; der erkannte Text bleibt stehen.
+  Eigener Regler im Live-Diktat, 0 bis 120 Sekunden, 0 = aus. Der alte
+  Regler daneben darf jetzt bis 60 statt bis 5 Sekunden.
+- **Der Mikrofon-Knopf tut jetzt immer etwas.** Waehrend eine Antwort lief,
+  passierte beim Druecken nichts - ohne Ton, ohne Meldung. Das sah aus wie
+  ein abgeschaltetes Diktat. Die naechste Nachricht zu diktieren, waehrend
+  das Modell noch antwortet, ist jetzt der Normalfall.
+- **Eine abgebrochene Aufnahme blockiert das Mikrofon nicht mehr.** Wurde
+  die Oberflaeche neu geladen (zum Beispiel beim Qwirbeln), blieb im
+  Hintergrund eine tote Aufnahme stehen und jeder weitere Druck bekam „Es
+  laeuft schon eine Aufnahme". Es half nur ein Neustart. Jetzt wird die
+  Leiche weggeraeumt und du bekommst gesagt, dass du noch einmal druecken
+  sollst.
+
+### Bedienung mit den Pfeiltasten
+
+- Du kommst jetzt **mit den Pfeiltasten ueberall hin**: Navigation links,
+  Reiter oben, Modellauswahl, Knoepfe, Eingabefeld. Vorher ging das nur
+  innerhalb einzelner Leisten, und hinein kam man nur mit der Maus.
+- **Eine Pfeiltaste aus dem Nichts steigt ein** - die Auswahl springt auf
+  den Chat-Knopf oben links. Es ist also immer etwas ausgewaehlt, sobald du
+  anfaengst.
+- Gerechnet wird **raeumlich**: „rechts" ist das, was auf dem Bildschirm
+  rechts liegt, nicht das naechste im Programmtext. Deshalb springt die
+  Auswahl nicht mehr quer durchs Bild.
+- **Der Auswahl-Rahmen ist neu**: weiss im Dunkelmodus, schwarz im
+  Hellmodus, mit ruhigem Schimmern - und er uebernimmt die Ecken des
+  Elements, das er umfasst. Der alte Rahmen hatte fuer alles dieselben
+  runden Ecken, weshalb er mal passte und mal nicht.
+- Im Textfeld gehoeren die Pfeiltasten weiter dem Schreibzeiger; mit Escape
+  kommst du heraus. Die Maus schaltet den Rahmen wieder aus.
+
+Das ist der erste Teil eines groesseren Vorhabens: Qwirbel vom Sofa aus
+bedienen. Controller, Bildschirmtastatur und eine Fernseh-Ansicht kommen in
+eigenen Schritten.
+
 ## v2.9.44 - Der Platz fuer das Kontextfenster wird richtig gerechnet
 
 - Beim Planen, was auf die Grafikkarte passt, zaehlte Klecks bei Qwen3.5 und
