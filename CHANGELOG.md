@@ -35,6 +35,192 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.48 - Der helle Modus ist jetzt wirklich hell
+
+Eine Rueckmeldung per Mail brachte es auf den Punkt: wer den hellen Modus
+benutzt, sieht Teile der Schrift schlicht nicht. Graue Beschriftungen
+verschwinden auf hellem Grund, beim Drueberfahren mit der Maus wird es noch
+schlimmer, und das Rechtsklick-Menue auf der Eingabe war praktisch leer.
+
+### Was los war
+
+Der helle Modus war eine Flick-Schicht ueber einem dunklen Design. Er
+zaehlte 20 Farbwerte auf und drehte genau die. Im Programm stehen aber:
+
+- **44 verschiedene Textfarben mit 2.090 Vorkommen** direkt im Quelltext.
+  33 davon lagen im Hellen unter dem Lesbarkeits-Minimum (4,5:1), viele bei
+  1,0 bis 1,7:1 - das ist weisse Schrift auf weissem Grund.
+- **45 von 47 festen Farbregeln** im Stylesheet waren Dunkelmodus-Farben.
+  Darunter genau die gemeldeten Stellen: das Rechtsklick-Menue, die Chips
+  unter der Eingabe, und jeder Knopf beim Drueberfahren.
+
+Eine laengere Flick-Liste war keine Loesung: sechs der haeufigsten Farben
+stehen sowohl als Schrift als auch als Flaeche im Programm. Eine Regel auf
+den Farbwert haette die Flaechen mit erwischt.
+
+### Was jetzt gilt
+
+- **Jede Textfarbe hat einen Namen statt einer Zahl** - staerkster Text,
+  normaler Text, Nebentext, leiser Text, und die Bedeutungsfarben (laeuft,
+  Fehler, Warnung, Hinweis). Jeder Name hat zwei Werte: einen fuer dunkel,
+  einen fuer hell.
+- **Im Hellen ist Grau jetzt dunkelgrau bis schwarz.** Die Rangfolge bleibt:
+  was im Dunkeln heller (= wichtiger) war, ist im Hellen dunkler.
+- **Jeder Wert ist gerechnet, nicht geschaetzt**: mindestens 4,5:1 gegen
+  JEDE helle Flaeche im Programm - auch gegen die dunkelste.
+- **Die Akzentfarbe bekommt eine Schrift-Variante.** Deine Akzentfarbe
+  bleibt deine Akzentfarbe; als Schrift auf hellem Grund wird sie
+  automatisch abgedunkelt. Das gilt fuer jede Farbe, die du waehlst.
+- **Flaechen drehen mit**: gesperrte Knoepfe, die Flaeche beim
+  Drueberfahren, der Rahmen dabei und die Scrollleiste waren fest auf
+  dunkel verdrahtet - dunkle Schrift auf dunkler Flaeche.
+- **Der dunkle Modus aendert sich um kein einziges Pixel.** Jeder Name
+  traegt im Dunkeln exakt den Wert, der vorher an der Stelle stand.
+
+### Und die Regel dahinter
+
+Einzelne Farben zu reparieren reicht nicht - das naechste Mal steht wieder
+dunkle Schrift auf dunklem Grund. Darum gilt ab jetzt eine Regel:
+
+> **Die Schriftfarbe folgt der Flaeche, auf der sie liegt.**
+> Dunkle Flaeche, helle Schrift. Helle Flaeche, dunkle Schrift.
+
+- Das gilt fuer **jede Akzentfarbe, die du waehlst** - auch fuer eine, die
+  es heute noch nicht gibt. Gerechnet wird sie nicht von uns, sondern vom
+  Browser, in dem Moment, in dem er sie zeichnet.
+- Dein eigener Text im Chat war das deutlichste Beispiel: die Sprechblase
+  mischte die Akzentfarbe mit einem fest eingebauten Dunkelblau, blieb im
+  hellen Modus also dunkel - waehrend die Schrift schwarz wurde. Jetzt
+  mischt sie mit der Flaeche des Modus, und die Schrift folgt ihr.
+- **46 weitere Flaechen und Rahmen**, die ebenso mit festen Dunkeltoenen
+  gemischt waren, drehen jetzt mit.
+- **Auch im dunklen Modus.** Zwei Grautoene lagen dort auf den dunkelsten
+  Flaechen bei 3,73:1 und 2,34:1 - der Hinweis unter der Eingabe und der
+  gesperrte Senden-Knopf. Beide sind auf das Minimum angehoben, das
+  4,5:1 erreicht; heller als noetig wird nichts. Farbige Beschriftungen
+  bekommen dort 10 % Weiss beigemischt - das sieht man kaum, unlesbar war
+  der alte Zustand.
+
+### Wie das geprueft wurde
+
+Nicht nach Augenmass. Das Programm laeuft in einem Browser, eine Messung
+klickt **13 Ansichten** durch und rechnet fuer **jedes sichtbare
+Textelement** die tatsaechliche Schriftfarbe gegen den tatsaechlichen
+Hintergrund - einschliesslich durchscheinender Flaechen uebereinander.
+
+| Modus | Textelemente | unter 4,5:1 |
+|---|---|---|
+| hell | 1.165 | **0** |
+| dunkel | 1.165 | **0** |
+
+Vorher waren es im hellen Modus 46 und im dunklen 79.
+
+## v2.9.47 - Qwirbel liest nicht mehr in fremden Projekten herum
+
+### Der Fehler
+
+Wer im Work- oder Code-Tab eine einfache Frage stellte, bekam sie beantwortet
+- aber davor sah sich Qwirbel jedes Mal einen Projektordner an, mit dem die
+Frage nichts zu tun hatte. Gemessen an einer laufenden Installation, lokales
+Modell, Frage "Was ist 9 mal 8?":
+
+- "Ich hab mir erst Qwirbel angesehen - der Code liegt in tests."
+- 26.290 Token fuer eine Rechenaufgabe, davon 6.863 nur fuers Lesen
+- 35 Sekunden
+
+Dasselbe erklaert die Beschwerde, dass sich ein Chat an Dinge aus einem ganz
+anderen Chat "erinnert" und beilaeufig in fremden Dateien nachsieht.
+
+### Die Ursache
+
+Qwirbel sucht den gemeinten Projektordner, indem er Ordnernamen im Text
+sucht. Durchsucht wurde dabei die Frage UND der bisherige Chat-Verlauf. Im
+Verlauf steht aber vor jeder Antwort die Sprecher-Kennung "QWIRBEL:" - damit
+stand in jedem Chat mit auch nur einer Antwort das Wort "Qwirbel" im
+Suchtext, und der Qwirbel-Ordner gewann als "das gemeinte Projekt". Egal,
+worum es ging.
+
+Das war kein Fehler des Modells. Das Modell bekam einen falschen Kontext und
+hat damit brav gearbeitet.
+
+### Was jetzt gilt
+
+- **Was du JETZT schreibst, zaehlt zuerst.** Nennt deine Nachricht einen
+  Ordner, ist das der Ordner. Punkt.
+- **Erst wenn deine Nachricht keinen nennt**, schaut Qwirbel in den Verlauf -
+  und dort nur auf **deine eigenen Zeilen**. "Mach da weiter" nach "arbeite
+  an Klecks" findet Klecks weiterhin; seine eigene Antwort darf das Projekt
+  nicht mehr umhaengen.
+- Dieselbe Umstellung an zwei weiteren Stellen, an denen derselbe Verlauf
+  mitgelesen wurde: **welche Bau-Werkzeuge geprueft werden** (ein beilaeufiges
+  "Server" aus einem alten Zug zog Java und Gradle in den Befund) und
+  **welche Anleitungen in den Prompt kommen**.
+- Die Sprecher-Kennung hat jetzt genau **eine** Stelle im Programm, die sie
+  vergibt und liest. Vorher war sie zweimal abgetippt - daher der Fehler.
+
+Geprueft mit 36 neuen Pruefungen an den echten Funktionen, mit echten
+Ordnern, und danach an der laufenden Installation nachgemessen.
+
+### Verlorene Zuege: 80 gezaehlt, zwei Ursachen geschlossen
+
+Wenn Qwirbel schreibt „jetzt pruefe ich das" und danach nichts passiert, ist
+ein Zug verloren gegangen: das Modell hat geantwortet, aber Qwirbel konnte
+aus der Antwort keinen Werkzeugaufruf lesen. Wir haben das an einem echten
+Protokoll ausgezaehlt - fuenf Tage, 5.459 Agenten-Zuege:
+
+| Grund | Faelle | wer |
+|---|---|---|
+| Text statt Werkzeugaufruf | 48 | gemischt |
+| an der Laengengrenze abgeschnitten | 25 | **nur lokale Modelle** |
+| Wiederholungsschleife | 7 | nur lokale Modelle |
+| **zusammen** | **80 von 5.459 (1,5 %)** | |
+
+**Eckige statt spitzer Klammern.** Manche lokalen Modelle schreiben die
+Werkzeugzeile als `[function=...]` oder `[tool:...]` statt `<function=...>`,
+waehrend die Parameter darunter unveraendert bleiben. Qwirbel las das nicht
+und warf den ganzen Zug weg. Jetzt zaehlen beide Schreibweisen.
+
+**Die Laengengrenze wurde zu spaet gesagt.** Die Antwort eines lokalen
+Modells darf hoechstens ein Viertel des Kontextfensters gross sein - bei
+16.384 also rund 4.096 Marken. Wer eine ganze CSS-Datei in einem Zug
+schreiben wollte, lief dagegen, und der Zug war weg. Den Hinweis „schreib
+grosse Dateien in Teilen" gab es bisher erst DANACH. Jetzt steht die echte
+Grenze am Ende jedes Zug-Auftrags, in Zeichen ausgerechnet, samt dem Weg
+drumherum: erst schreiben, dann ergaenzen.
+
+**Was damit NICHT behoben ist:** die 48 Faelle, in denen das Modell schlicht
+Prosa schreibt statt eines Aufrufs. Davon trugen 19 ein vollstaendig
+aussehendes `{"tool": ...}` im Text - die Formen, die im Protokoll sichtbar
+sind, liest Qwirbel nachweislich. Sie muessen also weiter hinten brechen,
+und weiter hinten reicht das Protokoll nicht. Das bleibt offen und wird
+hier nicht als erledigt ausgegeben.
+
+### Bildschirmtastatur: drei Wege, ein Eingang
+
+- **Im Rechtsklick-Menue steht jetzt "Bildschirmtastatur anzeigen".** Auf
+  jedem Textfeld im Programm, neben Ausschneiden, Kopieren und Einfuegen.
+- Das ersetzt einen Fehler von gestern: der Rechtsklick hat in der
+  Pfeil-Bedienung das Menue unterdrueckt und die Tastatur direkt geoeffnet -
+  damit waren dort Ausschneiden und Einfuegen weg. Es gibt wieder EIN
+  Rechtsklick-Menue, in jedem Modus dasselbe.
+- **Enter oeffnet sie ebenfalls**, wenn du ein Eingabefeld gerade mit den
+  Pfeiltasten ausgewaehlt hast und noch nichts getippt ist. Sobald du
+  schreibst, ist Enter wieder Senden - dein gewohnter Weg bleibt.
+
+### Controller: ein Prueffeld statt Raten
+
+- Unter Darstellung -> Bedienung ohne Maus zeigt ein Feld **live**, was
+  ankommt: Name, Belegung, gedrueckte Tasten, Stick-Werte.
+- Es erklaert auch den haeufigsten Stolperstein: das Programmfenster gibt
+  einen Controller **erst nach dem ersten Tastendruck** heraus. Vorher ist
+  er bei Windows angemeldet und fuer das Programm unsichtbar - das sieht aus
+  wie "tut nichts", ist aber normales Browser-Verhalten.
+- Meldet der Controller keine Standard-Belegung, steht das da, samt Hinweis:
+  beim 8BitDo Ultimate den Schalter auf X (XInput) stellen, sonst stimmen
+  die Tastennummern nicht.
+- Kommt ein Controller an, waehrend der Schalter noch aus ist, sagt das Feld
+  auch das.
+
 ## v2.9.46 - Qwirbel vom Sofa: Controller, Bildschirmtastatur, Fernseh-Ansicht
 
 Der zweite Teil der Bedienung ohne Maus. Alles davon steht unter
