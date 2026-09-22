@@ -35,6 +35,31 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.50 - Ein Update aendert nicht, WAS deine Installation ist
+
+Ein Fund, der nur an einem echten Rechner auffaellt. Im Protokoll standen
+zwei Aktualisierungen derselben Fassung kurz hintereinander:
+
+    11:32   Update angewendet   667 Dateien, v2.9.49
+    12:05   Update angewendet   666 Dateien, v2.9.49
+
+Eine Datei Unterschied - und die entscheidet, ob eine Installation als
+**verkaufte Kopie** gilt. Jedes ausgelieferte Paket traegt diese Markierung,
+und das ist richtig so. Falsch war, dass ein Update sie auch dorthin
+mitgenommen hat, wo vorher keine war: aus einer freien Installation wurde
+durch einen Klick auf Aktualisieren eine lizenzpflichtige.
+
+Von Hand loeschen half nicht - beim naechsten Update war sie wieder da.
+
+**Ab jetzt gilt:** ein Update ERNEUERT die Markierung, wenn sie schon da
+ist (eine gekaufte Kopie bleibt eine gekaufte Kopie), aber es FUEHRT sie
+nie neu ein. Der Zustand gehoert der Installation, nicht dem Paket, das
+gerade vorbeikommt. Umgekehrt genauso: ein Paket ohne Markierung nimmt
+einer gekauften Kopie ihre nicht weg.
+
+Geprueft wird das mit echten Paketen gegen echte Wegwerf-Installationen -
+frei bleibt frei, gekauft bleibt gekauft, in beide Richtungen.
+
 ## v2.9.49 - Im deutschen Programm steht Deutsch
 
 Die Reiter hiessen Chat, Work, Code, Settings - englische Woerter in einer
