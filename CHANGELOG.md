@@ -35,6 +35,91 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.49 - Im deutschen Programm steht Deutsch
+
+Die Reiter hiessen Chat, Work, Code, Settings - englische Woerter in einer
+deutschen Oberflaeche. Jetzt heissen sie **Nachrichten**, **Arbeiten**,
+**Programmieren**, **Einstellungen**.
+
+### Wie wir die Luecken gefunden haben
+
+Nicht durch Durchlesen. Die Oberflaeche schreibt jeden Text als Paar - die
+deutsche und die englische Fassung nebeneinander. Steht auf beiden Seiten
+dasselbe, hat den Text nie jemand uebersetzt. Ueber alle **2.906 Texte**
+gezaehlt waren das **68 Stellen**.
+
+Uebersetzt wurden 49 davon. Der Rest bleibt mit Absicht:
+
+- **Namen bleiben Namen**: ComfyUI, Klecks, Ollama, MCP, Hyperspace.
+- **Abkuerzungen bleiben**: API, GPU, VRAM, JSON, Port, 2FA.
+- **Woerter, die im Deutschen laengst normal sind**, bleiben auch:
+  Auto, Normal, Online, Budget, Controller, Terminal, Prompt, Backup.
+
+Die neuen Namen im Einzelnen:
+
+| vorher | jetzt |
+|---|---|
+| Chat | Nachrichten |
+| Work | Arbeiten |
+| Code | Programmieren |
+| Mind | Gedanken |
+| Agentic | Agenten |
+| Admin | Verwaltung |
+| Models | Modelle |
+| Privacy | Privatsphaere |
+| Setup | Einrichtung |
+| Settings | Einstellungen |
+| Shortcuts | Tastenkuerzel |
+| Engine | Motor |
+| Queue | Warteschlange |
+| Galaxy View | Galaxie-Ansicht |
+| Reload | Neu laden |
+| Train / Use | Trainieren / Nutzen |
+| Hotword | Weckwort |
+
+**Die englische Oberflaeche aendert sich dadurch nicht** - der englische
+Name steht weiter daneben, er war ja nie das Problem.
+
+### Nachgezogen: die Lesbarkeits-Regel rechnet jetzt richtig
+
+Die Regel aus der letzten Fassung („die Schrift folgt ihrer Flaeche")
+entschied nach der Helligkeit im HSL-Farbraum. Das ist keine gute
+Grundlage: Gelb und Blau mit demselben HSL-Wert sind fuer das Auge
+unterschiedlich hell. An 22 Farben nachgemessen lag diese Rechnung
+**5 Mal daneben**, die perzeptive (OKLCH) nur **1 Mal**. Jetzt rechnet
+Qwirbel perzeptiv.
+
+Dazu zwei Stellen, die dieselbe Regel gebraucht haben:
+
+- **Der gefuellte Knopf** (SENDEN, EINRICHTEN, OEFFNEN) hatte weisse
+  Schrift fest eingebaut. Bei einem hellen Akzent - Tuerkis, Gelb - war
+  das Weiss auf Weiss. Jetzt leitet auch er seine Schrift aus seiner
+  Flaeche ab. Sein Farbverlauf lief ausserdem von der vollen Akzentfarbe
+  bis auf 55 % davon; ueber so eine Spanne kann EINE Schriftfarbe nicht
+  an beiden Enden lesbar sein. Der Verlauf ist jetzt flacher (bis 86 %) -
+  man sieht ihn weiterhin, aber die Schrift stimmt oben wie unten.
+- **Die Pixel-Welt im Automatik-Tab** ist eine gezeichnete Nachtszene und
+  bleibt in beiden Modi dunkel. Dort gilt die Regel andersherum: innerhalb
+  der Szene gelten wieder die hellen Schriftfarben des Dunkelmodus.
+
+Gemessen an der fertigen Oberflaeche, 15 Ansichten, 1.298 Textelemente:
+**46 Stellen unter der Lesbarkeitsgrenze vorher, 4 danach** - und die vier
+liegen bei 4,27 bis 4,49 statt der geforderten 4,5, also einen Hauch
+darunter, nicht im Unsichtbaren.
+
+### Und es bleibt so
+
+Eine Pruefung geht jetzt bei jedem Durchlauf alle Texte durch und meldet
+jedes neue englische Wort, das sich in die deutsche Oberflaeche verirrt.
+Sie kennt die Ausnahmen oben und akzeptiert nur, was wirklich ein Name,
+eine Abkuerzung oder ein eingebuergertes Wort ist.
+
+Dabei wird auch gezaehlt, wie vollstaendig die Uebersetzung ueberhaupt sein
+KANN: 15.226 Texte stehen fest im Programm und sind uebersetzbar, 604
+entstehen erst waehrend der Arbeit (Dateinamen, Zahlen, Meldungen) und
+werden getrennt ausgewiesen - wer sie mitzaehlt, verspricht eine
+Vollstaendigkeit, die es nicht gibt.
+
 ## v2.9.48 - Der helle Modus ist jetzt wirklich hell
 
 Eine Rueckmeldung per Mail brachte es auf den Punkt: wer den hellen Modus
