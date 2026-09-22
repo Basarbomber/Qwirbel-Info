@@ -35,6 +35,73 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.52 - Er beantwortet dich EINMAL, nicht in jedem Zug
+
+"Wenn ich einmal sage 'Internet ist wieder da', sagt er in jedem Melden
+'Internet ist wieder da, Internet ist wieder da'. Er wiederholt, was ich ihm
+einmal gesagt habe. Er muss sich auch notieren, was er da beantwortet hat -
+User-Interaktion mitfuehren."
+
+Es lag nicht am Kontext und nicht am Modell. Es stand im Klartext in seiner
+Arbeitsanweisung.
+
+Schreibst du Qwirbel waehrend der Arbeit etwas dazu, landet das auf einem
+Merkzettel, den er bei jedem Zug liest - unter der Ueberschrift:
+
+    DAS HAT NUTZER WAEHREND DER ARBEIT DAZUGESAGT
+    (noch OFFEN - das kommt JETZT dran, bevor du fertig meldest)
+
+Dieser Zettel wurde nur befuellt und nie geleert. Ein einmal gesagtes
+"Internet ist wieder da" stand damit Zug um Zug als OFFENE AUFGABE da, mit
+der Anweisung, sie JETZT zu erledigen. Das Modell war nicht verwirrt - es hat
+getan, was dort stand.
+
+**Ab jetzt ist so eine Nachricht kein ewiger Zettel mehr, sondern ein
+Vorgang mit Zustand:**
+
+* **Offen** - hoechstens zwei Zuege lang. Wer es zweimal gelesen hat, hat es
+  gelesen; ein drittes "das kommt JETZT dran" ist genau die Schleife.
+* **Besprochen** - danach steht es weiter da, aber als Verlauf: "das hat er
+  auch gesagt, du bist schon darauf eingegangen - nicht noch einmal
+  beantworten, nicht in jedem Melden wiederholen". Der Faden bleibt, die
+  Aufforderung faellt weg.
+* Geht er sofort darauf ein, kann er es sofort abhaken.
+
+Die zwei Zuege sind dabei die Garantie, nicht das Abhaken: sich darauf zu
+verlassen, dass ein Modell seine eigene Buchhaltung fuehrt, waere dieselbe
+Wette, die hier gerade verloren wurde.
+
+Ein **Stopp** oder eine Korrektur wirkt unveraendert sofort - daran ist
+nichts aufgeweicht.
+
+## Behoben: ein Name durfte den Start verhindern - und hat es getan
+
+Ehrlich, weil es genau so passiert ist: die Neuerung "alle Prozesse heissen
+im Taskmanager Qwirbel" hat in der Entwicklungsfassung den Start
+lahmgelegt.
+
+Qwirbel schreibt den Startbefehl seiner eigenen Kindprozesse auf eine
+markierte Kopie des Interpreters um. Geprueft wurde dabei nur der NAME
+dieser Kopie - nicht, ob es sie ueberhaupt schon gibt. Sie entsteht beim
+ersten Start selbst; bis dahin zeigte der Befehl ins Leere, Windows meldete
+"Datei nicht gefunden", und das Fenster ging nie auf.
+
+    Kopie angelegt     22:16:50
+    letzter Startversuch 22:15:48
+
+Eine Minute. Genau dazwischen lag der Fehler.
+
+**Ab jetzt drei Schloesser:** die Kopie wird nur gemeldet, wenn sie nach dem
+Schreiben wirklich da ist (ein Virenscanner kann sie genau dazwischen
+wegnehmen); sie wird nur benutzt, wenn sie existiert; und der Befehl wird
+nur gegen eine vorhandene Datei getauscht. Im Zweifel bleibt der
+urspruengliche Befehl stehen.
+
+Das ist keine neue Regel, die stand schon im Programm: ein falscher Name im
+Taskmanager ist ein Schoenheitsfehler, ein nicht startendes Programm nicht.
+Sie wird jetzt auch geprueft - mit einem Test, der genau diesen Fall
+nachstellt (Kopie fehlt, Prozess startet trotzdem).
+
 ## v2.9.51 - Dein Chatverlauf hoert nicht nach 200 Zeilen auf
 
 "Ich scroll hoch und sehe die Bilder nicht, die ich da im Chat hatte."
