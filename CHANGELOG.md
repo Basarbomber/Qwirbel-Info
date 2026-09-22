@@ -35,6 +35,298 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.51 - Dein Chatverlauf hoert nicht nach 200 Zeilen auf
+
+"Ich scroll hoch und sehe die Bilder nicht, die ich da im Chat hatte."
+
+Sie waren nie weg. Sie wurden nur nie geholt. Der Verlauf lieferte die
+letzten 200 Zeilen aus und sagte nicht, dass es mehr gibt - die
+Oberflaeche konnte gar nicht nachladen. Nachgezaehlt in einer echten
+Installation:
+
+    code.jsonl      2.683 Zeilen   ->  sichtbar waren 200
+    code2.jsonl     2.241 Zeilen   ->  sichtbar waren 200
+    aufgabe.jsonl   1.911 Zeilen   ->  sichtbar waren 200
+
+18 von 150 Chats waren laenger als das Fenster, durch das man sie sah.
+
+**Ab jetzt** kommt beim Hochscrollen der naechste Block nach, so lange,
+bis der erste Tag erreicht ist - mit Bildern, Dateien und allem, was
+dazugehoert. Die Scroll-Position bleibt dabei stehen. Auf einmal laedt
+Qwirbel nichts: ein Chat mit 2.683 Zeilen und Bildern soll sich oeffnen,
+nicht aufbauen.
+
+## Schriftart
+
+Unter **Darstellung** steht jetzt, in welcher Schrift das Programm
+geschrieben ist. Mitgeliefert sind zwei (Inter und JetBrains Mono, die
+liegen ohnehin im Paket), dazu vier Schriften, die jedes System schon
+hat. Eine eigene Schriftdatei (TTF, OTF, WOFF, WOFF2) laedst du hoch -
+sie liegt danach beim Programm, nicht im Browser, und jedes Geraet, das
+sich anmeldet, sieht sie.
+
+Jede Zeile in der Auswahl ist in IHRER Schrift geschrieben. Du siehst
+vorher, was du bekommst.
+
+## Ein Ton beim Wandern - und die Maus bleibt still
+
+Springt die Auswahl auf etwas Neues, gibt es ein kurzes Blub. Das gilt
+fuer Pfeiltasten, Controller und die Bildschirmtastatur. Standardmaessig
+an und leise, mit Regler, abschaltbar.
+
+Mit der Maus bleibt es still. Das ist keine zusaetzliche Regel, die
+jemand vergessen koennte: der Ton haengt an der einen Stelle, durch die
+jede Tastatur-Auswahl geht - und die Maus geht da nicht durch, sie
+schaltet die Pfeil-Navigation sogar ab.
+
+## Nicht nur ein Controller
+
+Bisher fragte Qwirbel genau zwei Dinge ab: den linken Stick und das
+Steuerkreuz eines Geraets mit Standard-Belegung. Fernbedienungen,
+Wii- und Switch-Griffe und viele guenstige Pads melden weder das eine
+noch das andere - sie legen den Stick auf ein anderes Achsenpaar und das
+Kreuz auf einen sogenannten Hat-Schalter.
+
+Jetzt wird beides gelesen. Welche TASTE ausloest, kann niemand raten -
+die ordnest du einmal selbst zu (Einstellungen - Bedienung - Prueffeld,
+"Andere Taste zum Ausloesen?"). Gemerkt wird das je Geraet, nicht
+global: Fernbedienung und Pad duerfen verschiedene Nummern haben.
+
+Ein Geraet mit Standard-Belegung verhaelt sich exakt wie vorher - der
+gewohnte Weg wird weiterhin zuerst geprueft.
+
+**Dabei ist ein echter Fehler aufgefallen**, bevor ihn jemand erlebt hat:
+eine gewoehnliche Analogachse meldet in Ruhe 0,0 - und genau dieser Wert
+lag im Fangbereich von "rechts". Die Auswahl waere von allein durch die
+Oberflaeche gelaufen, ohne dass jemand etwas anfasst. Behoben und
+mitgeprueft.
+
+## Bevor ein Programm aufgeht: nachsehen, wo Platz ist
+
+Qwirbel misst jetzt, welcher Bildschirm frei ist, und macht das Programm
+dort auf - ohne es nach vorn zu holen. Bei einem Bildschirm bleibt alles
+wie bisher. Welcher Bildschirm regelmaessig frei ist, merkt er sich; ist
+der gerade belegt, gewinnt trotzdem der wirklich freie.
+
+Die Messung selbst war der interessante Teil. Der erste Anlauf addierte
+die Flaechen aller Fenster und meldete alle drei Bildschirme zu 100 %
+belegt - auch den leeren. Zwei Gruende: sechs uebereinanderliegende
+Fenster summieren sich auf 600 % (gebraucht wird die Vereinigung), und
+die Fensterliste enthaelt auch Dinge, die man nicht sieht - ausgelagerte
+Systemfenster und durchklickbare Overlays ueber dem ganzen Bildschirm.
+Nach dem Aussortieren stimmt es: 97 %, 100 %, 0 %.
+
+## Drei Regeln fuer den Betrieb
+
+"CMD-Fenster soll man nicht sehen, vor allem nicht welche, die die ganze
+Zeit aufploppen. Wenn er seine Checks macht, dann alle 25 Sekunden und
+nicht jede Millisekunde. Und immer nur eine Sache auf einmal bauen."
+
+Diese drei Regeln standen bisher an drei verschiedenen Stellen. Jetzt
+haben sie einen Ort:
+
+1. **Kein sichtbares Fenster.** Jeder Prozessstart laeuft versteckt.
+2. **Nicht hetzen.** Wiederkehrende Checks hoechstens alle 25 Sekunden.
+3. **Eins nach dem anderen.** Ein zweiter Bau wartet oder bekommt eine
+   ehrliche Absage - er laeuft nicht daneben.
+
+Und der Teil, der am laengsten gefehlt hat: schreibt Qwirbel sich selbst
+ein Hilfsskript, bekommt dieses Skript die Regeln als Dateikopf mit. Er
+muss sie nicht jedes Mal neu erfinden - und kann sie nicht vergessen.
+
+Ein begrenztes Warten auf ein einzelnes Ereignis ("ist das Fenster jetzt
+da?") ist davon ausgenommen. Ein Vorgang darf arbeiten; ein Waechter darf
+nicht hetzen.
+
+## Modellwechsel wird gefragt, nicht stillschweigend gemacht
+
+Ein Chat merkt sich, mit welchem Modell er angefangen hat. Waehlst du
+mitten im Chat ein anderes, steht jetzt da, dass der Verlauf dafuer neu
+eingelesen werden muss - und du bestaetigst zweimal. Danach wird
+gewechselt und neu gebunden. Deine Nachricht geht dabei nicht verloren,
+sie wird nach dem zweiten Ja noch einmal abgeschickt.
+
+Der Grund: ein Lauf, der als lokales Modell gedacht war, lief in
+Wahrheit ueber den Cloud-Anbieter, an den der Chat gebunden war. Die
+Modell-Leiste zeigte trotzdem die lokale Wahl. Nur eine Statuszeile sagte
+es - und die rauscht durch.
+
+## Zwischennachrichten werden beantwortet, nicht bestaetigt
+
+Schreibst du waehrend der Arbeit dazwischen, kam bisher ein Fenster mit
+"Angekommen: ...". Das ist weg. Er geht jetzt inhaltlich darauf ein und
+arbeitet danach weiter. Lange Zwischennachrichten werden nicht mehr
+abgeschnitten - dafuer gibt es kein Limit mehr.
+
+## Wenn etwas laedt, sieht man es
+
+"Man drueckt auf ComfyUI starten - man sieht nicht mal einen Kreis, dass
+es laedt. Und auf einmal passiert's. Das musste man wirklich ueberall
+einfuegen."
+
+Es gibt 237 Knoepfe im Programm. Jeden einzeln mit einer Ladeanzeige zu
+versehen, waeren 237 Gelegenheiten, es zu vergessen - und beim naechsten
+neuen Knopf 238. Deshalb steht es an EINER Stelle: ein Knopf sieht jetzt
+selbst nach, ob seine Aufgabe noch laeuft. Tut sie das, dreht sich ein
+Kreis in ihm, und er ist solange gesperrt - ein zweiter Klick auf etwas,
+das gerade laeuft, richtet nichts mehr an. Geht es schief, hoert der
+Kreis trotzdem auf; ein ewig drehender Kreis laesst ein funktionierendes
+Programm kaputt aussehen.
+
+**ComfyUI starten** war dabei ein eigener Fall. Der Knopf war zwar
+"fertig", sobald das Backend geantwortet hatte - ComfyUI faehrt aber noch
+15 bis 30 Sekunden hoch. Ein Kreis haette also kurz aufgeblitzt und waere
+weg gewesen. Jetzt wartet der Knopf wirklich: er sieht bis zu 40 Sekunden
+lang alle vier Sekunden nach, zeigt dabei mit, wie lange er schon
+wartet - und sagt ehrlich Bescheid, wenn sich nichts meldet.
+
+## Der Token-Zaehler zeigt keine fremde Zahl mehr
+
+"Wenn ich ein Modell wechsle, will ich einen Ladekreis beim Token-Counter
+sehen, bis ein neuer da ist. Ich sehe den alten von GLM irgendwie 900k."
+
+Das war nicht nur unaktuell, das war falsch. Die Zahl kommt vom Server
+und wurde alle 15 Sekunden geholt - nach einem Modellwechsel stand also
+bis zu 15 Sekunden lang der Stand des ALTEN Modells da. 900k neben einem
+Modell mit 78k Fenster ist keine veraltete Anzeige, das ist eine falsche.
+
+Jetzt weiss jede Zahl, zu welcher Wahl sie gehoert (Modell, Anbieter,
+Werkzeug-Auswahl). Passt sie nicht mehr, dreht sich ein Kreis mit
+"rechnet ..." - an beiden Stellen, am Chip oben und am Kopf-Platz-Balken
+unten, denn zwei Anzeigen derselben Zahl duerfen nicht verschiedene
+Dinge behaupten. Und geholt wird sofort, nicht erst beim naechsten Takt.
+
+## Kommt die Verbindung wieder, steht das auch im Chat
+
+"Mein Internet kam waehrend eines Laufs wieder und oben kam die Aufgabe,
+aber im Chat steht nicht 'laeuft weiter', sondern immer noch 'Verbindung
+weg'."
+
+Beides stimmte fuer sich: oben lief der neue Lauf, unten stand die rote
+Karte des alten. Nur sieht eine Fehlermeldung, die nicht mehr gilt,
+genauso aus wie eine, die noch gilt. Sobald wieder etwas laeuft, wird die
+alte Karte jetzt als ueberholt gekennzeichnet - blass, mit einer Zeile
+darunter, seit wann es wieder laeuft.
+
+Geloescht wird sie NICHT. Der Abbruch hat stattgefunden, und ein Verlauf,
+aus dem Fehler verschwinden, ist kein Verlauf mehr.
+
+## Eine Zwischennachricht ohne Lauf wird nicht mehr aufgehoben
+
+"Ich schicke eine, zufaelligerweise geht das Internet weg, die
+Zwischennachricht wird gespeichert - und der naechste liest sie im
+naechsten Prompt einfach mit."
+
+Genau so stand es im Code: Qwirbel wusste, dass gerade keine Aufgabe
+laeuft, legte die Nachricht trotzdem in den Posteingang und schrieb dazu
+"wird beim naechsten Lauf beruecksichtigt". Ein Satz aus einem
+abgebrochenen Lauf tauchte so Stunden spaeter in einer ganz anderen
+Aufgabe auf.
+
+Eine Zwischennachricht ist eine Nachricht an einen LAUFENDEN Lauf. Laeuft
+keiner, wird sie nicht angenommen - sie kommt zurueck in die Eingabe, mit
+einem Satz dazu, warum. Und was durch einen Abbruch trotzdem liegen
+bleibt, raeumt der naechste Lauf weg und sagt dir, was da lag, statt es
+dem Modell unterzuschieben.
+
+## Alles, was Qwirbel oeffnet, heisst Qwirbel - und steht mit drin
+
+"Jedes Python, jedes CMD, alles, was in Qwirbel drin ist, steht im
+Taskmanager unter Qwirbel. Wenn er einen Waechter fuer irgendwelche
+Dateien offen hat, steht das da drin. Alles. Und das soll er auch
+mitschreiben."
+
+Zwei Dinge, und es sind wirklich zwei:
+
+**Heissen.** Das Hauptprogramm heisst im Taskmanager seit v2.9.4 Qwirbel.
+Seine Kinder - Hilfsskripte, Waechter, Dienste - liefen weiter als
+"Python". Sie bekommen jetzt dieselbe Markierung. (Nicht auf gut Glueck:
+geschrieben wird nur in Qwirbels eigene Umgebung, nie in einen
+Systemordner. Das ist beim Bauen dieser Funktion selbst aufgefallen -
+ein Testlauf hatte genau das getan.)
+
+**Mitschreiben.** Ein Register haelt fest, was offen ist, wozu und seit
+wann. Du siehst es im selben Fenster wie VRAM/RAM/CPU, und du kannst von
+dort beenden - aber nur, was Qwirbel selbst gestartet hat. Eine fremde
+Prozessnummer wird abgelehnt, nicht abgeschossen; das ist eine Auskunft
+ueber Qwirbels Prozesse, kein Taskmanager-Ersatz.
+
+Es haengt an der einen Stelle, durch die jeder Prozessstart im Programm
+ohnehin schon laeuft. Auch einer, den morgen jemand dazuschreibt.
+
+## Neben jedem Stueck Code steht, was es tut
+
+"Ich will ueberhaupt keinen Python-Code sehen, ich will sehen, dass er
+richtige Tools benutzt. Und wenn er dann Python-Code macht, dann steht
+daneben, was dieser Python-Code macht."
+
+Erst nachgezaehlt, dann gebaut. In vier Tagen: 1.298 Werkzeugaufrufe,
+davon 87 % richtige Werkzeuge (Dateien lesen, Code durchsuchen, Ordner
+ansehen). Die uebrigen 13 % gingen durch Python, PowerShell oder die
+Kommandozeile - und im Chat stand dabei nur "Fuehrt Python-Code aus",
+dreimal hintereinander, ohne ein Wort dazu. Der Grund war schlicht: die
+Zeile, die den Schritt beschreibt, las alles Moegliche, nur nicht den
+Code.
+
+Jetzt gilt: **eine Beschreibung ist Pflicht.** Ohne sie kommt der Aufruf
+einmal zurueck - beim zweiten Mal laeuft er trotzdem, denn eine Schleife
+waere schlimmer als ein Eintrag ohne Text. Die Beschreibung steht im Chat
+neben dem Schritt und im Protokoll.
+
+Und wenn der Code etwas tut, wofuer es ein Werkzeug gibt, sagt Qwirbel
+das jetzt selbst - mit dem Namen des Werkzeugs. Die Liste ist nicht
+ausgedacht: sie kommt aus seinen eigenen 112 Python-Aufrufen. 28 davon
+starteten oder suchten Prozesse, 9 holten etwas aus dem Netz, der Rest
+suchte ueberwiegend Ordner ab. Fuer alles davon gibt es ein Werkzeug.
+
+## Am eigenen PC fuehrt der Datei-Chip zum Ordner
+
+"Der Herunterladen-Knopf soll verschwinden - hier soll man gar nichts lokal
+runterladen von seinen eigenen Dateien, die embedded im Chat sind. Ich bin
+hier in meinem Code-Chat und ich sehe Download-Symbole an Dateien auf meinem
+PC. Da soll das Ordnersymbol hin, dass ich da hinkomme, wo die Datei ist."
+
+Liegt die Datei auf DIESEM Rechner, ist Herunterladen sinnlos. Der Chip
+oeffnet jetzt den Ordner - unter Windows sogar mit markierter Datei. Auf dem
+Handy und bei einer Server-Kopie bleibt der Download: dort liegt die Datei
+auf einem anderen Rechner, und der Knopf ist der einzige Weg an das eigene
+Ergebnis.
+
+Gebaut war das schon am selben Tag - es wirkte nur nicht, und zwar aus zwei
+Gruenden, die erst ein Bildschirmfoto seiner laufenden Oberflaeche gezeigt
+hat:
+
+* Die Frage "bin ich am eigenen PC?" war als "laeuft das als App-Fenster?"
+  geschrieben. Das Windows-Fenster IST ein App-Fenster - also galt
+  ausgerechnet am PC "nein". Jetzt erkennt sich das PC-Fenster an seinem
+  eigenen Startgeheimnis, das die Handy-App nie bekommt.
+* Der Ordner-Weg galt nur fuer Text- und Web-Dateien. Seine .jar fiel in den
+  allgemeinen Zweig - der trug zwar schon ein Ordner-Symbol, lud beim Klick
+  aber weiter herunter. Erst falsches Symbol, dann richtiges Symbol mit
+  falscher Wirkung.
+
+Beides gefunden, behoben und mit einem Test festgehalten, der die Rechnung in
+sechs Lagen durchspielt (PC-Fenster, Browser am PC, Android-App,
+Handy-Browser, Server-Kopie, installierte Web-App).
+
+## Kleinigkeiten
+
+- **Leertaste.** Auf der Bildschirmtastatur ist sie jetzt die breiteste
+  Taste und traegt ihren Namen - daran erkennt man sie.
+- **Ordner statt Download.** Steht eine Datei im Chat, die auf deinem
+  eigenen Rechner liegt, findest du daneben ein Ordner-Symbol. Es oeffnet
+  den Ordner. Ein Download-Knopf fuer etwas, das schon da ist, war Unsinn.
+- **Fortschritts-Waechter.** Ein Modell, das dreimal hintereinander eine
+  Absicht ankuendigt, ohne etwas zu tun, hoert auf und sagt, wo es steht -
+  statt sich stundenlang im Kreis zu drehen.
+
+## Was noch offen ist
+
+Damit es nicht unter einem Haken verschwindet: 3D-Modelle bauen,
+in Roblox oder Minecraft hineingehen und herumlaufen, und die
+MCP-Recherche sind **nicht** in dieser Fassung. Fenster verschieben geht
+(und Qwirbel weiss jetzt, wohin) - der Rest steht noch aus.
+
 ## v2.9.50 - Ein Update aendert nicht, WAS deine Installation ist
 
 Ein Fund, der nur an einem echten Rechner auffaellt. Im Protokoll standen
