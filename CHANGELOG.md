@@ -35,6 +35,55 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.55 - Das Kern-Wissen fuellt sich selbst, und die Galaxie waechst sichtbar mit
+
+"Dass er auch mal seine ganzen Work-Chats in Kernwissen qwirbeln kann. Im
+Wissen-Tab ein Einstellungsknopf: jede Stunde, jeden Tag, jede Woche, ueber
+API oder lokal, an und aus. Und die Galaxie kommt aus dem Kernwissen - man
+sieht einfach, wie es mehr wird."
+
+**Automatik im Wissen-Tab.** Ein Knopf "Automatik": an/aus, stuendlich,
+taeglich oder woechentlich, und womit (lokales Modell oder ein API-Anbieter).
+Ein Lauf macht der Reihe nach:
+- jeden Chat mit genug Neuem komprimieren - der Chat bleibt offen, nichts
+  wird archiviert - und die Zusammenfassung als Quelle ins Wissen legen
+  (knowledge/chats/);
+- alles ins Kern-Wissen qwirbeln, bis es drin ist;
+- die Galaxie neu bauen.
+Laeuft, solange Qwirbel offen ist; ist das Intervall beim Start schon um,
+kommt der Lauf zwei Minuten danach. "Jetzt ausfuehren" geht immer. Aus
+heisst: alles wie vorher.
+
+**Auswaehlen, was gequirbelt wird.** Die Wissens-Dateien stehen nach
+Ordnern sortiert (vorher ueber 540 Dateien untereinander). Jede Datei zeigt,
+ob sie schon im Kern-Wissen ist (drin, angefangen, offen), und jede Datei
+und jeder Ordner hat einen Haken - QWIRBELN nimmt die Auswahl, ohne Auswahl
+alles.
+
+**Es gibt nicht mehr auf.** Kam ein Modell mit einem Happen nicht klar,
+brach die Serie nach drei Fehlern ab. Jetzt werden die Happen halbiert, bis
+es geht, zuletzt Datei fuer Datei. Was auch einzeln nicht geht, bleibt
+offen, wird genannt und beim naechsten Lauf wieder versucht - der Rest
+laeuft durch.
+
+**Das Kern-Wissen ist aufgeraeumt.** Die KI durfte neue Kategorien anlegen
+und hat sich dabei vertippt: "erkennen-und-fallen" und
+"erkennnisse-und-fallen" standen neben "erkenntnisse-und-fallen". Solche
+Beinahe-Doppel werden jetzt zusammengefuehrt, neue landen gleich richtig.
+Die alten Dateien werden nicht geloescht, sie liegen in
+kern/_zusammengefuehrt/.
+
+**Die Galaxie kommt aus dem Kern-Wissen.** Vorher erfand ein Modell in 30
+bis 60 Sekunden jedes Mal 15 bis 40 neue Punkte - Wachstum war nicht zu
+sehen. Jetzt entsteht sie ohne Modell in Millisekunden: je Kategorie ein
+Punkt, der mit seinen Fakten groesser wird, die neuesten Fakten drumherum,
+Verbindungen ueber gemeinsame Begriffe. Oben steht, wie viele Fakten es
+sind. Sie wird nach jedem Qwirbeln neu gebaut.
+
+**Claude.** Qwirbel liess Claude hoechstens 4.096 Marken antworten - eine
+grosse Datei oder ein langer Werkzeugaufruf brach mitten drin ab. Jetzt
+32.000. Die Modellliste kennt Sonnet 5, Opus 5.5, Fable 5.1 und Haiku 4.5.
+
 ## v2.9.54 - Qwirbel meldet sich, Stufe 8 fragt beim Schreiben nicht mehr, und Komprimieren nimmt den ganzen Chat
 
 "Seine Antworten sind noch komisch. Das habe ich getan, das ist offen, was
