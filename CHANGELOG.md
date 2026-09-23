@@ -35,6 +35,103 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.54 - Qwirbel meldet sich, Stufe 8 fragt beim Schreiben nicht mehr, und Komprimieren nimmt den ganzen Chat
+
+"Seine Antworten sind noch komisch. Das habe ich getan, das ist offen, was
+kann als naechstes - und die Auftraege unten, nach jeder Antwort, in jedem
+Chat verschieden. Ich sehe Quest-Sachen und bin im Roblox-Chat. Das darf
+nicht. Und ich hoffe, komprimieren ist so gut, wie es sein soll - dass die
+900k auf 60k runtergehen."
+
+**Die Schlussantwort.** In Work und Code kam nach einer langen Arbeit
+manchmal nur ein kurzer Satz - oder sogar ein Arbeitsbeginn ("Ich schaue
+zuerst ... Schritt 1: Bestandsaufnahme"), obwohl die Arbeit laengst
+getan war. Nachgelesen im Chat: nach dem Nachbessern wurde der Bericht
+frei neu erfragt, und das Modell verstand die Frage als neuen Auftrag.
+Jetzt wird der Bericht auch dann in fester Form erfragt, und er hat
+immer drei Teile: was getan wurde, was offen ist, was als Naechstes
+ginge. Liest sich eine Antwort trotzdem wie ein Arbeitsbeginn, bleibt
+der erste, echte Bericht stehen.
+
+**Auftraege je Chat.** Die Vorschlaege unter dem Eingabefeld gehoerten
+bisher zur ART des Chats - alle Code-Chats teilten sich eine Liste, daher
+die Minecraft-Quests im Roblox-Chat. Jetzt hat jeder Chat seine eigene,
+und sie entsteht aus DIESEM Chat: nach jeder Antwort in Work und Code
+schlaegt Qwirbel bis zu drei naechste Auftraege vor, die zu dem passen,
+was dort gerade passiert ist. Am Knopf steht "Qwirbel denkt nach ...",
+solange er ueberlegt, und ein Punkt, wenn neue bereitliegen.
+
+**Komprimieren.** Gemessen an den eigenen Chats: aus 285.807 Zeichen
+wurden 4.570. Das klingt gut, war aber keine Verdichtung - gelesen
+wurden nur die letzten 60.000 Zeichen, der Rest fiel still weg, und das
+Ziel war fest 4.000 Zeichen, egal wie gross der Chat war.
+
+Jetzt:
+- Der ganze Chat seit der letzten Zusammenfassung geht hinein.
+- Behalten wird etwa ein Fuenfzehntel - aus 900.000 Marken werden rund
+  60.000. Gedeckelt auf 8 % des Modellfensters, damit auch ein kleines
+  lokales Modell danach Platz hat.
+- Grosse Chats werden in Teilen verdichtet. Mit einem Cloud-Modell
+  laufen bis zu vier Teile gleichzeitig, lokal nacheinander. Scheitert
+  ein Teil, wird nichts gespeichert - lieber keine als eine halbe
+  Zusammenfassung.
+- Die vorige Zusammenfassung bleibt woertlich stehen, solange sie passt,
+  statt jedes Mal erneut gekuerzt zu werden.
+- Was waehrend des Komprimierens noch in den Chat kommt, steht woertlich
+  dahinter und geht nicht verloren.
+- Bei 90 % des Modellfensters komprimiert Qwirbel von selbst, im
+  Hintergrund, und sagt es im Chat. Vorher wurde an dieser Stelle nur
+  eine Sicherung geschrieben.
+
+Die Zahl im Kontext-Chip und die Schwelle fuer das automatische
+Komprimieren kommen jetzt aus derselben Rechnung - bei verschluesselten
+Chats fand der Chip die letzte Zusammenfassung vorher nicht.
+
+**Benachrichtigungen.** "Ich krieg noch keine wirklichen Windows- oder
+Handy-Benachrichtigungen, wenn er irgendwas abfragt." Stimmt - es gab
+keine. Jetzt:
+- Einstellungen -> Benachrichtigungen, je Art an/aus: wenn er dich fragt
+  (Fragefenster und Bestaetigungen, an), wenn ein Auftrag anfaengt (an),
+  Zwischenmeldungen (aus - im Lauf oft mehrere pro Minute).
+- Am PC kommt eine Windows-Benachrichtigung ueber das Qwirbel-Symbol
+  unten rechts; ein Klick darauf holt das Qwirbel-Fenster nach vorn oder
+  oeffnet es. Schaust du gerade ins Qwirbel-Fenster, bleibt es still.
+- Am Handy fragt die Qwirbel-App alle 25 Sekunden nach, solange sie im
+  Hintergrund ist, und zeigt eine Android-Benachrichtigung; ein Tipp
+  oeffnet die App. Beendet Android die App ganz, fragt auch niemand mehr -
+  eine staendig laufende Hintergrund-App mit Dauer-Symbol wollten wir
+  nicht.
+- "Probe senden" zeigt, ob es ankommt.
+
+**Stufe 8 fragt beim Schreiben nicht mehr.** "Er fragt auch fuer
+Datei-Ueberschreiben die ganze Zeit. Stufe 8, Bro." Nachgelesen im
+Protokoll: Stufe 8 liess Ueberschreiben nur im eigenen Benutzerordner
+ohne Rueckfrage zu - die Plugin-Dateien eines Minecraft-Servers auf einem
+anderen Laufwerk fragten jedes Mal. Jetzt heisst Stufe 8 wirklich "alles":
+anlegen und ueberschreiben ueberall. Weiter gesperrt bleiben Windows- und
+Systemordner und der Autostart; weiter gefragt wird beim Loeschen
+ausserhalb des Benutzerordners und bei sudo.
+
+Dazu ein Fehler, den die Pruefung selbst gefunden hat: ein Ordner, der per
+Verknuepfung (Junction) auf eine andere Platte umgezogen ist, zaehlte
+nicht mehr als Teil des Benutzerordners - Stufe 7 und 8 fragten dort bei
+jeder Datei. Und: ein Pfad unter C:\Users\Public (oder einem zweiten
+Windows-Konto) wurde still in den eigenen Benutzerordner umgebogen - die
+Datei landete woanders als verlangt. Beides behoben.
+
+Fuer die Stufen gibt es jetzt eine feste Pruefung: alle acht Stufen gegen
+21 Aktionen (lesen, anlegen, ueberschreiben, loeschen, Code, Befehle,
+Systemordner, Autostart, Browser, sudo) - keine Stufe darf zuruecknehmen,
+was eine niedrigere erlaubt. Dazu Rueckfragen und Injektions-Schutz je
+Stufe, und der echte Schreibweg einmal mit einem Cloud-Modell und einmal
+mit einem lokalen: dieselbe Antwort.
+
+**Das Bestaetigungsfenster verschwindet nicht mehr von selbst.** Es hat
+keinen Zeitablauf - aber Escape lehnte irgendwo im Programm die offene
+Bestaetigung ab, und Escape ist genau die Taste, mit der man die
+Pfeil- und Controller-Bedienung verlaesst. Jetzt entscheidet nur ein
+Klick.
+
 ## v2.9.53 - Der Schutzfilter denkt mit, und "ja, mach das" ist kein Schluessel
 
 "Ich habe manchmal Prompts losgeschickt, die sind riesig, wo ich einfach nur
