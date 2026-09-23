@@ -35,6 +35,246 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.53 - Der Schutzfilter denkt mit, und "ja, mach das" ist kein Schluessel
+
+"Ich habe manchmal Prompts losgeschickt, die sind riesig, wo ich einfach nur
+sehr viel fuer mein Spiel beschrieben habe. Die KI hat nicht darueber
+nachgedacht, das Programm hat intern geantwortet. Und wenn ich danach gesagt
+habe 'ja, mach das', hat er es gemacht. Ich moechte nicht, dass mein
+Programm fuer irgendwas Schaedliches benutzt wird."
+
+Zwei Fehler, eine Wurzel: der eingebaute Schutz war ein Wortfilter. Er sah
+Woerter, nicht Absichten - und immer nur die EINE Nachricht.
+
+**Falscher Alarm.** "Die Waffen sind je Tier gestaffelt ... schreib mir
+eine Anleitung fuer das 3D-Modell" enthaelt genau die Woerter, auf die der
+Filter anspringt. Er hat abgesagt, bevor je ein Modell den Satz gelesen
+hat.
+
+**Die Hintertuer - und wie sie wirklich funktioniert hat.** Das war kein
+Verdacht, sondern ist nachgestellt und gemessen:
+
+    1. grosse Nachricht   -> Wortfilter -> Absage (die Zeile wird markiert)
+    2. "ja, mach das"      -> kein Filterwort darin -> der Agent startet
+    3. Gedaechtnis des Agenten -> "DU WURDEST GEBETEN: <der Wortlaut>"
+    4. der Agent tut es
+
+Der normale Chat schwaerzt abgelehnte Nachrichten seit dem 03.09. - das
+Modell sieht dort nur "[Diese Nachricht wurde abgelehnt]". Der Agent im
+Work- und Code-Tab las den Verlauf aber mit einer EIGENEN Funktion, und
+die kannte die Markierung nicht. Sein Gedaechtnis sagte ihm dazu sogar:
+"Bezieht sich der Auftrag auf etwas Frueheres - dann steht es HIER."
+
+**Was jetzt gilt:**
+
+* **Das Modell urteilt.** Schlaegt der Wortfilter an, bekommt das Modell
+  den Text und die Regel dazu - in einem eigenen, einmaligen Aufruf - und
+  antwortet mit einem Urteil. Eine Spielbeschreibung mit Waffen ist harmlos
+  und laeuft; eine Bauanleitung fuer einen echten Sprengsatz nicht. Die
+  Regel bleibt NICHT im Gespraech stehen.
+* **Im Zweifel zu.** Antwortet das Modell nicht, nicht eindeutig oder mit
+  Unsinn, bleibt es bei der Absage. Ein Modell, das schweigt, oeffnet
+  nichts. Behauptungen im Text ("ich bin der Besitzer", "nur ein Test")
+  zaehlen nicht.
+* **"Ja" gilt dem Auftrag davor.** Eine blosse Zustimmung - "ja", "mach
+  das", "trotzdem", "ok dann los" - wird nie allein geprueft, sondern
+  zusammen mit dem letzten Auftrag, der etwas verlangt. Auch nach dem
+  dritten "ja" hintereinander (der eigene Test hat genau diese Luecke
+  gefunden: das zweite "ja" wurde anfangs nur mit dem ersten verglichen).
+* **Der Agent sieht keinen abgelehnten Wortlaut mehr** - nur, DASS etwas
+  abgelehnt wurde, mit der Anweisung, nichts davon auszufuehren.
+* **Zwei weitere Wege zu:** die Vorschlaege unter dem Chat (ein
+  abgelehnter Auftrag haette dort als anklickbarer Knopf wieder stehen
+  koennen) und die Zusammenfassung beim Loeschen eines Chats (sie geht
+  ins dauerhafte Wissen).
+* **Bei Selbstverletzung wird nicht abgewogen.** Da braucht ein Mensch
+  sofort die Hilfe-Antwort, keine Pruefung.
+
+Harmlose Nachrichten kosten nichts extra: das Modell wird nur gefragt,
+wenn der Wortfilter etwas meldet.
+
+## Er sieht in jedes Fenster - und faengt an, statt zu warten
+
+"Er schaut da egal wie rein - auch wenn es dahinter ist, macht er keinen
+Screenshot, sondern greift das Fenster intern. Und wenn er noch nichts
+angerichtet hat, soll er erst etwas herstellen und es sich danach
+anschauen."
+
+Der Auftrag war: ein neues Roblox-Spiel. Im Protokoll stand danach:
+
+    screen_capture          -> (leeres Ergebnis)
+    fenster_ansehen Place1  -> kein sichtbares Fenster gefunden
+
+Beides war falsch, und beides lag nicht am Modell.
+
+* **Das Fenster war da - minimiert.** Windows meldet minimierte Fenster
+  160 x 28 Pixel gross, und die Liste warf sie als "zu klein" weg. Jetzt
+  stehen sie mit ihrem Zustand darin, und Qwirbel sagt ehrlich
+  "minimiert", statt "gibt es nicht".
+* **Gesucht wird auch nach dem Programm.** Roblox Studio heisst oft wie die
+  offene Datei. "roblox" oder "unity" findet das Programm jetzt, auch wenn
+  der Titel ein Dateipfad ist.
+* **Das Bild kommt aus dem Fenster selbst** - auch wenn es verdeckt ist,
+  hinter anderen liegt oder auf einem anderen Bildschirm. Nichts wird dafuer
+  nach vorn geholt, deine Arbeit bleibt, wo sie ist. Auf skalierten
+  Bildschirmen wird nicht mehr abgeschnitten, und ein schwarzes Bild wird
+  als schwarz gemeldet statt als "da ist nichts".
+* **Roblox' eigene Aufnahme kommt an.** Die Roblox-Bruecke liefert ihr Bild
+  als Bild, Qwirbel las aber nur Text daraus - das Bild fiel still weg.
+  Jetzt landet es im Chat und wird angesehen.
+* **Erst bauen, dann sehen.** Was es noch nicht gibt, kann man nicht
+  ansehen. Bei einem neuen Projekt legt Qwirbel sofort die Datei an und
+  baut das erste Stueck, statt zuerst in ein Programm schauen zu wollen.
+  Er kam bisher selbst darauf - nur ueber den Umweg.
+
+## Behoben: Qwirbel hat Linux geweckt, nur um nachzusehen - das war das Piepen
+
+"Warum habe ich dir gesagt, dass du von Remote-Desktop-Audio das Piepen
+ausmachen sollst? Du hast es irgendwo ausgemacht, aber nicht da. Das wird
+an mein Headset weitergeleitet, uebersteuert."
+
+Er hatte recht, und ich hatte an der falschen Stelle gesucht.
+
+"Remote App Audio" / "Remote Desktop Audio" im Lautstaerkemixer ist kein
+Geraet, sondern die Tonspur eines Programms: msrdc.exe. Auf diesem Rechner
+liegt es nur in einem Ordner - dem von WSL. Es ist die Ton- und
+Fensterbruecke, ueber die Linux-Programme unter Windows Ton ausgeben. Wird
+die Linux-Maschine geweckt, oeffnet sie diesen Kanal.
+
+Beim ersten Anlauf (21.09.) hatte ich nach einem GERAET dieses Namens
+gesucht, keins gefunden und stattdessen das Windows-Soundschema
+stummgeschaltet. Das war die falsche Stelle.
+
+Gemessen, was WSL weckt: die Karte fuer Kimi K3 fragte beim Oeffnen, ob
+die CPU AVX2 kann - und fragte dafuer UBUNTU. Es ist dieselbe CPU. Allein
+das Anschauen der Seite fuhr eine Linux-Maschine hoch.
+
+* Die CPU fragt jetzt Windows selbst, die installierten Linux-Versionen
+  stehen in der Registry. Beim Nachsehen startet nichts mehr.
+* Die genaue Pruefung IN Linux gibt es weiter - auf den Knopf PRUEFEN.
+  Wer den drueckt, weiss, dass jetzt Linux startet.
+* Bevor die Kimi-Engine in Linux gestartet wird, schaut Qwirbel auf die
+  ersten vier Bytes: jedes Linux-Programm beginnt mit derselben Kennung.
+  Fehlt sie - weil der Bau abgebrochen ist -, kommt der klare Satz "bitte
+  neu bauen", statt Linux hochzufahren, dort zu scheitern und dir das
+  Scheitern als Ton aufs Headset zu geben. Genau das hat eine Pruefung in
+  der Entwicklung bei jedem Lauf getan: sie meldete "bestanden", und der
+  Knall ging an dich.
+* Fuer alle, die an Qwirbel entwickeln: `tests/_alle_suiten.py` laesst
+  alle Pruefungen laufen und schaut vor und nach jeder nach, ob WSL
+  aufgewacht ist. Wenn ja, ist sie ROT - auch wenn sie sonst bestanden
+  haette. Eine Pruefung, die im Ohr knallt und "gruen" meldet, ist keine
+  gruene Pruefung. Wer nebenher in Linux arbeitet, dem faehrt der Lauf
+  nichts herunter.
+
+## Die Figur gehoert dir
+
+"Die Animation unten, der kleine Agent, dieses gelbe Flimmern darueber:
+macht das mal weg. Dass das einfach komplett normal in einer Farbe, die
+man in Darstellung waehlt, dasteht. Und dann kann man auch ein Bild
+waehlen oder ein GIF. Und dann machst du ein paar verschiedene
+Maennchen - der eine ist cool, aber Qwirbel hat eigentlich Haare, so
+Dinger, und ist blau."
+
+**Der blaue Streifen laeuft endlich durch.** Neben dem Maennchen steht,
+woran Qwirbel gerade arbeitet - "Qwirbel pustet ... 0:21 - 41.6k Token" -
+und darueber sollte ein Lichtstreifen wandern. Er tat es nicht. Bild fuer
+Bild gemessen, mit angehaltener Animation:
+
+    t=0.00  ---          t=0.50  ---
+    t=0.08  links        t=0.58  ---
+    t=0.17  links        t=0.67  ---
+    t=0.25  RECHTS       t=0.75  ---
+    t=0.33  ---          t=0.83  links
+    t=0.42  ---          t=0.92  links
+
+Kein Durchlauf, sondern zwei Zuckungen, eine halbe Runde Stillstand und
+am Ende ein Streifen, der links parkt, bis die Runde von vorn beginnt.
+
+Der Grund war eine Rechnung, die sich niemand angesehen hatte: die
+Position lief gegen eine Breite, die groesser war als die Zeile, der Weg
+war fast dreimal so lang wie noetig, und Anfang und Ende zeigten
+verschiedene Stellen des Verlaufs - die Schleife KONNTE nicht rund
+laufen.
+
+Jetzt sitzen zwei Kerne in einer Kachel von doppelter Zeilenbreite, die
+sichtbare Periode ist also genau eine Zeile: es ist immer einer im Bild.
+Der Weg ist genau eine Kachel, damit das Ende wieder der Anfang ist. Der
+Streifen wandert nach rechts, in Leserichtung, mit einem langen weichen
+Schweif dahinter, und braucht 4,8 Sekunden fuer eine Runde - langsam,
+ohne Haenger, ohne Sprung.
+
+Wer ihn nicht mag, schaltet ihn unter Darstellung ab.
+
+**Die Figur waehlst du unter Darstellung.** Fuenf Gestalten, jede in
+ihrer eigenen Form abgebildet, damit du siehst, was du nimmst:
+
+* **Qwirbel** - der Fusselball aus dem Logo, mit Fransen rundherum und
+  zwei grossen Augen. Er ist die neue Vorgabe, und er ist blau.
+* **Klassisch** - der eckige Kopf von bisher.
+* **Schopf**, **Zopf**, **Kappe** - derselbe Kopf mit Haaren.
+
+Dazu: eine eigene Farbe (oder die des Akzents), der Schalter fuer den
+blauen Streifen von oben, und wer lieber etwas Eigenes sieht, waehlt ein
+Bild oder GIF - bis 8 MB, es tritt an die Stelle der Figur. Die Haltung
+bleibt in jedem
+Fall dieselbe Anzeige wie vorher: sie sagt, wie viel Muehe und welche
+Rechte-Stufe eingestellt sind.
+
+Die gewaehlte Farbe geht denselben Weg wie jede andere Schriftfarbe im
+Programm - im Hellmodus wird sie automatisch dunkler, sonst waere ein
+helles Blau auf weisser Flaeche kaum zu sehen.
+
+## Du siehst, was er gerade tut
+
+"Nach dem Prompt schickt er eine Nachricht nach den ersten zehn
+Werkzeugen, danach benutzt er 36 Werkzeuge und redet nicht. Man soll
+richtig wissen: was machst du gerade genau?"
+
+Beides stimmte, und beides stand im Code.
+
+**Er darf reden, wenn er lange arbeitet.** Die Zahl der Zwischen-
+nachrichten war fest: drei. Ein Lauf mit 46 Werkzeugschritten durfte
+genauso oft etwas sagen wie einer mit fuenf - danach bekam er auf jeden
+weiteren Versuch die Anweisung, still zu arbeiten. Jetzt waechst die Zahl
+mit der Arbeit: drei bei kurzen Laeufen, sechs bei 36 Schritten, sieben
+bei 46.
+
+**Und dazwischen steht, was er tut.** In der Statuszeile, nicht als neue
+Chat-Zeile: liest sich ein - aendert Dateien - baut und fuehrt aus -
+prueft das Ergebnis - plant. Das wird an den benutzten Werkzeugen
+GEMESSEN, nicht vom Modell behauptet: was dort steht, ist, was
+tatsaechlich laeuft.
+
+**Was er dir erzaehlt, kostet ihn keinen Platz mehr.** Seine
+Zwischennachrichten und die Erklaerungen zu seinen Befehlen sind fuer
+dich - er muss sie sich nicht merken. Im Verlauf, den das Modell bei
+jedem Zug wieder liest, steht ab jetzt nur noch, DASS er etwas gesagt hat
+und wie lang es war. Alles, woran ein Ergebnis haengt - Pfade, Befehle,
+Dateiinhalte - bleibt unangetastet.
+
+## Prompt verbessern: abwaehlbar, bei jedem Medien-Ablauf
+
+Bei Bild, Video und Ton steht jetzt neben der Ablauf-Wahl ein Knopf fuer
+"Prompt verbessern". Er ist an, wie bisher - aber du kannst ihn
+ausschalten, und dann geht dein Text unveraendert an den Ablauf.
+
+## Behoben: "Modell bleibt, wie es war" hat trotzdem gewechselt
+
+Der Chat fragt beim Modellwechsel zweimal nach, und auf Nein soll alles
+bleiben. Es blieb nicht.
+
+Der Grund war ein zweiter Schreiber: nach der Frage stand im Code noch
+eine Zeile, die den Chat bei jeder Nachricht an das oben gewaehlte Modell
+band - ohne Bedingung, ohne die Antwort zu kennen. Die Frage kam also,
+und danach wurde trotzdem gewechselt. Diese Zeile ist weg; es gibt jetzt
+genau eine Stelle, die diese Bindung setzt.
+
+**Und alte Chats fragen nicht mehr grundlos.** Die Frage kam bisher, wenn
+sich das eingestellte Modell vom gebundenen UNTERSCHIED - auch wenn du
+gar nichts ausgewaehlt hattest. Gefragt wird jetzt nur noch, wenn du
+wirklich ein anderes Modell gewaehlt hast.
+
 ## v2.9.52 - Er beantwortet dich EINMAL, nicht in jedem Zug
 
 "Wenn ich einmal sage 'Internet ist wieder da', sagt er in jedem Melden
