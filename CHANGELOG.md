@@ -35,6 +35,208 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.58 - Eine richtige deutsche Stimme, schnellere Erkennung, und Reden gibt Auftraege weiter
+
+"Wir brauchen im Backend etwas viel Besseres fuer die Stimme, das klingt
+ueberhaupt nicht gut - gebroeckelte Woerter. Er braucht standardmaessig eine
+richtige Stimme. Und wenn ich ihm sage, mach das in Code, Minecraft Server,
+dann guckt er, ist da ein Chat, und schickt es dahin."
+
+**Deutsch klingt jetzt richtig.** Die bisherige Sprachausgabe (Kokoro) hat
+keine deutsche Stimme - Deutsch lief ueber eine englische Stimme und
+zerbroeckelte. Jetzt spricht Deutsch die Stimme "Thorsten" (Piper ueber
+sherpa-onnx, lokal, auf Windows, macOS und Linux). Sie wird beim ersten
+Bedarf geholt (116 MB), bei deutscher Oberflaeche gleich beim Start;
+englische Nutzer laden sie nicht ungefragt. Englisch bleibt Kokoro.
+Weitere Sprachen bekommen ihre Piper-Stimme, sobald sie nachgeruestet
+ist; bis dahin sagt Qwirbel ehrlich, welche Stimme gerade spricht.
+Gemessen: ein deutscher Satz in 4,9 s, keine Stille-Bloecke, an den
+Satzgrenzen kein Sprung mehr - die Wiedergabe laeuft jetzt ueber EINEN
+durchgehenden Ausgabestrom mit Ueberblendung, der naechste Satz wird
+vorab erzeugt (Luecke = 150 ms Satzpause statt der Rechenzeit).
+
+**Stimme & Erkennung in den Einstellungen.** Je Sprache die Standardstimme
+mit Probe-Knopf, Cloud-Stimmen ueber einen OpenAI-Key, und die Erkennung:
+lokal wie bisher (small), lokal genauer (turbo), lokal schnell (Parakeet,
+nachruestbar) oder Cloud mit deinem Groq- oder OpenAI-Key ("Whisper-API").
+"5 Sekunden sprechen" zeigt, was ankommt und womit erkannt wurde.
+
+**Reden gibt Auftraege weiter.** Sagst du im Reden-Tab (oder im Chat, in
+der Planung) "mach das in Code, Minecraft Server", sucht Qwirbel den
+passenden Code- oder Work-Chat, legt sonst einen neuen an, startet den
+Auftrag dort und sagt es dir: "Gestartet in Code: Minecraft Server" - mit
+Knopf "Dorthin". Sind alle Chats belegt, sagt er das, statt still nichts
+zu tun. Es duerfen jetzt 30 Chats je Art sein statt 10.
+
+**Ehrlich dazu.** Die Stimme ist hier am Rechner nur als Datei gemessen,
+nicht am Lautsprecher gehoert; Cloud-Stimme, Cloud-Erkennung und Parakeet
+sind mit nachgestellten Diensten geprueft, nicht mit echtem Key. Die
+Weitergabe ist ohne echtes Modell geprueft. Mac und Linux weiterhin nur mit
+nachgestellten Systemen; die Wheels fuer sherpa-onnx gibt es fuer alle drei
+(auch Intel-Mac).
+
+## v2.9.57 - Reden mit Qwirbel, die Galaxie neu gedacht, Wissen von Anfang an
+
+"Wir brauchen einen komplett neuen Tab: Reden. Was du sagst, wird live
+beantwortet, wie ein Gespraech. Und der Galaxie-Tab ist das Einzige, worauf
+man keinen Einfluss hat - das sollte richtig aufgepeppt werden."
+
+**Neuer Tab: Reden.** Ein Knopf, du sprichst, Qwirbel antwortet mit Stimme -
+Satz fuer Satz, sobald ein Satz fertig ist, und du kannst ihn unterbrechen.
+Oben waehlst du Lokal oder Cloud, das Modell, die Stimme, die Sprache und
+ob Qwirbel dabei den Bildschirm sehen darf. Die Sprache erkennt er selbst
+(28 Sprachen), antwortet darin und nimmt die passende Stimme; fuer Deutsch
+liest wie bisher die englische Stimme mit deutscher Aussprache. Er kennt
+dabei dein Kern-Wissen und schlaegt selbst nach, wenn ein Thema passt.
+Wie schnell ein lokales Modell antworten wird, steht vorher am Modell
+(bei Klecks). Am Handy nimmt die Qwirbel-App selbst auf; dafuer gibt es
+eine neue App-Version mit Mikrofon-Freigabe. Ein echtes Gespraech ist
+in dieser Version noch nicht am Mikrofon gemessen - die Wege sind mit
+nachgestellten Bausteinen geprueft.
+
+**Die Galaxie ist neu.** Statt gleicher Punkte in verschiedenen Farben:
+sieben Gruppen als Sektoren mit eigenem Symbol, Kategorien als Sonnen
+(gross, wenn viel drin ist), Fakten als Planeten auf Ringen um ihre Sonne,
+die neuesten innen. Grosse Kategorien werden zu Buendeln mit Zahl, ein
+Klick loest sie auf. Karte mit vollem Text beim Klick, Suche, die alles
+andere abdunkelt, Zoom und Verschieben, am Handy mit den Fingern. Sie baut
+sich selbst neu, sobald das Wissen sich aendert; NEU DENKEN bleibt.
+„Demo-Galaxie" zeigt mit 468 erfundenen Beispielen, was entstehen kann,
+ohne etwas in dein Wissen zu schreiben.
+
+**Wissen von Anfang an.** Jede Installation bringt ein Basis-Kern-Wissen
+mit: neun Kategorien mit 305 Fakten ueber Qwirbel selbst (Tabs,
+Bildgenerierung, Modelle, Hardware, Diktat und Stimme, Werkzeuge,
+Einrichtung, Sicherheit, Tipps). Es liegt in deinem Kern-Wissen, du kannst
+es aendern, und die Galaxie ist damit vom ersten Start an gefuellt. Bei
+einem Update kommen neue Basis-Fakten dazu, ohne dass deine Aenderungen
+verlorengehen. Nichts davon stammt aus fremden Daten.
+
+**Oberflaeche neu laden ohne Neustart.** F5 und Strg+R funktionieren jetzt
+im Programmfenster (sie waren technisch abgeschaltet), dazu ein Knopf
+„Nur Oberflaeche neu laden" bei den Updates und im Tray-Menue. Das
+Programm und laufende Aufgaben laufen dabei weiter.
+
+**Der Wissen-Tab zaehlt live.** „Kern-Wissen: 200 von 399 (6 angefangen),
+83,8 %" - waehrend die Automatik arbeitet, nicht erst beim naechsten
+Oeffnen. Die Haken an den Dateien ziehen mit, mitgelieferte Dateien
+tragen ein Abzeichen.
+
+**Agenten-Schwarm: deine Auswahl gilt.** Stand im Agentic-Tab nur GLM,
+konnten trotzdem Gemini-Agenten mitlaufen, wenn der Auftrag das Wort
+„Gemini" enthielt - und sechs Agenten je Anbieter wurden zu zwoelf. Jetzt
+gilt die Auswahl im Tab, hoechstens sechs Cloud-Agenten insgesamt, und
+jede Anfrage an einen Anbieter geht durch eine Bremse je Anbieter: kommt
+ein Rate-Limit, wartet Qwirbel statt abzubrechen, und Chats haben Vorrang
+vor Agenten. Der Tab zeigt das Maximum und je Anbieter Anfragen pro
+Minute. Nebenbei behoben: die Status-Abfrage des Tabs brach ab, solange
+ein Agent auf einen Platz wartete.
+
+**Uebersetzungen.** Alle neuen Texte dieser Version gehen den regulaeren
+Weg (259 neue Eintraege in der Sprachliste, jetzt 3.143). In andere
+Sprachen als Deutsch und Englisch sind sie noch nicht uebersetzt.
+
+**Ehrlich dazu.** Reden am Handy und am PC ist nicht mit echtem Mikrofon
+gemessen; die Galaxie ist nur am PC und in der Handy-Ansicht des
+Browsers gesehen, nicht auf einem Handy; die Zahlen der Rate-Bremse sind
+Vorgaben, nicht bei den Anbietern nachgemessen.
+
+## v2.9.56 - Festigen: der Diktat-Knopf sagt die Wahrheit, Auftraege bleiben in ihrem Chat, kein Klick mehr ohne Antwort
+
+"Alles, was jetzt so ist, wie es ist, wird gefestigt. Ich will nicht, dass
+irgendetwas an irgendetwas schuld ist, dass es nicht geht. Der Diktatmodus
+soll jedes Mal beim Klicken direkt erkennen. Und das eine fuer Minecraft
+ist im Roblox-Chat und das fuer Roblox im Minecraft-Chat."
+
+Diese Version bringt kein neues Merkmal. Sie macht, was da ist,
+zuverlaessig - auf Windows, macOS und Linux. 26 neue oder erweiterte
+Pruefungsdateien halten jeden Fehler fest, der dabei gefunden wurde
+(Gesamtsuite: 259 Dateien, 258 gruen; rot ist nur die Paketpruefung
+gegen die alten 2.9.55-Pakete).
+
+**Diktat.** Der Mikrofon-Knopf meldete "an", bevor das Sprachmodell
+geladen war. Beim ersten Diktat nach dem Start staute sich das Gesagte
+und kam Sekunden spaeter auf einmal - oder gar nicht, wenn das Modell
+nicht laden konnte. Jetzt zeigt der Knopf einen Ladekreis, bis Modell
+und Mikrofon wirklich bereit sind; erst dann wird er rot und der Ton
+kommt. Ein Klick waehrend des Ladens bricht ab, ein Klick im Fehler-
+Zustand setzt neu auf. Der Fehlertext steht am Knopf, bis du klickst.
+Wurde das Diktat einmal benutzt, laedt Qwirbel das Modell beim naechsten
+Start im Hintergrund vor. Nach dem Stille-Ende bleibt der Knopf nicht
+mehr auf "Aufnahme" stehen.
+
+**Auftraege je Chat.** Die Vorschlaege unter dem Eingabefeld gehoerten
+seit 2.9.54 zum richtigen Chat - aber das Modell baute sie aus dem
+falschen Stoff: nur 60 Verlaufszeilen (in einem Code-Chat fast nur
+Werkzeug-Zeilen) und dazu das Nutzer-Wissen, in dem die Quests aus dem
+anderen Chat standen. Jetzt kommt der Kontext aus dem ganzen Verlauf
+DIESES Chats, ohne Wissen aus anderen; jeder Vorschlag traegt seinen
+Chat, und ein fremder wird sichtbar abgewiesen statt gezeigt. Eine
+gemerkte Liste ueberlebt das Loeschen eines Chats nicht mehr, und die
+Sprache der Liste ist die der Oberflaeche.
+
+**Kein Klick ohne Antwort.** 45 Antworten des Programms meldeten einen
+Fehler mit "alles gut" als Statuscode, und die Oberflaeche glaubte es:
+Modell gewechselt, obwohl es nicht gespeichert war; "Serie gestoppt",
+obwohl sie weiterlief; "Danke - gemerkt" ohne Speichern; Eintraege im
+Life-Tab, die ohne Grund verschwanden; MCP-Schalter, die nichts taten.
+Jetzt zeigt jede dieser Stellen den Grund am Element, und der Zustand
+springt erst um, wenn es geklappt hat. Ebenso im Hintergrund: eine
+kaputte Einstellungsdatei wird gesichert statt ueberschrieben, ein
+Schwarm, dessen Zerlegung scheitert, sagt das statt "braucht keinen
+Schwarm", und ein Lokal-Rueckfall wird im Chat angesagt. Der Start im
+Agentic-Tab endete bisher immer mit einem Fehler 422 - behoben.
+"Modell installieren" durch den Agenten scheiterte immer an einem
+Aufruf, den es nie gab - behoben.
+
+**Erster Start.** Es gab drei Empfehlungslisten fuer Modelle, die sich
+widersprachen; jetzt eine. Der Einrichtungs-Check zaehlte ein kleines
+Modell als das grosse (qwen3:4b als qwen3:14b) - jetzt exakt. "Selbst
+einrichten" meldete Erfolg, auch wenn nichts gesetzt wurde - jetzt
+ehrlich. Onboarding und Assistent kamen beide beim ersten Start und
+fragten den Namen zweimal - jetzt ein Weg. Ohne Grafikkarte steht
+"keine Karte gefunden" statt "laeuft ComfyUI?", und es werden keine
+20 GB Modelle vorgehakt. Ein Satz sagt, ab welcher Modellgroesse Work
+und Code lokal arbeiten (30B) und welche Modelle das sind. Nach
+"Loslegen" drei Zeilen erste Schritte, abschaltbar.
+
+**macOS und Linux, jede Ecke.** Ein Audit ueber alle drei Systeme hat
+15 Luecken gefunden, alle geschlossen: das Mac-Setup prueft die Xcode-
+Werkzeuge und den Homebrew-Pfad und nimmt ausdruecklich Python 3.12; aus
+dem Finder gestartet findet Qwirbel jetzt ffmpeg, Ollama und node und
+schreibt ein Log; Mikrofon-, Bildschirm- und Bedienungshilfen-Freigaben
+werden geprueft und mit dem Pfad in den Systemeinstellungen gemeldet
+statt still zu scheitern; Apple Silicon bekommt eine Modell-Empfehlung.
+Linux: das Setup meldet fehlende Pakete je Distribution (apt/dnf/pacman)
+statt falsch "bestanden", das Fenster faellt ohne WebKit in den Browser,
+die Firewall-Regel sperrt SSH nicht mehr aus, der Tray startet erst mit
+der Sitzung, Benachrichtigungen kommen auch im Dienst-Betrieb an, Ollama
+als Systemdienst wird samt seinem Modellordner erkannt, Programme starten
+ueber .desktop-Dateien, und es gibt eine ZUERST-LESEN-Datei mit
+Installations-Doppelklick. Beide: ffmpeg wird als fertiger Build geholt,
+das Hotword laeuft ohne tflite, und ein Update entfernt keine
+Ausfuehrungsrechte mehr von Startdateien. Der Updater und die Pakete
+tragen die Version jetzt auch in der Mac-App.
+
+**Hotword.** Die Erkennungsmodelle von openwakeword fehlten nach der
+Installation ganz - der Lauscher waere beim Start gestorben. Nachruesten
+holt sie jetzt, und der Schalter sagt, wenn sie fehlen.
+
+**Klecks.** Vor dem Laden steht jetzt, wie schnell ein Modell auf DIESEM
+Rechner antworten wird (Marken je Sekunde, gerechnet aus gemessener
+Bandbreite und der aktiven Menge je Token - fuer Qwen3.8 Flash Next auf
+einer 16-GB-Karte trifft die Rechnung die Messung auf 3 Prozent). Der
+Dienst startet auch ohne Vulkan-Treiber und nennt die Stufe, statt
+abzustuerzen. Er braucht leer 88 statt 319 MB, weil torch erst bei
+Bedarf geladen wird. Und die Pakete tragen Klecks' Maschinen-
+Einstellungen nicht mehr mit (dort lag seit 2.9.52 eine Datei mit
+Verbrauchszaehler und Modellwahl - ohne Schluessel).
+
+**Ehrlich dazu.** Auf einem echten Mac und einem echten Linux-Rechner
+ist in dieser Version nichts gelaufen; alle Systemwege sind mit
+nachgestellten Systemen geprueft. Der Firewall-Freigabe-Knopf fuer die
+Handy-Verbindung ist noch nicht gebaut.
+
 ## v2.9.55 - Das Kern-Wissen fuellt sich selbst, und die Galaxie waechst sichtbar mit
 
 "Dass er auch mal seine ganzen Work-Chats in Kernwissen qwirbeln kann. Im
