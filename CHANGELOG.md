@@ -35,6 +35,40 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.61 - Reden redet zu Ende und schneller, die Galaxie leuchtet
+
+"Er liest alles immer so langsam vor. Und er hoert einfach auf - er soll
+fertig reden. Abbrechen erst, wenn man so drei Sekunden durchredet, nicht
+wenn kurz irgendwelche Sounds kommen. Ich drehe mich im Stuhl und der hoert
+auf." - "Die Demo-Galaxie muss 10.000 Punkte zeigen, was ich da aufbauen
+kann, muessen die Leute direkt sehen."
+
+**Reden: Sprechtempo.** Ein Regler in Einstellungen -> Stimme (0,7 bis 1,6,
+Vorgabe 1,15) gilt fuer alle Stimmen - Thorsten, Kokoro und Cloud - ab dem
+naechsten Satz. Die Probe spricht schon im neuen Tempo.
+
+**Reden: erst ausreden.** Qwirbel unterbricht sich nur noch, wenn du
+wirklich dazwischenredest: mehr als vier Woerter, drei Sekunden am Stueck
+(Regler 1 bis 8 s), und es ist nicht seine eigene Stimme aus dem
+Lautsprecher. Stuhlknarzen, Husten und sein Echo lassen ihn zu Ende reden.
+Sein Echo landet auch nicht mehr als deine naechste Frage.
+
+**Galaxie: Sternenstaub.** Jedes Buendel zeigt seine Fakten jetzt als
+leuchtende Spiralarme mit Nebel in der Gruppenfarbe, funkelnd, zoomsynchron
+- auf einer eigenen Zeichenebene, damit auch zehntausend Punkte fluessig
+bleiben. Klick, Karte, Suche und Legende bleiben wie sie sind. Die Website-
+Demo zeigt damit eine Galaxie aus 10.000 erfundenen Fakten in 48 Kategorien.
+
+**Ehrlich dazu.** Tempo und Unterbrechen sind gegen nachgestellte Stimme und
+Diktat geprueft, nicht am Mikrofon gehoert; ob die Cloud-Stimme das Tempo
+beachtet, ist ohne Schluessel nicht gemessen. Die Galaxie ist ohne Browser
+gerendert und gemessen (Punkte, Zoom, Bilder pro Sekunde), nicht im Fenster
+angesehen. Echo-Fetzen aus ein bis zwei Woertern erkennt der Filter bewusst
+nicht. Beim Pruefen der Browser-Erweiterung fiel eine ungenutzte Datei auf,
+die Anmeldedaten aus dem Browserprofil lesen koennte - sie liegt ab dieser
+Fassung nicht mehr im Paket; die Erweiterung selbst bekommt als Naechstes
+eine Sicherheits-Runde.
+
 ## v2.9.60 - Tabs in der Kopfleiste ziehen, Kopfzeile nach Wunsch
 
 "Ich will da oben die Tabs, die ich fixiere, noch ziehen koennen. Mit
