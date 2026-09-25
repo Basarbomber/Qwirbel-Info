@@ -35,6 +35,32 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.60 - Tabs in der Kopfleiste ziehen, Kopfzeile nach Wunsch
+
+"Ich will da oben die Tabs, die ich fixiere, noch ziehen koennen. Mit
+Animationen, wie die sich dann verschieben. Und bei Darstellung den
+Token-Counter aussuchen, den VRAM-Knopf ausblenden, die Buttons toggeln."
+
+**Tabs ziehen.** In der schlichten Ansicht ordnest du die festen und
+angehefteten Tabs oben jetzt durch Ziehen: der gezogene Tab folgt der Maus,
+die anderen rutschen animiert zur Seite, beim Loslassen rastet er ein. Die
+Reihenfolge bleibt gespeichert und gilt auf allen deinen Geraeten. Ein
+Klick bleibt ein Klick, Rechtsklick heftet weiter an, Escape bricht ab.
+Wer Animationen im System abgeschaltet hat, bekommt keine.
+
+**Kopfzeile - Anzeigen & Knoepfe.** Neue Karte unter Darstellung: der
+Token-Zaehler als Kreis, als Zahlen (23k / 102k), nur als Prozent oder aus;
+Lokal/API-Schalter, VRAM-Knopf, Ressourcen-Regeln und Neu-laden-Knopf
+einzeln ein- oder ausblendbar. Wirkt sofort, gilt fuer dieses Geraet. Der
+Neu-laden-Knopf erscheint trotzdem, sobald ein Update oder eine Aenderung
+zum Uebernehmen ansteht - ein Update, das man sich weggeklickt hat, waere
+ein Defekt.
+
+**Ehrlich dazu.** Ziehen und Schalter sind mit der Maus am Rechner
+geprueft (Reihenfolge bleibt nach dem Neuladen, kein Klick rutscht durch);
+am Touchschirm bricht der Browser den Zug meist zugunsten des Scrollens ab.
+Die Chat-Reiter in der zweiten Zeile lassen sich noch nicht ziehen.
+
 ## v2.9.59 - Die Weitergabe-Karte auch im Chat und in der Planung, ehrliche Groessen
 
 "Weiter, King."
