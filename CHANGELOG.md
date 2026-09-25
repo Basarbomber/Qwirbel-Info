@@ -35,6 +35,40 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.59 - Die Weitergabe-Karte auch im Chat und in der Planung, ehrliche Groessen
+
+"Weiter, King."
+
+**Die Karte "Gestartet in Code: ..." steht jetzt ueberall.** Bisher kam sie
+nur im Reden-Tab; sagst du im Chat oder in der Planung "mach das in Code,
+Minecraft Server", stand dort nur der nackte Werkzeug-Aufruf. Jetzt
+erscheint in allen drei Tabs dieselbe Karte mit "Dorthin" - und bei vollen
+Chats dieselbe rote Meldung.
+
+**Reden zeigt, womit es hoert.** Die Statuszeile im Reden-Tab liest die
+Erkennung (Groq, lokal small, turbo, Parakeet) jetzt aus dem laufenden
+Gespraech selbst, nicht mehr aus den Einstellungen - ist die gewaehlte
+Erkennung nicht da, steht der Hinweis direkt dort.
+
+**Die Groessen stimmen.** Am Erkennungs-Knopf steht vor der Wahl, was
+geholt wuerde: Whisper turbo sind 1,6 GB (nicht 810 MB, wie bisher
+angenommen - nachgemessen an der Quelle), Parakeet 0,6 GB.
+
+**Handy braucht keine Tonkarte.** Auf dem Handy oeffnet Qwirbel keinen
+Ausgabestrom mehr fuer die Stimme (dort spielt die App), am PC bleibt der
+durchgehende Strom.
+
+**Ehrlich dazu.** Die Karte im Chat und in der Planung lebt nur im
+laufenden Verlauf; nach "Neu laden" steht sie nicht mehr da. Nebenwirkung
+in der Planung: das Injektions-Schutz-Gate fragt dort jetzt nach ("wirklich
+ausfuehren?") wie im Chat, statt hart zu blocken - weil die Planung nun den
+Fortschrittskanal hat; keine Antwort heisst weiterhin blocken. Nichts davon
+ist mit echtem Modell, Mikro oder Handy probiert, nur mit nachgestellten
+Diensten; Hoerprobe der Stimme steht weiter aus. Beim Blick ins Paket
+fiel auf, dass seit 2.9.56 ein interner Klecks-Messbericht (eine Textdatei,
+nichts Privates) mitfuhr - der Packer hat jetzt einen Besitzer fuer den
+Klecks-Ordner, ein Test haelt das fest.
+
 ## v2.9.58 - Eine richtige deutsche Stimme, schnellere Erkennung, und Reden gibt Auftraege weiter
 
 "Wir brauchen im Backend etwas viel Besseres fuer die Stimme, das klingt
