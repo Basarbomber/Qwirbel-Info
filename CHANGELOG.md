@@ -35,6 +35,52 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.64 - Bessere Augen: Bilder gehen ans Modell, und lokale Modelle arbeiten in Work und Code
+
+"Wenn die API-Anbieter Bilder selber koennen, muss das Modell das nutzen und
+kein CPM-Modul. Er braucht bessere Augen, je nachdem, was man ausgewaehlt hat."
+- "Nemotron hat ein falsches Kontextfenster und funktioniert nur im Chat,
+nicht in Work und Code."
+
+**Das Bild geht als Bild ans Modell.** Bisher ging jedes angehaengte Bild an
+das kleine lokale Beschreib-Modell, auch wenn oben Claude, Gemini oder GLM
+gewaehlt war - der Anbieter sah nur Woerter. Jetzt sieht das gewaehlte
+Modell das Bild selbst, wenn es das kann (Claude, Gemini, GPT-4o/5, bei
+z.ai glm-5.3-flash, glm-5v-turbo, glm-4.6v/4.5v). Kann es das nicht (etwa
+glm-5.3), nimmt Qwirbel fuer diese Runde das Seh-Modell desselben Anbieters
+und sagt es in der Statuszeile. Das Bild wird vor dem Senden verkleinert
+und liegt nur im Request, nie im Verlauf. In Work und Code beschreibt das
+sehende Modell das Bild mit Lage, Form und Farbe - und wo das Modell des
+Auftrags selbst sieht, bekommt es das Bild im ersten Zug dazu. Lokal
+waehlt Qwirbel das beste installierte Seh-Modell (Gemma 4 vor minicpm-v);
+in Einstellungen -> APIs und im Modelle-Tab steht je Anbieter und Modell,
+ob es sieht.
+
+**Lokale Modelle in Work und Code.** Ein grosses lokales Modell mit
+1-Million-Fenster lief im Work-Tab ins Leere: der Auftrag war groesser als
+das geladene Fenster, jeder Zug fiel auf Ollama zurueck, und Ollama
+kuerzte den Auftrag still auf die Haelfte - 96 Mal hintereinander. Jetzt
+erkennt Qwirbel das stille Kuerzen und sagt es, waehlt das Fenster nach
+dem Bedarf des Auftrags (gedeckelt durch das, was das Modell kann), faellt
+je Auftrag nur einmal auf den anderen Motor zurueck und haelt das Modell
+waehrend des Auftrags geladen statt es bei jedem Zug 24 Sekunden neu zu
+laden. Der Chip zeigt "geladen" und "kann" getrennt und warnt, wenn das
+Fenster fuer Work/Code zu klein ist. Modelle ohne Werkzeug-Training sind
+im Work/Code-Menue grau, mit Grund.
+
+**Modelle richten sich selbst ein.** Nach jedem Download (Bibliothek,
+Hugging-Face-Import, Klecks) und einmal fuer alle schon installierten
+Modelle liest Qwirbel die Wahrheiten des Modells (Architektur, Fenster,
+Werkzeuge, Sehen, Denken, Stop-Marken) und legt fest: Fenster, Motor,
+Eignung je Tab - sichtbar im Modelle-Tab. Dabei wird kein Modell geladen.
+
+**Ehrlich dazu.** Alles gegen nachgestellte Anbieter und ein nur lesend
+befragtes Ollama geprueft, kein echter Bild-Request an z.ai, Claude oder
+Gemini, kein Nemotron-Lauf im Work-Tab; ob glm-5.3-flash im Coding-Plan
+Bilder annimmt, ist offen - lehnt der Anbieter ab, beschreibt das lokale
+Seh-Modell mit Hinweis. Bilder gehen jetzt an Cloud-Anbieter, sobald ein
+Cloud-Modell gewaehlt ist; der Komplett-lokal-Modus haelt sie lokal.
+
 ## v2.9.63 - Browser-Bruecke: ein Browser, ein Fenster, eigene Tabs (Runde 1)
 
 "Wenn zwei Browser offen sind, fokussiert er sich auf nur einen. Er macht
