@@ -35,6 +35,46 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.65 - Was du ihm schickst, kommt an und wird benutzt
+
+"Egal was man in seinen Prompt packt, egal wann, egal wie ankommt und egal
+wie viel - er muss sich alles angucken und alles benutzen. Ich konnte kein
+Bild schicken, das blieb einfach in der Promptbox."
+
+**Zwischennachrichten tragen Bilder und Dateien.** Bisher schickte eine
+Nachricht waehrend eines laufenden Auftrags nur den Text; ein angehaengtes
+Bild blieb in der Box und ging spaeter mit der naechsten, fremden Nachricht
+raus - oder wurde ohne Text stumm verschluckt. Jetzt geht jede
+Zwischennachricht mit allem, was in der Box liegt, und die Box leert sich
+erst, wenn es wirklich angekommen ist. Kann sie nicht gesendet werden,
+steht es in der Statuszeile, und nichts geht verloren.
+
+**Ein Vertrag fuer Anhaenge.** Jede Datei, die du anhaengst, ziehst oder
+einfuegst, liegt sofort als Original bei Qwirbel; Textdateien und Dokumente
+(PDF, Office) bekommen einen lesbaren Auszug daneben. Der Agent bekommt in
+JEDEM Zug die Liste "Der Nutzer hat dir geschickt - benutze es", mit Stand,
+ob er es schon angesehen hat, und bevor er "fertig" sagt, wird er einmal
+darauf gestossen, wenn er etwas nicht angesehen hat. Das gilt in Chat, Work,
+Code, Planung und fuer Helfer-Agenten. Im Verlauf bleiben die Anhaenge
+sichtbar und nach "Neu laden" erhalten.
+
+**ZIP, Archive und Ordner.** Kein Format wird mehr abgelehnt. ZIP und Archive
+kann Qwirbel ansehen (Liste, ohne zu entpacken) und in Work/Code entpacken.
+Ein Ordner-Pfad in der Nachricht wird ein Anhang und der erste Kandidat fuer
+den Projektordner; im PC-Fenster kannst du einen Ordner hineinziehen. Der
+Ordner, in dem Qwirbel Anhaenge ablegt, wird nie mehr faelschlich zum
+Projektordner.
+
+**Ehrlich dazu.** Alles mit Modell-Doppeln geprueft, kein echter Auftrag mit
+echtem Modell; das Ziehen eines Ordners ins echte PC-Fenster ist nur
+nachgestellt; die Handy-App hat noch kein "Teilen an Qwirbel". Der
+Anhangs-Ordner raeumt sich noch nicht selbst auf.
+
+**Paket bereinigt.** In den Paketen 2.9.64 und dem ersten Bau von 2.9.65 lag
+ein internes Arbeitsprotokoll der Werkstatt (AUFTRAEGE-2026-09-24.md) mit -
+keine Schluessel, keine Kundendaten, aber nichts, was in ein Paket gehoert.
+Der Packer kennt jetzt das Muster, und ein Test fragt jedes Paket danach.
+
 ## v2.9.64 - Bessere Augen: Bilder gehen ans Modell, und lokale Modelle arbeiten in Work und Code
 
 "Wenn die API-Anbieter Bilder selber koennen, muss das Modell das nutzen und
