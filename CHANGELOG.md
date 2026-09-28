@@ -35,6 +35,115 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.63 - Browser-Bruecke: ein Browser, ein Fenster, eigene Tabs (Runde 1)
+
+"Wenn zwei Browser offen sind, fokussiert er sich auf nur einen. Er macht
+nicht mehrere Uploads gleichzeitig." - Der Fokus-Vertrag aus dem Bauplan
+steht jetzt im Code, Punkt fuer Punkt.
+
+**Qwirbel arbeitet nie mehr in deinem Tab.** Bis jetzt nahm die Erweiterung
+fuer lesen, klicken und tippen den Tab, den du gerade ansiehst - auch
+wenn Qwirbel seine Seite in einem Hintergrund-Tab geoeffnet hatte. Jetzt
+hat Qwirbel ein eigenes Fenster "Qwirbel" (wird nie nach vorn geholt), und
+jeder Befehl geht nur an Tabs, die er selbst geoeffnet hat. Willst du ihm
+einen anderen Tab geben, druecke im Erweiterungs-Fenster "Diesen Tab
+Qwirbel geben" - und nimm ihn dort auch wieder zurueck. Jeder Auftrag merkt
+sich seinen Tab; ohne seite_oeffnen sagt Qwirbel ehrlich "erst oeffnen".
+
+**Mehrere Browser, einer aktiv.** Ein zweiter gekoppelter Browser verdraengt
+den ersten nicht mehr still. Beide stehen unter Einstellungen -> Browser
+koppeln, genau einer ist der Arbeitsbrowser, dort schaltest du um und loest
+einzelne. Der andere bekommt "anderer Browser ist aktiv" - kein Angriff,
+kein Rauschen im Log (eine Zeile je Minute statt 1615 an einem Nachmittag).
+
+**Ein Auftrag, ein Upload zur Zeit.** Ein Auftrag haelt den Browser; ein
+zweiter wartet sichtbar ("wartet auf Browser, Platz 1") oder bekommt nach
+drei Minuten eine ehrliche Absage. Uploads (seite_datei, video_hochladen,
+Skripte an /browser-bruecke/befehl) reihen sich in eine eigene Schlange
+ein - nie zwei gleichzeitig. Zwei Befehle auf denselben Tab laufen strikt
+nacheinander, nicht Zeichen fuer Zeichen durcheinander. Ein Auftrag, der
+abstuerzt, blockiert nichts: sein Leasing verfaellt nach zehn Minuten.
+
+**Einmalig noetig:** die Erweiterung in chrome://extensions neu laden
+(Fassung 1.3.0). Eigene Skripte an /browser-bruecke/befehl nennen ab jetzt
+ihren Tab (tab_id aus oeffnen) und - freiwillig - ihren Auftrag
+(auftrag_id); "loslassen" gibt Browser und Upload-Reihe frei.
+
+**Ehrlich dazu.** Wieder ohne echten Browser geprueft: der node-Pruefstand
+(71 Pruefungen, die Fassung 1.2.0 war in den neuen 27 rot) und die
+Backend-Suiten (Fokus 42, Sicherheit 152). Ob Chrome das Fenster "Qwirbel"
+wirklich ohne Fokuswechsel anlegt (windows.create focused:false) und ob
+storage.session den Tab-Besitz ueber einen Dienst-Neustart traegt, ist am
+echten Browser nicht gesehen. Falkos Ad-Uploader muessen ihre Tabs jetzt
+selbst ueber "oeffnen" anlegen (fremde tab_ids lehnt die Erweiterung ab).
+Noch nicht gebaut: das Regelwerk fuer Konten mit Bestaetigung (Runde 2,
+braucht C2/C5/C6), Live-Karte und Abbrechen-Knopf (Runde 3), der interne
+Browser fuer Recherche (Runde 4).
+
+## v2.9.62 - Browser-Bruecke: die Loecher aus dem Audit sind zu (Runde 0)
+
+"Die Browserbruecke braucht auch ein komplettes Update nochmal, bevor wir
+hier was fertig machen ... ueber allgemein die Extension, die Sicherheit und
+wie er damit ist." - Das Audit vom 25.09. (ROADMAP-2026-09-25-BROWSERBRUECKE.md)
+fand fuenf Loecher. Diese Fassung stopft sie; Fokus, Regelwerk und Einblick
+folgen in den naechsten Runden.
+
+**Das Token verlaesst die Erweiterung nie mehr.** Bis jetzt schickte die
+Erweiterung ihr Kopplungs-Token bei jedem Verbinden in der Adresse mit -
+wer den Port 11000 besetzt hatte, solange Qwirbel gerade nicht lief, bekam
+es geschenkt und konnte damit den angemeldeten Browser fernsteuern. Jetzt
+weisen sich beide Seiten nur noch per Signatur ueber eine Zufallszahl aus.
+Ein neues Token nimmt die Erweiterung nur an, wenn sie keins hat - dafuer
+gibt es im Erweiterungs-Fenster den Knopf "Neu koppeln". Der Port ist dort
+einstellbar (Vorgabe 11000).
+
+**In Passwort-, Karten- und 2FA-Felder tippt Qwirbel nie.** Die Sperre sitzt
+in der Erweiterung selbst und prueft das echte Feld auf der Seite (Typ,
+autocomplete, Name, Beschriftung) - egal, was das Modell schickt. Titel,
+Beschreibung, Suche, Benutzername bleiben frei.
+
+**Rueckfragen der Seite klickt Qwirbel nicht mehr weg.** "Wirklich
+loeschen?" oder "Kauf bestaetigen?" wurden bisher automatisch bestaetigt.
+Jetzt lehnt die Erweiterung sie ab und meldet Qwirbel den Text; nur "Seite
+verlassen?" im eigenen Tab wird weiter bestaetigt (sonst haengt die Seite).
+Und dein "Abbrechen" in Chromes gelber Leiste gilt: Qwirbel haengt sich an
+diesen Tab nicht wieder an.
+
+**Nur der Betreiber steuert den Browser.** Die Tuer fuer eigene Skripte
+(/browser-bruecke/befehl) und der Kopplungs-Knopf verlangen jetzt Admin;
+die Tuer kennt nur noch die echten Befehle, prueft Klick-Ziele und
+JavaScript gegen den Konten-Schutz und legt nie eine Geheimnis-Datei in ein
+Upload-Feld. In der Server-Variante sind alle Browser-Werkzeuge fuer
+Mitarbeiter-Konten gesperrt - die Bruecke haengt am angemeldeten Browser
+des Betreibers.
+
+**Der interne Browser ist nie dein Browser.** Er haengt sich nicht mehr an
+einen zufaellig offenen Debug-Port, oeffnet keine lokalen Dateien und keine
+Adressen auf dem eigenen Rechner oder im LAN. Der Systemstatus meldet jetzt
+die Bruecke, nicht den Port. Eine ungenutzte alte Datei, die Anmeldedaten
+aus dem Browserprofil kopieren konnte, ist aus der Werkstatt entfernt.
+
+**Das Erweiterungs-Fenster tut, was es zeigt.** Das Skript lag als
+Inline-Skript in der Seite, was Chrome bei Erweiterungen nicht ausfuehrt -
+die Knoepfe waren vermutlich wirkungslos. Jetzt eigene Datei; der Text sagt
+ehrlich, dass Qwirbel Seiteninhalte an das gewaehlte Modell gibt.
+
+**Einmalig noetig:** die Erweiterung in chrome://extensions neu laden. Eine
+alte Fassung weist Qwirbel ab und sagt es unter Einstellungen -> Verbindung.
+
+**Ehrlich dazu.** Alles ohne echten Browser geprueft: die Erweiterung in
+einem node-Pruefstand mit nachgestellter Chrome-API (44 Pruefungen, die
+alte Fassung war dort in 18 rot), das Backend gegen eine Wegwerf-Instanz
+(125 Pruefungen). Ob Chrome den Dialog "Aenderungen verwerfen?" von X als
+beforeunload meldet, ist nicht am echten Browser gemessen - falls nicht,
+kommt der alte Haenger zurueck und steht dann sichtbar in der Antwort.
+Falkos Ad-Uploader-Skripte muessen sich an /browser-bruecke/befehl als
+Admin ausweisen (Desktop-Geheimnis oder Admin-Token) - womit sie sich heute
+anmelden, konnte ich hier nicht sehen. Noch nicht gebaut: Tab-Besitz und
+Fokus (Runde 1), das Regelwerk fuer Konten mit Bestaetigung (Runde 2), die
+Live-Karte und der Abbrechen-Knopf (Runde 3), der interne Browser fuer
+Recherche unter Windows (Runde 4).
+
 ## v2.9.61 - Reden redet zu Ende und schneller, die Galaxie leuchtet
 
 "Er liest alles immer so langsam vor. Und er hoert einfach auf - er soll
