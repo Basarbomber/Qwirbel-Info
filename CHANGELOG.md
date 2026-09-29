@@ -35,6 +35,58 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.66 - Was einen Kunden aufgehalten haette: behoben, auf jedem System geprueft
+
+Ein Laptop mit 4 GB Speicher, Intel-Grafik und dem neuen Python-Installations-
+manager hat Qwirbel und Klecks an fuenf Stellen ins Stolpern gebracht. Ein
+Kunde ohne Programmierkenntnisse waere an zwei davon haengen geblieben. Alle
+fuenf sind behoben, und jeder Installer prueft am Ende selbst nach.
+
+**Qwirbel startet auch mit dem neuen Python.** Die Start-Datei bekommt die
+Python-Bibliotheken neben sich gelegt und wird vor dem Einsatz einmal zur
+Probe gestartet. Vorher hiess es auf dem Laptop "python314.dll fehlt", und
+Qwirbel ging gar nicht auf.
+
+**Ohne Ollama nimmt Qwirbel Klecks - von selbst.** Ein frisches Qwirbel stand
+auf Ollama und suchte ein Modell, das es ohne Ollama nicht gibt ("qwen nicht
+da"). Jetzt stellt sich der Motor beim Start auf Klecks um, wenn Ollama weder
+installiert noch erreichbar ist und Klecks da ist. Ein installiertes, gerade
+nur nicht laufendes Ollama bleibt deine Wahl.
+
+**Klecks auf kleinen Rechnern.** Kann der Grafik-Weg die Gewichte nicht tragen
+(geteilter Grafikspeicher, Modell groesser als Arbeitsspeicher plus Karte),
+nimmt Klecks vorab den CPU-Bau von llama.cpp und holt ihn, wenn er fehlt.
+Bricht ein Start trotzdem mit "OutOfDeviceMemory" ab, setzt Klecks einmal
+mit dem CPU-Bau nach. Zeitschranken richten sich nach Klecks' eigener
+Vorhersage statt nach festen Zahlen: das Laden darf so lange dauern, wie die
+Platte braucht, solange messbar etwas passiert; ein Zug darf so lange dauern,
+wie das vorhergesagte Tempo es braucht. Qwirbel wartet genauso lange wie
+Klecks, statt frueher abzubrechen. Und "Denken aus" wirkt jetzt auch ueber
+den OpenAI-kompatiblen Weg, in allen gaengigen Schreibweisen.
+
+**Jeder Installer prueft am Ende nach.** Windows, Linux und macOS: Umgebung,
+Kern, Start-Datei, Oberflaeche, Motor passend eingestellt, Modell, Port,
+Schreibrechte. Ein "FEHL" wird laut gesagt, statt "FERTIG" ueber ein Symbol,
+hinter dem nichts steckt.
+
+**Vorlagen als Basiswissen.** Acht neue Vorlagen, wie man Projekte aufsetzt -
+Unity-Handyspiel, Roblox mit Rojo, 3D-Modelle und Texturen, Handy-App als
+Huelle um eine Weboberflaeche, Website veroeffentlichen, Minecraft-Server mit
+Plugins, Python-Programm mit Release-Packer und Tests, Zahlungen einbauen.
+Jede beginnt mit "erst das, dann das", damit Qwirbel bei einem Auftrag sofort
+einen ungefaehren Plan hat statt lange zu ueberlegen.
+
+**iPhone-App 1.19.2 (eigenes Paket, nicht in diesem Download).** Koppeln per
+QR wie bei Android, Mikrofon fuer den Tab Reden, Downloads in Dateien >
+Qwirbel, alle Rechte erklaert, wechselt selbst zwischen WLAN und Tailscale.
+
+**Ehrlich dazu.** Die Laptop-Fixes sind gegen die Quelltexte und mit
+Modell-Doppeln geprueft, nicht auf dem Laptop selbst; ob Klecks dort wirklich
+den CPU-Bau nimmt, zeigt erst /llm/laden auf dem Geraet. Die Vorlagen sind
+aus echten Projekten abgeleitet, Konten und Zahlungen bleiben Sache des
+Nutzers. Die iOS-App laeuft ueber AltStore mit 7-Tage-Signatur, bis ein
+Apple-Entwicklerkonto dazukommt.
+
 ## v2.9.65 - Was du ihm schickst, kommt an und wird benutzt
 
 "Egal was man in seinen Prompt packt, egal wann, egal wie ankommt und egal
