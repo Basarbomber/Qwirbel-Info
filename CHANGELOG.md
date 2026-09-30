@@ -35,6 +35,64 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.67 - Sicherheit fuer den Server mit Mitarbeiter-Konten, kleinerer Speicher fuer Klecks, letzter Scan
+
+**WICHTIG fuer Betreiber eines Qwirbel-Servers mit Mitarbeiter-Konten.** Beim
+Durchsehen der Server-Variante sind Luecken aufgefallen, ueber die ein
+angemeldeter Mitarbeiter mehr durfte, als seine Rolle hergibt. Sie sind in
+dieser Version geschlossen. Der Einzelplatz (ein Nutzer, kein Konto-Betrieb)
+war nicht betroffen und verhaelt sich unveraendert.
+
+Was geschlossen ist:
+- Handy koppeln: ein Kopplungs-Code traegt jetzt das Konto, das ihn erzeugt
+  hat. Ein Mitarbeiter koppelt sein Handy mit SEINEM Konto - vorher bekam das
+  Handy den Zugang des Betreibers.
+- Rueckfragen und Bestaetigungen ("darf ich diese Datei schreiben?") gehoeren
+  dem Konto, fuer dessen Auftrag sie entstanden. Die Kennungen sind nicht mehr
+  fortlaufend, fremde lassen sich nicht bestaetigen.
+- Live-Ereignisse, laufende Auftraege und Meldungen gehen nur noch an das
+  eigene Konto.
+- Anbieter und API-Schluessel aendern darf nur die IT. Wird die Adresse eines
+  Anbieters geaendert, muss der Schluessel neu eingegeben werden - er wandert
+  nicht still an die neue Adresse mit.
+- Bildschirm, Maus und Tastatur des Server-PCs sind fuer Mitarbeiter-Konten
+  gesperrt, wie es die Werkzeuge des Agenten schon waren.
+- Den globalen Arbeitsordner setzt nur die IT; Vorlagen vom Desktop des
+  Servers gehen nicht mehr an Mitarbeiter-Konten.
+
+**Was du als Betreiber tun solltest:** Wurde vor dieser Version ein Handy von
+einem Mitarbeiter gekoppelt, haelt es noch den alten Zugang (bis zu 90 Tage).
+Einmal alle Sitzungen widerrufen (Admin-Handbuch, Abschnitt 32) und die Handys
+neu koppeln.
+
+**Ehrlich dazu:** Noch offen ist, dass "Stopp" und "Abbrechen" fuer alle
+Konten wirken - die Lauf-Register kennen bisher nur den Kanal, nicht das
+Konto; das wird als Naechstes umgebaut. 112 schreibende Wege sind noch nicht
+einzeln einer Rolle zugeordnet; ein Waechter-Test sorgt dafuer, dass die Zahl
+nur noch sinkt. Geprueft ist alles mit echten Routen und Doppeln, nicht an
+einem Server mit echten Mitarbeitern.
+
+**Klecks: halber Speicher fuer das Gedaechtnis eines Gespraechs.** Der
+KV-Cache kann jetzt in q8_0 liegen statt in fp16 - bei einem 4B-Modell mit
+32k-Fenster 2,39 statt 4,50 GiB. Auf Geraeten der Klasse 4 GB und 8 GB waehlt
+Klecks das von selbst und sagt, warum; auf groesseren bleibt alles, wie es
+war. Die Vorhersage vor dem Laden rechnet den kleineren Cache ein. Dazu: ein
+Geraete-Bericht als Datei (Klasse, Bandbreiten, Vorhersage je Modell), ohne
+dass ein Modell geladen wird.
+
+**Letzter Scan.** Das Protokoll (logs/app.log) war auf einer lange laufenden
+Installation 132 MB gross - es wird jetzt beim Start ab 10 MB umgeschaltet,
+zwei alte Generationen bleiben. Vier Warte-Schleifen meldeten ihr normales
+"noch nichts Neues" als Fehler, viermal je Sekunde - jetzt still. Anfragen,
+die genau beim Beenden ankamen, hinterliessen je einen langen Fehlerbericht -
+sie bekommen jetzt eine ehrliche Antwort "wird gerade beendet".
+
+**Unterwegs mit dem Handy.** Der QR-Code zum Koppeln traegt die
+Tailscale-Adresse auch dann, wenn Tailscale nicht im Suchpfad von Qwirbel
+stand. iPhone-App 1.19.3 (eigenes Paket): wartet beim ersten Kontakt ueber
+Tailscale laenger und sagt auf dem Fehlerbild, wenn am iPhone der
+Tailscale-Schalter aus ist.
+
 ## v2.9.66 - Was einen Kunden aufgehalten haette: behoben, auf jedem System geprueft
 
 Ein Laptop mit 4 GB Speicher, Intel-Grafik und dem neuen Python-Installations-
