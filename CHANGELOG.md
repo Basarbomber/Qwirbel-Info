@@ -35,6 +35,41 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.68 - Diktat mit dem Handy-Mikro, "mach es besser" ist ein Auftrag, Handy-Chips vollstaendig
+
+"Der Diktatmodus muss auf dem Handy das Mikrofon von meinem Handy nehmen und
+nicht das von meinem PC." Und: "Wenn ich ihm sage, er soll mehrere machen,
+die gut aussehen und besser, dann muss er besser Researches machen."
+
+**Diktat am Handy nimmt das Handy-Mikro.** Der Mikro-Knopf im Chat nahm vom
+Handy aus bisher am PC auf. Jetzt nimmt die Qwirbel-App (Android und iPhone)
+selbst auf und schickt den Ton an deinen Rechner, der Text erscheint wie
+gewohnt live im Eingabefeld. Dafuer braucht es die neue App (Android-APK liegt
+im Paket, iPhone-App 1.20.0); mit einer aelteren App bleibt es beim PC-Weg,
+und Qwirbel sagt dir einmal, dass die App aktualisiert werden will.
+
+**"Mach es besser" ist ein Auftrag.** Sagt man Qwirbel, etwas soll besser
+oder schoener werden, liefert er nicht mehr dasselbe noch einmal: er benennt
+zuerst, woran "besser" gemessen wird, holt sich Referenzen (wie machen es
+die Guten), baut zwei messbar verschiedene Varianten, sieht sie sich an,
+vergleicht, nimmt die bessere und haelt die Lehre fest - beim naechsten Mal
+faengt er damit an. Gilt fuer 3D-Modelle, Code, Bilder und Texte.
+
+**Handy: Workflow-Chip und "Prompt verbessern".** Auf dem Handy war der
+Ausklapp-Pfeil der Chip-Reihe unsichtbar, die Reihe auf eine Zeile gekappt,
+der Workflow-Name nach 16 Zeichen abgeschnitten, und den Schalter "Prompt
+verbessern" gab es dort nicht. Jetzt: Pfeil da, Workflow mit Name und Art
+lesbar, der Schalter oben im Workflow-Menue - dieselbe Einstellung wie am PC.
+Zwei Sinnbilder (Pfeil, Funken), die benutzt, aber nie gezeichnet waren, sind
+nachgezeichnet - vorher standen dort leere Kaestchen.
+
+**Ehrlich dazu.** Das Diktat mit dem Handy-Mikro ist ohne Handy gebaut und
+geprueft (Routen, Bruecke, Quelltext beider Apps); ob das Handy wirklich
+aufnimmt, zeigt erst das Geraet. Beim Start wartet der Rechner bis zu 1,5
+Sekunden auf den ersten Ton. Ein waehlbares Mikro (Headset, Bluetooth) gibt es
+noch nicht. Die Handy-Ansicht ist headless bei 375 und 412 px gemessen, nicht
+mit geoeffneter Tastatur.
+
 ## v2.9.67 - Sicherheit fuer den Server mit Mitarbeiter-Konten, kleinerer Speicher fuer Klecks, letzter Scan
 
 **WICHTIG fuer Betreiber eines Qwirbel-Servers mit Mitarbeiter-Konten.** Beim
