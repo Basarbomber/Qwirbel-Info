@@ -1,7 +1,7 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket.",
-  "_naechster_schritt": "v2.9.69 ist veroeffentlicht (03.10.2026). Die Pakete haengen als Anhaenge am Release v2.9.69 dieses Repos - genau die Dateien, die in 'pakete' stehen, und die 'sha256' sind gegen genau diese Dateien gerechnet. Der Update-Knopf im Programm laedt sie von dort. FUER DAS NAECHSTE RELEASE: Pakete packen, Release mit dem neuen Tag anlegen, Anhaenge hochladen, DANN hier 'version', 'hinweise', 'datei', 'url' und 'sha256' setzen - in dieser Reihenfolge. Ein Manifest, das eine Datei nennt, die noch niemand laden kann, meldet eine neue Version und bietet keinen Knopf an; das sieht wie ein Defekt aus. ACHTUNG: ein Release-Anhang ist OEFFENTLICH ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
-  "version": "2.9.69",
+  "_naechster_schritt": "v2.9.70 ist veroeffentlicht (04.10.2026). Die Pakete haengen als Anhaenge am Release v2.9.70 dieses Repos - genau die Dateien, die in 'pakete' stehen, und die 'sha256' sind gegen genau diese Dateien gerechnet. Der Update-Knopf im Programm laedt sie von dort. FUER DAS NAECHSTE RELEASE: Pakete packen, Release mit dem neuen Tag anlegen, Anhaenge hochladen, DANN hier 'version', 'hinweise', 'datei', 'url' und 'sha256' setzen - in dieser Reihenfolge. Ein Manifest, das eine Datei nennt, die noch niemand laden kann, meldet eine neue Version und bietet keinen Knopf an; das sieht wie ein Defekt aus. ACHTUNG: ein Release-Anhang ist OEFFENTLICH ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
+  "version": "2.9.70",
   "kanal": [
     "stabil",
     "test",
@@ -14,7 +14,7 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://github.com/Basarbomber/Qwirbel-Info/blob/main/CHANGELOG.md",
-  "hinweise": "v2.9.69 - Kontext schlanker nutzen: Komprimieren behaelt Thema, Regeln und Ergebnisse (Kopf+Schwanz statt Nur-Vorne-Schere), volle Werkzeugliste erst ab 100 Milliarden Parametern; Handy-Kopfleiste per Portal gefixt, Workflows sauber umbenannt (ImageEdit/T2I/I2V), Modellwahl Q2 durchgereicht bis in die Generations-Bibliothek. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
+  "hinweise": "v2.9.70 - VRAM bleibt leer, wenn niemand arbeitet: Ein Leerlauf-Waechter schaut alle 5 Minuten nach und raeumt erst nach 5 Minuten vollkommener Ruhe selbst auf - Ollama-Modelle werden entladen, ComfyUI-Speicher nur bei leerer Warteschlange freigegeben, torch-Cache geleert. Nie mitten in der Arbeit: Jeder Chat, Agent-Zug und jede Generierung setzt einen Puls. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
   "_felder": {
     "version": "Zielversion. Qwirbel bietet sie nur an, wenn sie NEUER ist als die installierte.",
     "kanal": "Fuer welche Kanaele freigegeben (stabil/test/lts). Wer im Kanal 'lts' sitzt, sieht eine Version nur, wenn 'lts' hier steht.",
@@ -29,34 +29,34 @@
   },
   "pakete": {
     "windows": {
-      "datei": "Qwirbel-Windows-Normal-v2.9.69.zip",
-      "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.69/Qwirbel-Windows-Normal-v2.9.69.zip",
-      "sha256": "683cc573e134aa5d4b78f53bcf2734ea76c670f87389d227d1541d16dfc831d4"
+      "datei": "Qwirbel-Windows-Normal-v2.9.70.zip",
+      "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.70/Qwirbel-Windows-Normal-v2.9.70.zip",
+      "sha256": "c47ee03180ddf9cc513d4ec6306fb8a326fb7070469435165cfeec4ff756a29c"
     },
     "windows_server": {
-      "datei": "Qwirbel-Windows-Server-v2.9.69.zip",
-      "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.69/Qwirbel-Windows-Server-v2.9.69.zip",
-      "sha256": "85e29c26a11e61d3cc6514795198a4b7f5c7c88fe17aed7eecd5dcc39810b0f1"
+      "datei": "Qwirbel-Windows-Server-v2.9.70.zip",
+      "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.70/Qwirbel-Windows-Server-v2.9.70.zip",
+      "sha256": "3c6024beaae1f084f7b59ad78b096b9e8db799ef8687f754d2302b44cc0a29b2"
     },
     "linux": {
-      "datei": "Qwirbel-Linux-Normal-v2.9.69.zip",
-      "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.69/Qwirbel-Linux-Normal-v2.9.69.zip",
-      "sha256": "cfcae27d262c70b35c053fb91ccabfed49923bd9400fa2b52a751a24e7d74ae9"
+      "datei": "Qwirbel-Linux-Normal-v2.9.70.zip",
+      "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.70/Qwirbel-Linux-Normal-v2.9.70.zip",
+      "sha256": "9cddf04e13316a584bb63b8632aad168875d25ec94f22d8fab561b08f883f24e"
     },
     "linux_server": {
-      "datei": "Qwirbel-Linux-Server-v2.9.69.zip",
-      "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.69/Qwirbel-Linux-Server-v2.9.69.zip",
-      "sha256": "e8f395d5b64130c3c611f4cb7d9ff542d5ab7114082ff5bc60526de78d40e62d"
+      "datei": "Qwirbel-Linux-Server-v2.9.70.zip",
+      "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.70/Qwirbel-Linux-Server-v2.9.70.zip",
+      "sha256": "e672c14a6504cbda8d5677a3c940f889f821894310e626cdeabe21e4454b8e70"
     },
     "macos": {
-      "datei": "Qwirbel-macOS-Normal-v2.9.69.zip",
-      "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.69/Qwirbel-macOS-Normal-v2.9.69.zip",
-      "sha256": "34d4bedbf9456b196e4fdf8ac1de818decf87e67e0cbccc1c598f2a4ca0208f1"
+      "datei": "Qwirbel-macOS-Normal-v2.9.70.zip",
+      "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.70/Qwirbel-macOS-Normal-v2.9.70.zip",
+      "sha256": "8ef24022628a55dbd582bb7fdbce717a8d17291f87309945bd024f6a005e4181"
     },
     "macos_server": {
-      "datei": "Qwirbel-macOS-Server-v2.9.69.zip",
-      "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.69/Qwirbel-macOS-Server-v2.9.69.zip",
-      "sha256": "e00defb908c6606fe3c4b0e4bf31f80327d4c3c1aabd6a18eb9ca22872a86ef9"
+      "datei": "Qwirbel-macOS-Server-v2.9.70.zip",
+      "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.70/Qwirbel-macOS-Server-v2.9.70.zip",
+      "sha256": "12038e43b87ab128edc421539ae050cf15e90ecbe44e451f497fdd016cd64623"
     }
   }
 }

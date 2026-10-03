@@ -35,6 +35,18 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.70 - VRAM bleibt leer, wenn niemand arbeitet
+
+"Irgendwo wird unnoetig VRAM genommen. Wenn kein Chat laeuft, soll das Programm im Hintergrund selbst dafuer sorgen, dass der VRAM die ganze Zeit leer ist." (Falko, 03.10.2026)
+
+**Der Leerlauf-Waechter.** Ein Hintergrund-Dienst schaut alle 5 Minuten nach: Laeuft irgendetwas - Chat, Agent-Zug, lokale Modell-Anfrage, Diktat, ComfyUI-Generierung - bleibt alles wie es ist. Erst nach 5 Minuten vollkommener Ruhe raeumt er selbst auf: Ollama-Modelle werden entladen (keep_alive=0), ComfyUI-Speicher nur bei voellig leerer Warteschlange freigegeben.
+
+**Nie mitten in der Arbeit.** Jede arbeitende Stelle setzt einen Puls; ein lokaler Lauf, der laenger als 5 Minuten dauert, zaehlt weiter als beschaeftigt - die Falle vom 12.08.2026 (keep_alive=0 mitten im Auftrag, danach 22 Sekunden Nachladen) kommt nicht zurueck. ComfyUI gilt als eigene Engine: Steht dort auch nur ein Job in der Warteschlange, wird es strikt geschont.
+
+**Nachvollziehbar.** Jedes Aufraeumen landet im Protokoll (was wurde entladen, wieviel GB wurden frei) - so siehst du, warum die Karte leer ist. Beim Herunterfahren stoppt der Waechter sauber mit.
+
+**Ehrlich dazu.** Greift nach dem naechsten Start von Qwirbel - der laufende Dienst arbeitet mit dem Code im Speicher weiter. Gemessen: 7 Checks gruen (Puls blockt, Stille raeumt, laufender Auftrag geschont, leere Karte in Ruhe gelassen, Comfy-Warteschlange zaehlt als beschaeftigt, arbeitende Comfy-Engine wird nicht angefasst, Start/Stopp sauber).
+
 ## v2.9.69 - Kontext schlanker nutzen: Komprimieren behaelt Thema, Regeln und Ergebnisse
 
 "Ich brauche viel zu viele Tokens fuer eine Aufgabe, die am Ende halb fertig ist. Beim Komprimieren behalte Regeln, Styles, Abhaengigkeiten, Thema des Chats alles drin - nicht nur was getan wurde." (Falko, 03.10.2026)
