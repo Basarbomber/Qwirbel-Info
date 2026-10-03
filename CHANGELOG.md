@@ -35,6 +35,18 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.69 - Kontext schlanker nutzen: Komprimieren behaelt Thema, Regeln und Ergebnisse
+
+"Ich brauche viel zu viele Tokens fuer eine Aufgabe, die am Ende halb fertig ist. Beim Komprimieren behalte Regeln, Styles, Abhaengigkeiten, Thema des Chats alles drin - nicht nur was getan wurde." (Falko, 03.10.2026)
+
+**Das Ende eines Zugs ueberlebt die Kompression.** Bisher schnitt die Schere nur von vorn: Bei einem Zug wie datei_schreiben(...) ueberlebte der Werkzeugname, das ERGEBNIS am Ende (Pfad, Zeilenzahl, Fehlercode) fiel aber weg - und spaeter wusste der Agent nicht mehr, was er getan hatte. Jetzt bekommt der Kopf zwei Drittel des Budgets und der Schwanz ein Drittel; nur die Mitte wird als ...[Mitte komprimiert]... ausgelassen. Gepinnte Eintraege bleiben wie immer unangetastet.
+
+**Zusammenfassungen behalten mehr als die Arbeit.** Die Verdichtung - im Hintergrund bei vollem Kontext wie beim Komprimieren-Knopf - schreibt zusaetzlich THEMA des Chats, REGELN & STYLES (deine Vorlieben, Bauregeln, Verbote) und ABHAENGIGKEITEN (was worauf aufbaut) aus, neben FERTIG, ENTSCHIEDEN, DATEIEN, OFFEN und STAND.
+
+**Volle Werkzeugliste erst ab 100 Milliarden Parametern.** Die rund 60 Werkzeuge samt Parameter-Doku kosten massiv Kontext. Sie gehen jetzt nur noch an Cloud-Modelle und lokale Riesen (ab 100B, einstellbar als agent.voll_ab_param); alles darunter arbeitet mit der schlanken, nach Arbeitsschritt sortierten Kern-Liste - im Code-Tab inklusive kompilieren. Der Werkzeug-Prompt schrumpft damit auf rund ein Zehntel.
+
+**Ehrlich dazu.** Alles greift erst nach dem naechsten Start von Qwirbel - der gerade laufende Dienst arbeitet mit dem Code im Speicher weiter. Gemessen: 74 Checks gruen (18 Kompression + 24 Profil + 21 Gemma-Gleichheit + 11 End-to-End), gelaufen im Entwicklungsbaum und in der Installation.
+
 ## v2.9.68 - Diktat mit dem Handy-Mikro, "mach es besser" ist ein Auftrag, Handy-Chips vollstaendig
 
 "Der Diktatmodus muss auf dem Handy das Mikrofon von meinem Handy nehmen und
