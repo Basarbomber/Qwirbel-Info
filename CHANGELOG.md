@@ -35,6 +35,48 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.73 - VRAM-Knopf tut, was er sagt; bei API-Arbeit laedt nichts mehr lokal zum Ansehen
+
+"Im Hintergrund fuellt irgendwas meinen VRAM, obwohl ich ueber API arbeite.
+Und der Knopf VRAM leeren funktioniert nicht."
+
+**Der zweite Klick kommt an.** Liegt nach dem ersten Druck noch ein Modell im
+Speicher, wird der Knopf zu "WIRKLICH RAUSWERFEN" und soll die laufenden
+Aufgaben beenden. Dieser zweite Klick kam beim Rechner nie als "hart" an -
+seit dem 20. August kein einziges Mal. Jetzt beendet er die Aufgaben und
+raeumt wirklich.
+
+**Der erste Klick ist wieder sanft.** Er sollte nur die Modelle aus dem
+Speicher werfen, ohne laufende Aufgaben abzuwuergen. Tatsaechlich kappte er
+die gerade laufende Antwort des Modells und nahm allen Auftraegen ihren
+Warm-Zustand - danach wurde das Modell bei jedem Schritt neu geladen. Jetzt
+wirft er nur noch raus.
+
+**Die Meldung zaehlt richtig.** Was ComfyUI freigibt, steht jetzt in der Zahl
+(vorher "0 GB", obwohl 13 GB frei wurden). "Grafikkarte frei" steht nur noch
+da, wenn der Rechner es so meldet.
+
+**Ansehen bei API-Arbeit laedt kein lokales Modell mehr.** Wenn Qwirbel in
+einem Auftrag ein Bild, ein Video oder ein Fenster ansieht, ging das immer an
+das lokale Seh-Modell - auch wenn der Auftrag ueber einen Anbieter lief. So
+lagen mitten in der API-Arbeit 11 GB im VRAM. Jetzt sieht der Anbieter des
+Auftrags (oder ein sehendes Modell desselben Anbieters). Kann er das nicht,
+sagt Qwirbel das, statt still lokal nachzuladen.
+
+**Vier Knoepfe, die nie gespeichert haben.** Derselbe Fehler wie beim
+VRAM-Knopf steckte im Umbenennen eines Chats (in der Sitzungsliste) und in
+drei Knoepfen der Browser-Bruecke (koppeln, Browser aktiv setzen, Kopplung
+loesen): die Angaben kamen beim Rechner nicht an.
+
+**Ehrlich dazu.** Das ist der erste Teil. Noch offen: ein gestoppter lokaler
+Auftrag kann das Modell ueber den anderen Motor noch einmal laden;
+Hintergrund-Arbeiten (Automatik, Chat-Namen, Lernen) sind noch nicht alle
+durch dieselbe Tuer gefuehrt; Ollama wird weiter ohne eigenes Protokoll
+gestartet. Wer bei API-Arbeit bewusst lokal ansehen lassen will, traegt in
+der config "sehen": {"lokal_bei_api": true} ein - einen Schalter in der
+Oberflaeche gibt es dafuer noch nicht. Der Knopf ist mit Stellvertretern
+geprueft, nicht an einer vollen Karte.
+
 ## v2.9.72 - Modellwechsel kommt an, "Wechseln und komprimieren", Tarif kostenlos/bezahlt
 
 "Als ich Wechseln gedrueckt habe, ist es dann nicht in den RAM reingeladen."
