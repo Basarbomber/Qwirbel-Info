@@ -35,6 +35,44 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.77 - Hochskalieren im Chat: bleibt im Chat, Vorher/Nachher, mehr Hochskalierer
+
+"Wenn ich ein Bild anhaenge, auf Hochskalieren und dann Bild hochskalieren
+druecke, ist das im Chat, und ich kann vorher/nachher sehen. Und mehr als x4:
+x2, x3 - Dateien zum Download in der Generationsbibliothek."
+
+**Das Ergebnis bleibt im Chat.** Ein hochskaliertes Bild stand bisher nur im
+Fenster - nach dem Neuladen war es weg. Jetzt liegt es im Verlauf des Chats,
+in dem du es bestellt hast, mit der Angabe, womit und wie stark vergroessert
+wurde.
+
+**Vorher und Nachher.** Statt nur des Ergebnisses zeigt der Chat den
+Vergleich: das Bild davor liegt genau ueber dem neuen, und eine Linie trennt
+beide. Die Linie folgt der Maus (am Handy dem Finger). Zwei Knoepfe zeigen
+ganz "Vorher" oder ganz "Nachher"; nochmal druecken holt den Schieber
+zurueck. Mit plus und minus zoomst du bis 800 Prozent hinein, "Ganz" zeigt
+wieder das ganze Bild. Daneben der Knopf zum Speichern.
+
+**Vier neue Hochskalierer in der Generationsbibliothek** (Models ->
+Generationsbibliothek -> Helfer), jeder mit Laden-Knopf:
+- 4x-ClearReality: der schnelle Vierfache, nur 9 MB.
+- 2x-NomosUni: echte Verdopplung fuer Fotos, raeumt JPEG-Artefakte auf,
+  4,5 MB.
+- OmniSR x2 / x3 / x4: drei winzige (je 1,7 MB) - der einzige mit echtem
+  Faktor 3.
+- 4x-RealWebPhoto: fuer Fotos, die schon verkleinert und komprimiert waren;
+  140 MB, langsam.
+Im Chat waehlst du unter "Hochskalieren" Faktor und Modell wie bisher.
+
+**Ehrlich dazu.** Die vier Quellen sind bei Hugging Face nachgeschlagen
+(Datei, Groesse, Lizenz), aber hier weder geladen noch gerechnet - ob deine
+ComfyUI-Fassung jede dieser Bauarten laedt, zeigt der erste Lauf. Drei der
+vier Dateien sind .safetensors statt .pth; ComfyUI nimmt beide. Den Vergleich
+gibt es nur, wenn das Bild im Chat angehaengt war (nicht bei Bildern, die nur
+ComfyUI kennt) und jedes Bild ein Ergebnis hat. Die Vorher-Bilder liegen in
+workspace/upscale_vorher und werden nicht von selbst geloescht. Videos haben
+keinen Vergleich. Geprueft mit einem Stellvertreter fuer den Hochskalierer.
+
 ## v2.9.76 - Reden: eine gestellte Frage wird immer beantwortet
 
 "Dann sagt er nichts, weil der Diktat-Modus im Backend beendet wird und die
