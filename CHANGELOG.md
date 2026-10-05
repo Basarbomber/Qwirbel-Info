@@ -35,6 +35,46 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.76 - Reden: eine gestellte Frage wird immer beantwortet
+
+"Dann sagt er nichts, weil der Diktat-Modus im Backend beendet wird und die
+KI-Antwort verfallen ist - Tokens verschwendet. Der Auftrag geht ja durch,
+kommt aber nicht beim User an."
+
+**Eine angenommene Frage wird zu Ende beantwortet.** Bisher beendete jedes
+Problem mit Mikrofon oder Diktat das ganze Gespraech: die Antwort, die das
+Modell gerade schrieb, wurde verworfen und die Stimme gestoppt - gerechnet
+und bezahlt, aber nie gezeigt und nie gesprochen. Brauchte ein lokales Modell
+lange, hoerte das Diktat von selbst auf, liess sich nicht neu starten, und
+alles war weg. Jetzt laeuft die Antwort immer durch: sie steht im Verlauf und
+wird vorgelesen. Abbrechen kann nur noch der Knopf - oder wer dazwischenredet.
+
+**Stoerungen statt Abbruch.** Klemmt das Mikrofon, das Diktat oder die
+Verbindung, zeigt ein kleines rotes Zeichen unter dem Knopf, was los ist. Das
+Diktat wird im Hintergrund neu gestartet, erst nach einer, dann nach zwei,
+vier, hoechstens zehn Sekunden. Sobald es wieder geht, verschwindet das
+Zeichen.
+
+**Antwortet das Modell nicht, geht das Gespraech weiter.** Kam vom Modell
+nichts (Limit erreicht, Zeit ueberschritten), war das Gespraech vorbei. Jetzt
+steht der Grund in Rot bei der Frage, und Qwirbel hoert wieder zu - der
+naechste Satz versucht es noch einmal.
+
+**Am Handy.** Gab die App ihr Mikrofon ab (Anruf, anderes Programm, kurz im
+Hintergrund), schickte die Oberflaeche sofort "Gespraech beenden" an den
+Rechner. Jetzt bleibt das Gespraech, das Mikrofon wird neu gestartet, und
+eine laufende Antwort kommt an. Faellt die Verbindung kurz aus, fragt die
+Oberflaeche weiter nach, statt nach gut einer Sekunde aufzugeben.
+
+**Ehrlich dazu.** Wenn ein Anbieter gar nicht antwortet, kommt auch weiter
+keine Antwort - nur endet das Gespraech nicht mehr. Lokale Modelle werden
+dadurch nicht schneller. Ohne Mikrofon-Erlaubnis am Handy bleibt das rote
+Zeichen stehen; zum Neuversuch das Gespraech beenden und neu beginnen. Bleibt
+die Oberflaeche laenger weg, endet das Gespraech nach der laufenden Antwort;
+deren Text steht im Verlauf, vorgelesen wird sie dann nicht mehr. Geprueft mit
+Stellvertretern fuer Mikrofon, Stimme und Modell - nicht mit einem echten
+Gespraech.
+
 ## v2.9.75 - Handy: Bewegung ueberall, Wischen zwischen den Tabs, aufgeraeumte Tabs
 
 "Animationen ueberall, wenn ich drauf druecke, von den Tabs wechsle, und dass
