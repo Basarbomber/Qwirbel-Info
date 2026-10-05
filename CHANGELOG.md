@@ -35,6 +35,45 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.78 - Modell-Downloads setzen fort und zeigen, wie weit sie sind
+
+"Bei der Modellbibliothek meinte ich richtiges Tracking, Fortsetzen usw. von
+mehrteiligen Modellen, weil da nicht steht, dass die laden. Schliesst man,
+bricht ab und faengt beim naechsten Mal von vorne an."
+
+**Fortsetzen statt von vorn.** Riss beim Laden die Verbindung, wurde das
+schon Geladene geloescht und nichts weiter versucht. Bei einem Modell aus
+mehreren Teilen mit zusammen 100 GB hiess jeder Wackler: alles neu. Jetzt
+bleibt das Geladene liegen, und Qwirbel bittet den Server nur noch um den
+Rest. Bis zu sechs Anlaeufe mit wachsender Pause, jeder macht dort weiter, wo
+der vorige aufgehoert hat.
+
+**Ueberlebt das Schliessen.** Welche Downloads liefen, stand nur im
+Arbeitsspeicher - nach einem Neustart wusste das Programm nichts mehr davon.
+Jetzt merkt es sich jeden offenen Download auf der Platte und laedt 20
+Sekunden nach dem naechsten Start von selbst weiter.
+
+**Man sieht, dass und wie weit es laedt.** In der Modellbibliothek steht bei
+einem mehrteiligen Modell jetzt ein Balken: "Teil 2 von 5 · 12,3 / 48 GB",
+dazu der Zustand - laedt, wartet auf einen freien Platz, Verbindung weg,
+unterbrochen, wird eingerichtet. Der Stand kommt vom Rechner, er stimmt also
+auch nach dem Neuladen der Seite. Ein unterbrochener Download hat den Knopf
+"Fortsetzen", jeder laufende "Abbrechen" (zweimal druecken; unfertige Teile
+werden dann geloescht, fertige bleiben).
+
+**Hoechstens zwei Dateien zugleich.** Ein Modell aus neun Teilen oeffnete
+bisher neun Verbindungen auf einmal. Jetzt laden zwei, die anderen warten
+sichtbar.
+
+**Ehrlich dazu.** Fortsetzen geht nur, wenn der Server es kann (Hugging Face
+kann es); sonst wird ehrlich neu geladen. Bei einem Abriss geht hoechstens
+das letzte Megabyte verloren. Der Balken ist fuer mehrteilige Chat-Modelle
+gebaut; einteilige Modelle, die Ollama selbst zieht, und die Dateien der
+Generationsbibliothek zeigen ihren Fortschritt wie bisher - fortgesetzt werden
+aber auch die der Generationsbibliothek. Geprueft mit einem eigenen kleinen
+Datei-Server, der die Verbindung mitten im Laden kappt - nicht mit einem
+echten 100-GB-Modell.
+
 ## v2.9.77 - Hochskalieren im Chat: bleibt im Chat, Vorher/Nachher, mehr Hochskalierer
 
 "Wenn ich ein Bild anhaenge, auf Hochskalieren und dann Bild hochskalieren
