@@ -35,6 +35,62 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.71 - Generationstab wieder vollstaendig, Umlaute bei Gemini, aufgeraeumtes Paket
+
+"Er hat im Repo 70 hochgeladen, ohne dem Generationstab. Was da vielleicht nur
+in der Installation geschrieben ist und gar nicht auf Desktop, musst du
+schauen." Genau das war es: ein Teil der Arbeit lag nur in einer laufenden
+Installation und kam darum in 2.9.70 nicht mit.
+
+**Generationstab: Standard-Modell je Abteil ist wieder da.** In der
+Generationsbibliothek legst du je Abteil (Bild, Video, Ton, Upscale ...) fest,
+welches Modell als Standard gilt. Die Wahl wird jetzt auch wirklich in die
+Workflows geschrieben - vorher stand sie nur in einer Liste, und der Workflow
+lud weiter sein altes Modell. Der Image-Edit-Workflow ist neu aufgesetzt und
+nimmt wieder bis zu drei Bilder - in der neuen Fassung fielen Bild 2 und 3
+still weg. Die Android-App im Paket ist die neue vom 01.10.
+
+**Umlaute bei Gemini.** Antworten von Gemini kamen mit zerschossenen Umlauten
+an ("fÃ¼r" statt "fuer" mit Umlaut) - in jeder Antwort. Ursache: Gemini nennt
+im Datenstrom keine Zeichenkodierung, und Qwirbel hat dann die falsche
+angenommen. Behoben fuer alle Anbieter, die sich so verhalten.
+
+**Dateiname beim Herunterladen.** Eine Datei mit Umlaut oder Leerzeichen im
+Namen wurde als "*=utf-8''f%C3%BCr.pdf" gespeichert. Jetzt heisst sie, wie sie
+heisst.
+
+**Werkzeuglisten je Modellgroesse wie vorher.** Seit 2.9.69 bekamen lokale
+Modelle erst ab 100 Milliarden Parametern die grosse Werkzeugliste - alles
+darunter teilte sich eine kleine. Das ist zurueckgenommen: ab 30 Milliarden
+(zum Beispiel QwQ 32B) gilt wieder die grosse Liste, darunter die Kern-Liste.
+
+**Geloeschter Chat ist wirklich weg.** Der Loesch-Knopf entfernte nur den
+Verlauf. Was Qwirbel in dem Chat gelesen hatte, sein Wegweiser durch die
+Dateien und der Stand fuer "Weitermachen" blieben liegen - der naechste Chat
+im selben Platz trug den alten Stoff in jeden Zug mit und bot an, einen
+Auftrag fortzusetzen, den es nicht mehr gab. Jetzt geht alles mit.
+
+**Handy: Chat-Leiste nur im Chat.** Die schwebende Kopfleiste mit den
+Chat-Optionen lag am Handy auch ueber Tabs, die kein Chat sind.
+
+**VRAM-Waechter findet ComfyUI.** Der Leerlauf-Waechter aus 2.9.70 fragte
+ComfyUI immer auf dem Standard-Port. Laeuft es bei dir auf einem anderen,
+hat er dessen Modelle nie freigegeben. Er nimmt jetzt die eingestellte Adresse.
+
+**Aufgeraeumtes Paket.** In den Paketen 2.9.70 lagen 125 Arbeitsdateien aus
+der Entwicklung der Handy-Ansicht: Probe-Skripte, Messwerte und 70
+Bildschirmfotos der Oberflaeche. Sie gehoeren nicht ins Paket und sind
+draussen; im Ordner der Oberflaeche kommt jetzt nur noch mit, was sie
+wirklich laedt.
+
+**Ehrlich dazu.** Der Knopf "VRAM leeren" und das Nachladen lokaler Modelle
+im Hintergrund sind untersucht, aber noch nicht behoben - das ist die naechste
+Version. Texte, die Gemini frueher mit kaputten Umlauten geschrieben hat
+(auch in deinem Wissen), werden von diesem Update nicht nachtraeglich
+repariert. Die grosse Werkzeugliste fuer 30-Milliarden-Modelle kostet mehr
+Kontext als die kleine; einen Schalter dafuer in der Oberflaeche gibt es
+noch nicht.
+
 ## v2.9.70 - VRAM bleibt leer, wenn niemand arbeitet
 
 "Irgendwo wird unnoetig VRAM genommen. Wenn kein Chat laeuft, soll das Programm im Hintergrund selbst dafuer sorgen, dass der VRAM die ganze Zeit leer ist." (Falko, 03.10.2026)
