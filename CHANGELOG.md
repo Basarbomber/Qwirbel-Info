@@ -35,6 +35,47 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.75 - Handy: Bewegung ueberall, Wischen zwischen den Tabs, aufgeraeumte Tabs
+
+"Animationen ueberall, wenn ich drauf druecke, von den Tabs wechsle, und dass
+ich nach links und rechts wischen kann. Wenn auf Mehr, kommt das Menue langsam
+hoch, nicht einfach da."
+
+**"Mehr" faehrt hoch.** Das Menue mit allen Bereichen war beim Antippen
+einfach da. Jetzt faehrt es von unten hoch, der Hintergrund blendet mit ab,
+und beim Schliessen faehrt es wieder hinunter.
+
+**Wischen wechselt den Tab.** Ein schneller Wisch nach links oder rechts im
+Inhalt geht zum naechsten oder vorigen Tab der unteren Leiste. Nicht in
+Eingabefeldern, nicht in Listen, die selbst zur Seite scrollen, nicht im
+PC-Bildschirm (dort ist der Finger die Maus) und nicht vom Bildschirmrand
+(das ist die Zurueck-Geste des Handys).
+
+**Der Tab kommt aus der Richtung, in die man geht.** Liegt der neue Tab in
+der Leiste rechts, schiebt er sich von rechts herein, sonst von links. Der
+gewaehlte Tab in der Leiste springt kurz auf.
+
+**Alles Antippbare gibt nach.** Knoepfe, Chips und Eintraege werden beim
+Druecken kurz kleiner - man sieht, dass der Tipp angekommen ist. Fenster und
+Menues erscheinen mit einer kurzen Bewegung statt schlagartig.
+
+**Tabs ohne Chat sind aufgeraeumt.** In Reden, Agenten, MCP, KI-APIs,
+Automatik und allen anderen Bereichen ohne Chat lag ein Abdeckband samt
+Menue-Knopf ueber dem Anfang des Inhalts; Ueberschriften und erste Zeilen
+waren abgeschnitten. Diese Tabs haben jetzt eine eigene Kopfzeile mit
+Menue-Knopf und Tab-Name, der Inhalt beginnt darunter. Im Wissen-Tab stehen
+Dateiliste und Inhalt untereinander statt nebeneinander (die rechte Haelfte
+war abgeschnitten), im Klecks-Tab bricht die Knopfreihe um, und die Lasche
+der Aufgaben-Ansicht liegt dort nicht mehr ueber dem Inhalt.
+
+**Ehrlich dazu.** Gemessen im unsichtbaren Browser bei 375 x 812 Punkten mit
+leeren Daten - nicht auf einem echten Handy und nicht mit vollen Listen. Die
+Bewegungen sind bewusst leicht (nur Verschieben, Skalieren, Ein- und
+Ausblenden); wer am Handy "Bewegung reduzieren" eingestellt hat, bekommt
+keine. Die Handy-App selbst muss nicht neu installiert werden - sie zeigt
+die Oberflaeche deines Rechners. Noch nicht durchgesehen: jeder Tab mit
+echten, vollen Inhalten und die Unter-Seiten der Einstellungen.
+
 ## v2.9.74 - Lokale Modelle ehrlich: gestoppt bleibt gestoppt, kein stiller Modellwechsel, kein falsches "Erledigt"
 
 "Flash Next geht schlechter als vor zwei Wochen ... seine Antwort: erledigt
