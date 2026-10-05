@@ -35,6 +35,46 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.72 - Modellwechsel kommt an, "Wechseln und komprimieren", Tarif kostenlos/bezahlt
+
+"Als ich Wechseln gedrueckt habe, ist es dann nicht in den RAM reingeladen."
+Und: "Bei Gemini auswaehlen, ob man Paid oder Free nutzt - bei Free 5 Sekunden
+Pause."
+
+**Der Modellwechsel im Chat kommt jetzt an.** Wer in einem Work- oder
+Code-Chat ein anderes Modell waehlte und zweimal "Wechseln" drueckte, bekam
+ein gruenes "Gewechselt" - gewechselt wurde aber nichts. Der zweite Klick
+verliess das Fenster nie, weil der Chat nach der Frage innerlich auf "laedt"
+haengen blieb. Nach zwei Minuten schickte derselbe Fehler ausserdem von selbst
+einen Stopp, der auch eine laufende Bild-Erzeugung abbrach. Beides ist
+behoben. Die Karte sagt jetzt erst "Gewechselt", wenn der Rechner es
+bestaetigt; kommt keine Bestaetigung, bleibt sie bedienbar und sagt das.
+
+**Neuer Knopf: "Wechseln und komprimieren".** Neben "Wechseln" steht ein
+zweiter Weg, ebenfalls mit zwei Klicks: das bisherige Modell fasst den Chat
+erst zusammen, danach wird gewechselt - das neue Modell liest nur die
+Zusammenfassung ein statt des ganzen Verlaufs. Klappt das Zusammenfassen nicht
+(zum Beispiel, weil das alte Modell kein Guthaben mehr hat), wird nicht
+gewechselt: die Karte nennt den Grund, und "Wechseln" ohne Komprimieren bleibt
+moeglich.
+
+**Tarif je Anbieter: kostenlos oder bezahlt.** Unter KI-APIs hat jeder
+Anbieter eine Zeile "Tarif". Bei "kostenlos" haelt Qwirbel fuenf Sekunden
+Abstand zwischen zwei Anfragen und wartet sichtbar ("warte 4 s bis zur
+naechsten Anfrage"), statt in das Minuten-Limit zu laufen. Vorher gingen die
+ersten 15 Anfragen auf einmal hinaus, und nach zwei Sekunden Wartezeit bekam
+das Modell eine Fehlermeldung statt einer Antwort - daher die Wiederholungen
+und falschen Werkzeuge mit dem kostenlosen Gemini-Schluessel.
+
+**Ehrlich dazu.** Der Klickweg der Wechsel-Karte ist mit Stellvertretern
+geprueft, nicht in einem echten Fenster mit einem echten Modell; ob ein
+lokales Modell mit langem Verlauf danach sauber laedt, zeigt erst der Versuch.
+"Wechseln und komprimieren" gibt es nur in der Karte, nicht im Chat-Tab, der
+ohne Frage wechselt. Die Tageslimits kostenloser Tarife kennt Qwirbel nicht -
+ist das Tageskontingent leer, hilft kein Abstand. Der Tarif wird nicht
+erkannt, man stellt ihn ein. Mit "kostenlos" dauert eine Aufgabe mit vielen
+Schritten spuerbar laenger.
+
 ## v2.9.71 - Generationstab wieder vollstaendig, Umlaute bei Gemini, aufgeraeumtes Paket
 
 "Er hat im Repo 70 hochgeladen, ohne dem Generationstab. Was da vielleicht nur
