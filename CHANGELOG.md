@@ -35,6 +35,43 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.74 - Lokale Modelle ehrlich: gestoppt bleibt gestoppt, kein stiller Modellwechsel, kein falsches "Erledigt"
+
+"Flash Next geht schlechter als vor zwei Wochen ... seine Antwort: erledigt
+siehe Schritte."
+
+**Das gewaehlte Modell rechnet - oder es steht da, warum nicht.** Konnte
+Klecks ein Modell nicht rechnen, uebernahm Ollama. Kannte Ollama dieses Modell
+nicht, nahm es still sein eigenes Standardmodell - im Protokoll stand weiter
+der gewaehlte Name. So sind Auftraege, die als "Flash Next" liefen, in
+Wahrheit von einem ganz anderen Modell beantwortet worden. Jetzt rechnet
+Ollama im Rueckfall nur noch dasselbe Modell; kennt es das nicht, endet der
+Zug mit dem Grund.
+
+**Gestoppt bleibt gestoppt.** Ein lokaler Lauf, der mitten im Rechnen
+beendet wurde, galt als "Klecks ist ausgefallen" - Ollama sprang ein, lud ein
+Modell und rechnete minutenlang weiter, obwohl niemand mehr darauf wartete.
+Ein Stopp loest jetzt kein Ausweichen mehr aus. Wirft der VRAM-Knopf das
+Modell unter einem laufenden Schritt heraus, laeuft genau dieser Schritt noch
+einmal ueber denselben Motor.
+
+**Kein "Erledigt" ohne Bericht.** Schrieb das Modell am Ende keinen
+Abschlussbericht, stand im Chat der feste Satz "Erledigt - Details siehe
+Schritte." - auch wenn gar nichts erledigt war. Jetzt steht da "NICHT
+BESTAETIGT" mit den Schritten, die wirklich gelaufen sind, oder "NICHT
+ERLEDIGT", wenn nichts lief.
+
+**Das Protokoll nennt den Motor.** Jede Zeile eines lokalen Schritts sagt
+jetzt, welcher Motor wirklich gerechnet hat.
+
+**Ehrlich dazu.** Das macht Flash Next nicht schneller: mit sehr langem
+Verlauf liest es auf dieser Hardware weiter nur rund 13 Marken je Sekunde
+ein - der erste Schritt kann viele Minuten dauern. Eine Ansage davor und ein
+schlankerer Auftrag fuer langsame Motoren sind noch nicht gebaut. Wer sich
+bisher darauf verlassen hat, dass bei einem Klecks-Ausfall "irgendein" Modell
+antwortet, bekommt jetzt eine Fehlermeldung mit Grund. Geprueft mit
+Stellvertretern fuer beide Motoren, nicht mit einem echten Modell.
+
 ## v2.9.73 - VRAM-Knopf tut, was er sagt; bei API-Arbeit laedt nichts mehr lokal zum Ansehen
 
 "Im Hintergrund fuellt irgendwas meinen VRAM, obwohl ich ueber API arbeite.
