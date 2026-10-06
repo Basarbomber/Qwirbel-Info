@@ -35,6 +35,45 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.79 - Kein Roblox-Hinweis bei fremden Fragen; jede Modellfamilie ihre eigene Werkzeugliste
+
+"Warum fragt er die ganze Zeit, ob er in Roblox Studio rein kann, wenn ich
+ihm eine komplett andere Frage stelle?" Und: "Jede Modellfamilie soll ihre
+eigenen Tool-Listen je Parameter kriegen - Qwen, Gemma, QwQ, GPT-OSS,
+Nvidia ..."
+
+**Der Roblox-Hinweis kommt nur noch, wenn es um Roblox geht.** Lag im
+Arbeitsordner ein Roblox-Projekt, galt JEDE Aufgabe dort als Roblox-Arbeit -
+auch die an der Website. Qwirbel pruefte dann die Verbindung zu Roblox
+Studio, sperrte, und jede Antwort endete mit "Blockiert: Roblox Studio
+laesst Qwirbel noch nicht hinein". Jetzt zaehlt ein Bau-Ziel aus dem Ordner
+nur, wenn der Auftrag es nennt (Roblox, Studio, Luau ...) oder die Aufgabe
+wirklich solche Dateien anfasst. Dasselbe gilt fuer Unity, Godot, Blender,
+Minecraft-Plugins, Android, iOS, Shader, .NET und Java.
+
+**Jede Modellfamilie bekommt ihre eigene Werkzeugliste - je Groesse.** Beim
+ersten Einsatz eines lokalen Modells im Work- oder Code-Tab schreibt es sich
+die Liste der Werkzeuge einmal selbst um: gleiche Werkzeuge, gleiche
+Argumentnamen, gleiche Form - aber in den Worten und der Reihenfolge, die es
+am besten versteht. Die Liste liegt danach als Textdatei im eigenen Ordner
+der Familie (config/werkzeuglisten/qwen, gemma, gptoss, nemotron, ...), je
+Groessenklasse (klein unter 8 Milliarden, mittel unter 30, gross) und je Tab,
+und wird ab dann benutzt. Qwirbel prueft jede Uebersetzung: fehlt ein
+Werkzeug oder ein Argumentname, oder ist eine Beispielzeile kein gueltiges
+JSON, bleibt die Vorlage - mit Grund im Protokoll. Aendert sich die Vorlage
+(neues Werkzeug), uebersetzt die Familie beim naechsten Mal neu. Nvidia
+Nemotron ist als eigene Familie dabei. Cloud-Anbieter (GLM, Claude, Gemini)
+behalten ihre bewaehrte Liste.
+
+**Ehrlich dazu.** Die Uebersetzung kostet beim ersten Einsatz einer Familie
+einen zusaetzlichen Modell-Zug (die Vorlage ist 6.000 bis 24.000 Zeichen;
+laengere werden nicht uebersetzt). Ob ein kleines Modell mit seiner eigenen
+Liste wirklich besser Werkzeuge ruft, ist nicht gemessen - gemessen ist nur,
+dass nichts verloren geht. Fuer Firmen-Konten mit eigenem Arbeitsbereich wird
+nicht uebersetzt (ihre Pfade gehoeren nicht in eine geteilte Liste). Die
+Dateien lassen sich von Hand aendern; eine Ansicht dafuer in der Oberflaeche
+gibt es noch nicht.
+
 ## v2.9.78 - Modell-Downloads setzen fort und zeigen, wie weit sie sind
 
 "Bei der Modellbibliothek meinte ich richtiges Tracking, Fortsetzen usw. von
