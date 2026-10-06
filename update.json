@@ -14,7 +14,7 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://github.com/Basarbomber/Qwirbel-Info/blob/main/CHANGELOG.md",
-  "hinweise": "v2.9.80 - Lokale Modelle arbeiten im Code-Tab; die iPhone-App findet Tailscale. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
+  "hinweise": "v2.9.80 - Lokale Modelle bauen Websites: Ornith 1.5 hat auf einer 16-GB-AMD-Karte ohne Cloud eine Shop-Website in rund 9 Minuten geschrieben. Jedes geladene Modell richtet sich nach seiner Groesse selbst ein (Werkzeugliste, Kontextfenster), und die iPhone-App findet Tailscale von selbst. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
   "_felder": {
     "version": "Zielversion. Qwirbel bietet sie nur an, wenn sie NEUER ist als die installierte.",
     "kanal": "Fuer welche Kanaele freigegeben (stabil/test/lts). Wer im Kanal 'lts' sitzt, sieht eine Version nur, wenn 'lts' hier steht.",

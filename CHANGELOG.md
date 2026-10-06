@@ -43,6 +43,24 @@ bekommen: Ornith 1.5 hat eine kleine Shop-Website gebaut, Gemma 4 26B-A4B
 sollte sie um Suche, "Warenkorb leeren" und einen Dunkelmodus erweitern. Gemma
 scheiterte dreimal - und jedes Mal lag es an Qwirbel, nicht am Modell.
 
+**Was lokale Modelle jetzt schaffen.** Ornith 1.5 (35 Milliarden Parameter,
+davon 3 aktiv, stark verkleinert auf 14 GB) hat auf einer AMD-Grafikkarte mit
+16 GB ganz ohne Cloud eine Shop-Website gebaut: Startseite mit sechs Produkten,
+Produktseite, Warenkorb mit Summe, eigenes Design - vier Dateien, nach rund
+9 Minuten fertig geschrieben. Danach hat es seine Seite selbst geprueft; mit
+dieser Pruefung dauerte der ganze Auftrag 38 Minuten. Gerechnet hat Ollama mit
+16 bis 22 Marken je Sekunde. Die Seite laeuft im Browser ohne einen einzigen
+Fehler in der Konsole.
+
+**Jedes Modell richtet sich nach seiner Groesse ein.** Wer ein Modell laedt,
+muss nichts einstellen: Qwirbel erkennt Familie und Groesse (bei Modellen mit
+Experten zaehlen die aktiven Parameter), das Modell schreibt sich beim ersten
+Einsatz seine Werkzeugliste selbst um (seit 2.9.79), und das Kontextfenster
+wird jetzt aus der echten Belegung der Grafikkarte gerechnet. Kleine Modelle
+bekommen kuerzere Listen und kleinere Happen, grosse und Cloud-Modelle alles.
+Ob ein kleines Modell eine Aufgabe schafft, haengt trotzdem am Modell - Gemma 4
+schaffte die Aenderung am Shop noch nicht fehlerfrei (siehe unten).
+
 **Das Kontextfenster wird gerechnet, wie die Grafikkarte es wirklich belegt.**
 Qwirbel gab Gemma 4 nur 16.000 Token, weil die Rechnung jede Schicht mit allen
 Koepfen in voller Genauigkeit annahm. Gemma hat aber 25 von 30 Schichten mit
