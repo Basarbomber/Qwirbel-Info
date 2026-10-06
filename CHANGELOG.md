@@ -35,6 +35,68 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.80 - Lokale Modelle arbeiten im Code-Tab; die iPhone-App findet Tailscale
+
+"Checkst du, ob die Modelle einfach so arbeiten, wie sie arbeiten sollen?"
+Dafuer haben lokale Modelle in einer eigenen Qwirbel-Instanz echte Auftraege
+bekommen: Ornith 1.5 hat eine kleine Shop-Website gebaut, Gemma 4 26B-A4B
+sollte sie um Suche, "Warenkorb leeren" und einen Dunkelmodus erweitern. Gemma
+scheiterte dreimal - und jedes Mal lag es an Qwirbel, nicht am Modell.
+
+**Das Kontextfenster wird gerechnet, wie die Grafikkarte es wirklich belegt.**
+Qwirbel gab Gemma 4 nur 16.000 Token, weil die Rechnung jede Schicht mit allen
+Koepfen in voller Genauigkeit annahm. Gemma hat aber 25 von 30 Schichten mit
+gleitendem Fenster (deren Speicher waechst nicht mit) und Ollama legt den
+Speicher kompakter an. Gemessen passen auf 16 GB ueber 160.000 Token. Jetzt
+wird je Schicht gerechnet, mit den Werten aus der Modelldatei. Kleine Modelle
+bekommen hoechstens 64.000, mittlere 128.000 - mehr Fenster heisst bei ihnen
+nur laengere Prompts je Zug.
+
+**"Steht schon im Kontext" stimmt jetzt.** Fiel eine gelesene Datei wegen des
+Platzes aus dem Gedaechtnis, sagte Qwirbel trotzdem "schon gelesen, nicht noch
+mal lesen". Das Modell hatte den Inhalt nicht und durfte ihn nicht holen -
+und erfand dann Text, den es ersetzen wollte. Jetzt gilt das nur fuer das, was
+wirklich im Prompt steht.
+
+**Ein fehlgeschlagenes Aendern sagt, was wirklich in der Datei steht.** Statt
+nur "kommt so nicht vor" nennt Qwirbel die aehnlichste Zeile mit Nummer und
+raet bei kleinen Dateien, sie komplett neu zu schreiben. Gemma hat genau das
+danach getan.
+
+**Ein gesperrter Aufruf dreht nicht mehr still.** Meldet ein Modell zu oft
+oder plant es im selben Schritt immer wieder um, wird das abgewiesen. Bisher
+geschah das unsichtbar und ohne Zaehler - Gemma rief so 25 Zuege lang nur
+"melden" auf. Jetzt steht die Sperre im Chat, ab dem zweiten Mal mit dem
+passenden Werkzeug, und nach vier gesperrten Zuegen endet der Schritt ehrlich
+mit "nicht erledigt".
+
+**Tippfehler im Werkzeugnamen kosten keinen Zug mehr.** "befhl_ausfuehren"
+wird zu "befehl_ausfuehren", "functions.datei_lesen" zu "datei_lesen". Ist der
+Name zweideutig, bleibt es beim Fehler - mit den naechstliegenden Namen.
+
+**Ollama startet von selbst.** Laeuft Ollama nach einem Neustart nicht, wirft
+Qwirbel es einmal selbst an und versucht den Aufruf erneut - nur auf diesem
+Rechner, nie fuer eine fremde Adresse.
+
+**Work und Code zeigen, wer rechnet.** Neben "Qwirbel denkt" stehen jetzt Motor
+(Ollama, Klecks oder Anbieter), Modell und Antwort-Marken je Sekunde - die
+Angabe kommt von Qwirbel selbst, nicht aus der Antwort des Modells.
+
+**iPhone-App: Tailscale-Adresse nachlernen.** Neuer Endpunkt
+/auth/pair/adressen (hinter der Anmeldung) nennt WLAN- und Tailscale-Adresse.
+Die iPhone-App 1.20.2 fragt ihn ab und braucht dann kein neues Koppeln, auch
+wenn beim ersten Koppeln keine Tailscale-Adresse mitkam. Ihr Fehlerbild hat
+jetzt wie Android die Knoepfe "Ueber Tailscale verbinden" und "Im WLAN
+verbinden".
+
+**Ehrlich dazu.** Gemma hat mit diesen Korrekturen zum ersten Mal Dateien
+geaendert, das Ergebnis war aber nicht brauchbar: ein fehlendes Zeichen
+zerschoss die Produktkarten, der Dunkelmodus-Knopf war mit nichts verbunden.
+Qwirbels Nachpruefung erkannte "nicht fertig". Die Demo-Website bleibt die von
+Ornith. Gemma lief dabei mit rund 3 Marken je Sekunde, weil nebenbei ein
+anderes Programm 8,7 GB der Grafikkarte belegte. Die iPhone-App 1.20.2 ist
+gebaut, auf einem Geraet aber noch nicht ausprobiert.
+
 ## v2.9.79 - Kein Roblox-Hinweis bei fremden Fragen; jede Modellfamilie ihre eigene Werkzeugliste
 
 "Warum fragt er die ganze Zeit, ob er in Roblox Studio rein kann, wenn ich
