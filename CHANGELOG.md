@@ -35,6 +35,119 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.81 - Modelle laden ohne Ollama, Anfangs-Guide, kein Abbruch auf langsamen Karten
+
+"Man muss ohne Ollama Modelle laden koennen." Bisher brauchte die
+Modellbibliothek Ollama: einteilige Modelle kamen nur ueber Ollamas eigenen
+Download ins Programm, und das Setup installiert Ollama nicht mit. Wer Qwirbel
+frisch einrichtete, stand im Setup vor einem gesperrten LADEN-Knopf.
+
+**Modelle laden jetzt auch ohne Ollama.** Laeuft kein Ollama, laedt Qwirbel das
+Modell direkt von Hugging Face in deinen Modellordner - im Setup, bei den
+Empfehlungen und in der Bibliothek, mit Fortschritt, Fortsetzen nach einem
+Abbruch und Abbrechen. Ausgefuehrt wird es dann von Klecks, Qwirbels eigenem
+Rechenwerk, das mitgeliefert wird. Kommt Ollama spaeter dazu, uebernimmt es die
+Modelle beim naechsten Durchgang von selbst. Was schon im Ordner liegt, zeigt
+das Setup als installiert an. Gegengeprueft in einer Qwirbel-Instanz ohne
+Ollama: LADEN fuer Ornith 1.5 startete den direkten Download in den
+Modellordner, Abbrechen raeumte die halbe Datei wieder weg.
+
+**Ohne Modell antwortet der Chat nicht mehr ins Leere.** Wer Qwirbel frisch
+einrichtet und noch kein Modell hat, sah bisher "Ollama ist nicht
+erreichbar" - Entwicklertext. Jetzt zeigt jeder leere Tab einen
+Anfangs-Guide: was der Tab kann, und in drei Schritten, wie man ein Modell
+aus der Modellbibliothek holt (mit Knopf dorthin, oder alternativ ein
+API-Schluessel). Schreibt man trotzdem los, kommt dieselbe Anleitung statt
+einer Fehlermeldung. Liegen Modelle fuer Klecks bereit, aber Ollama ist
+gewaehlt und laeuft nicht, sagt Qwirbel genau das.
+
+**Langsame Karten: kein Abbruch mehr, solange das Modell rechnet.** Auf einer
+Grafikkarte mit 8 GB liest ein grosses Modell den Auftrag oft minutenlang,
+bevor das erste Wort kommt. In dieser Zeit stand bisher der ganze Server
+still - und die Oberflaeche brach nach 2 Minuten mit "der Server hat nichts
+mehr geschickt" ab, obwohl gerechnet wurde. Jetzt rechnen lokale Modelle
+neben dem Server, das Lebenszeichen kommt alle 30 Sekunden durch (auch beim
+Komprimieren und Qwirbeln), und Ollama darf bis zu 30 Minuten still lesen.
+Abgebrochen wird nur noch, wenn wirklich etwas abstuerzt. Auch die
+Modell-Liste haelt den Server nicht mehr an.
+
+**Das Fenster rechnet sich selbst.** In den Einstellungen von Arbeiten und
+Programmieren stand fest "16384" - als waere das die Groesse, mit der
+geladen wird. Es war nur eine Untergrenze; das echte Fenster rechnet Qwirbel
+je Modell aus Karte und Modell. Das Feld steht jetzt auf "Automatisch". Passt
+ein Modell nicht ganz auf die Karte, arbeitet es trotzdem - mit einem Teil im
+Arbeitsspeicher, nur langsamer. Der Hinweis dazu kommt einmal je Modell statt
+unter jedem Auftrag und klingt nicht mehr nach Fehler.
+
+**Fragen ueber den eigenen PC.** "Leg eine Wissensdatenbank ueber meinen PC an":
+Qwirbel nahm dafuer bisher den Benutzerordner als Projekt, zaehlte
+Markdown-Dateien auf und das Modell suchte in Dateien, die es nicht gab. Jetzt
+schaut Qwirbel bei solchen Auftraegen zuerst auf den Rechner selbst -
+Prozessor, Grafikkarte, Arbeitsspeicher, Laufwerke, installierte Programme -
+und das Modell weiss, mit welchen Befehlen es mehr erfaehrt.
+
+**Kein Raten mehr bei Pfaden.** Liest ein Modell eine Datei, die es nicht gibt,
+bekam es bisher nur "existiert nicht" - und riet weiter. Jetzt nennt die
+Antwort den naechsten vorhandenen Ordner und die aehnlichsten Namen darin;
+ein abgeschnittener Ordnername wird so meist im naechsten Schritt richtig.
+
+**MCP: selbst waehlen, aufgeraeumt, Git ohne Absturz.** Modelle unter der
+MCP-Grenze (Standard 30 Milliarden Parameter) bekamen in Arbeiten und
+Programmieren bisher gar keine MCP-Werkzeuge. Jetzt erscheint fuer sie dort
+ein MCP-Knopf: Du hakst einzeln an, welche Server sie bekommen sollen - die
+Auswahl bleibt gespeichert, jeder Chat hat seine eigene. Grosse Modelle
+bekommen wie bisher alle aktivierten Server automatisch, und in Nachrichten
+gibt es den Knopf nicht, weil dort keine Auftraege laufen.
+Aus der MCP-Liste sind "Gedaechtnis-Graph" und "Knobel-Hilfe" raus - Qwirbel
+hat ein eigenes Gedaechtnis und plant selbst, die fremden Doppelungen haben
+Modelle nur verwirrt. Und der Git-Server: Fehlt auf dem PC das Programm Git,
+endete die Installation bisher mit "fehlgeschlagen". Jetzt wird er
+eingetragen, sagt, wie man Git holt, und schaltet sich nach dem Testen ein.
+
+**Schnellerer Start.** Nach dem Programmstart hing die Oberflaeche bis zu
+einer Minute bei "Deine Chats werden geladen" - die Anbieter-Liste wartete
+auf Klecks und hielt dabei den ganzen Server an. Gemessen: vorher ueber
+60 Sekunden, jetzt rund 4.
+
+**Tab-Namen in deiner Sprache.** Auf Deutsch sprach Qwirbel vom "Work-Tab"
+und "Code-Tab", die Oberflaeche heisst aber Arbeiten und Programmieren. Prompts
+und feste Meldungen nennen die Tabs jetzt so, wie du sie siehst - auf
+Englisch weiter Work und Code.
+
+**Kopfzeile.** Das Menue am Zahnrad neben "VRAM" klappt nach unten auf statt
+nach oben aus dem Fenster. Und die Ansicht-Leiste rechts rutscht unter die
+Kopfzeile, wenn diese bei schmalem Fenster zweizeilig wird - vorher lag sie
+ueber den Knoepfen fuer VRAM, Neu laden und Einstellungen.
+
+**GLM-5.3 Flash laeuft lokal ueber Klecks.** 321 Milliarden Parameter, davon
+18 je Wort aktiv - auf einer Grafikkarte mit 16 GB und 128 GB Arbeitsspeicher.
+Alle 46 Schichten rechnen auf der Karte, die Experten liegen im
+Arbeitsspeicher und kommen je Wort nur so weit, wie sie gebraucht werden.
+Gemessen: 2,3 bis 3,2 Woerter pro Sekunde, Laden in 35 Sekunden. Das ist
+langsam, aber es laeuft. Kennt das mitgelieferte Rechenwerk eine neue
+Modell-Architektur noch nicht, holt Klecks sich die passende Fassung selbst.
+
+**"Auf diesem Rechner getestet".** Der Modelle-Tab zeigt jetzt eine Liste mit
+dem, was wirklich gemessen wurde: Modell, Motor, Tempo, Datum und was es
+geschafft hat - von Ornith 1.5 (baut Websites) bis GLM-5.3 Flash.
+
+**Modelle ohne Groesse im Namen.** Qwen3.8 Flash Next und GLM-5.3 Flash
+tragen keine Groesse im Namen und sind Ollama unbekannt. Qwirbel zaehlt ihre
+Parameter jetzt aus der Datei selbst - und richtet sie damit richtig ein
+statt als "kleines Modell".
+
+**Downloads merken sich, was sie laden.** Aendert sich eine Datei bei Hugging
+Face waehrend einer Pause, faengt der Download sauber neu an, statt alte und
+neue Haelfte zusammenzukleben. Eine schon vorhandene Datei wird vorher mit dem
+Server verglichen.
+
+**Modellwechsel im Chat.** Die Karte "Modell wechseln?" verlor beim zweiten
+Klick ihren Auftrag - "Wechseln" tat dann nichts. Der Auftrag bleibt jetzt an
+der Karte haengen. Nicht im echten Fenster durchgeklickt, nur im Test
+nachgestellt.
+
+---
+
 ## v2.9.80 - Lokale Modelle arbeiten im Code-Tab; die iPhone-App findet Tailscale
 
 "Checkst du, ob die Modelle einfach so arbeiten, wie sie arbeiten sollen?"
