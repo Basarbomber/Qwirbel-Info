@@ -35,6 +35,56 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.82 - Grosse Modelle auf 8-GB-Karten zehnmal schneller
+
+"Bei meinem Kollegen mit einer RTX 3050 laeuft Ornith 1.5 mit 1 Token die
+Sekunde - das muss gehen." Wir haben genau das nachgestellt: dasselbe
+Experten-Modell (35 Milliarden Parameter, 3 Milliarden aktiv) auf einer Karte,
+die nur 7 GB hergeben durfte.
+
+**Experten-Modelle, die nicht ganz auf die Karte passen, rechnen jetzt rund
+zehnmal so schnell.** Klecks' eigenes Rechenwerk holte die ausgelagerten
+Experten bei jedem Wort ueber den Bus auf die Grafikkarte: 1,6 Woerter (Marken)
+pro Sekunde. Jetzt laedt Klecks solche Modelle von selbst ueber llama.cpp, das
+die Experten dort rechnet, wo sie liegen - im Arbeitsspeicher, auf dem
+Prozessor. Gemessen mit demselben Modell und denselben Fragen: 14 bis 18
+Marken pro Sekunde. Die Antwort beim Laden sagt, welcher Motor rechnet und
+warum. Passt ein Modell ganz auf die Karte oder reicht der Arbeitsspeicher
+nicht, bleibt alles wie bisher.
+
+**Neue Rechner konnten manche Modelle gar nicht starten.** Die neueste Fassung
+von llama.cpp, die Klecks auf einem frischen Rechner holt, kennt einen
+Startschalter nicht mehr, den Klecks mitgab - der Start brach sofort ab. Klecks
+fragt jetzt das mitgebrachte llama.cpp, welche Schalter es kennt, und prueft
+das in einem Test fuer jede vorhandene Fassung.
+
+**Kleine Qwen3.5-Modelle laden wieder in Klecks.** Qwen3.5 mit 2 und 4
+Milliarden Parametern - genau die Modelle fuer kleine Karten - brachen beim
+Laden mit einem Fehler ab, weil die Speicherrechnung einen Teil der Datei
+suchte, den diese Modelle nicht haben. Behoben und mit beiden Dateien
+geprueft.
+
+**Ein Modell zur Zeit auf der Karte.** Wechselst du zwischen einem Modell, das
+llama.cpp rechnet, und einem, das Klecks selbst rechnet, raeumt Klecks das
+alte vorher von der Karte. Vorher bekam das neue auf einer 8-GB-Karte nur den
+Rest und rechnete still im Arbeitsspeicher.
+
+**Grafikkarten mit anderen Matrix-Rechenwerken.** Klecks nutzt die
+Matrix-Rechenwerke der Karte nur noch, wenn sie genau die Form anbieten, mit
+der Klecks rechnet. Karten mit anderen Formen (etwa Intel Arc) rechnen ueber
+den normalen Weg - etwas langsamer, aber richtig.
+
+**Umlaute.** Ein Nutzer sah "fr" statt "fuer". Wir haben Klecks' Zerlegung in
+Marken gegen eine unabhaengige Umsetzung geprueft, dazu den Empfang in Qwirbel
+- alles sauber, auch auf der nachgestellten 8-GB-Karte ("Fuer die Groesse ...
+herzliche Gruesse"). Bei dem Nutzer lief das Modell ueber Ollama in einer
+stark verkleinerten Fassung - dort vermuten wir die Ursache.
+
+**Getestet:** je Fehler ein Test, der vorher rot war; der ganze Weg einmal so,
+wie Qwirbel ihn geht (Laden, zwei Fragen, Wechsel auf ein kleines Modell,
+Entladen) gegen einen eigenen Klecks-Dienst mit einer auf 8 GB gestutzten
+Karte.
+
 ## v2.9.81 - Modelle laden ohne Ollama, Anfangs-Guide, kein Abbruch auf langsamen Karten
 
 "Man muss ohne Ollama Modelle laden koennen." Bisher brauchte die
