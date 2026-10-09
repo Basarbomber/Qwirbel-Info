@@ -35,6 +35,43 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.84 - Die kleinen Helfer rechnen jetzt auch auf Klecks
+
+Qwirbel erledigt neben deinen Fragen viele kleine Aufgaben selbst: Es fasst
+Gespraeche fuers Gedaechtnis zusammen, sortiert Mails, prueft Nachrichten auf
+Betrug, schlaegt beim Tippen die fehlende Angabe vor, macht dein Tages-Briefing
+und glaettet Diktate. Diese Helfer fragten bisher nur Ollama oder einen
+Cloud-Anbieter. Auf einem Rechner, auf dem Klecks rechnet und kein Ollama
+laeuft, fielen sie ohne Cloud-Schluessel einfach aus.
+
+**Jetzt rechnet sie Klecks.** Ist Klecks dein lokaler Motor, uebernimmt es die
+kleinen Helfer mit dem Modell, das es gerade geladen hat. Dafuer wird nie ein
+Modell nachgeladen: Haelt Klecks gerade keins, warten die Helfer, bis du selbst
+etwas fragst - genau wie bisher bei Ollama. Wer einen Cloud-Schluessel
+eingerichtet hat, bei dem bleibt alles wie gehabt (die Helfer laufen dann ueber
+die Cloud, damit die Grafikkarte frei bleibt).
+
+**Ollama bleibt dabei.** Faellt Klecks aus, rechnet Ollama weiter, wenn es
+laeuft. Fuer Bilder (Klecks sieht noch nicht) und fuer Modelle, die du
+ausdruecklich in Ollama gewaehlt hast, bleibt es bei Ollama. Laufen beide nicht,
+sagt die Meldung das auch so - statt "Ollama nicht erreichbar" auf einem PC, der
+gar kein Ollama hat.
+
+**Tipps beim Tippen auf Klecks.** Der Vorschlag fuer die fehlende Angabe
+("fuer Paper 1.21", "als xlsx auf dem Desktop") suchte sein Modell nur in
+Ollamas Liste - auf einem Klecks-Rechner kam nie ein Tipp. In den Einstellungen
+steht jetzt, welches Klecks-Modell die Tipps schreibt.
+
+**Schneller Blick statt langer Liste.** Ob Klecks gerade ein Modell haelt, fragt
+Qwirbel mit einem kurzen Blick ab - nicht ueber die Modell-Liste, die bei vielen
+Modellen 5 bis 20 Sekunden braucht. Die Helfer warten also nicht.
+
+**Getestet:** ein eigener Test mit 21 Pruefungen, darunter das echte Lade-Tor
+(nicht nachgebaut); der ganze Weg einmal ueber echtes HTTP gegen einen
+Klecks-Dienst in einer Qwirbel-Umgebung ohne Ollama und ohne Schluessel - der
+Betrugs-Check meldete "Vorkasse fuer einen Gewinn", und die langsame
+Modell-Liste wurde kein einziges Mal gefragt.
+
 ## v2.9.83 - Qwirbel lernt deinen PC kennen
 
 "Wenn Leute KI noch nie benutzt haben oder Qwirbel das erste Mal nutzen: Das
