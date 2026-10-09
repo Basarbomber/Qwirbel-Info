@@ -35,6 +35,57 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.83 - Qwirbel lernt deinen PC kennen
+
+"Wenn Leute KI noch nie benutzt haben oder Qwirbel das erste Mal nutzen: Das
+Grundwissen muss sich an das anpassen, was bei ihm auf dem PC wirklich Sache
+ist." Qwirbel bringt Grundwissen mit, das auf jedem Rechner stimmt. Was auf
+DEINEM Rechner ist, wusste das Modell bisher nur, wenn es selbst danach suchte -
+und dann riet es oft: Pfade, die es nicht gibt, Modelle, die nicht auf die Karte
+passen, Programme, die gar nicht installiert sind.
+
+**Dein PC, einmal eingelesen.** Beim ersten Start sieht sich Qwirbel deinen
+Rechner an - ohne KI, nur gelesen, nichts verlaesst den PC: Grafikkarte und
+Grafikspeicher, Arbeitsspeicher, Laufwerke, deine echten Ordner (auch wenn
+OneDrive den Desktop umgelenkt hat), welche KI-Motoren und Modelle da sind,
+welche Cloud-Anbieter eingerichtet sind und welche Programme. Dein Modell
+bekommt das bei jeder Frage mit. Dazu stehen ein paar Saetze, was das fuer die
+Antworten heisst: wie gross ein Modell sein darf, damit es ganz auf deine Karte
+passt, dass Pfade nie geraten werden, und dass Anleitungen zu Programmen, die du
+nicht hast, nicht gelten.
+
+**Es bleibt aktuell.** Qwirbel liest den PC woechentlich neu ein - und sofort,
+wenn sich Grafikkarte, Modelle, Motoren oder Ordner aendern. Im Wissen-Tab steht
+unter "Dein PC", was Qwirbel weiss, seit wann, und ein Knopf zum Neu-Einlesen.
+In der Wissens-Galaxie erscheint "Dieser PC" als eigene Kategorie; was du selbst
+ergaenzt, gehoert nach Hardware, Programme oder Dateisystem - "Dieser PC" wird
+bei jedem Einlesen ganz ersetzt. Im Server-Betrieb gilt das Profil nur fuer den Haupt-Zugang:
+Mitarbeiter-Konten sehen die Ordner und Programme des Betreibers nicht.
+
+**Der Anfangs-Guide nennt deine Karte.** Wer noch kein Modell hat, liest jetzt
+nicht mehr "ein Modell, das zu deiner Grafikkarte passt", sondern zum Beispiel:
+"AMD Radeon RX 9060 XT mit 16 GB - Modelle bis etwa 14 GB passen ganz hinein."
+Den Grafikspeicher liest Qwirbel dafuer direkt aus den Treiberdaten - auch auf
+einem frischen PC, auf dem noch kein KI-Motor laeuft.
+
+**Behoben: grosse Experten-Modelle auf einem frischen PC.** Seit 2.9.82 rechnet
+Klecks grosse Experten-Modelle auf kleinen Karten ueber llama.cpp. Auf einem
+Rechner, auf dem llama.cpp noch nie geholt wurde, brach das Laden ab. Jetzt holt
+Klecks llama.cpp in diesem Fall selbst; ohne Internet rechnet wie frueher Klecks'
+eigenes Rechenwerk - langsamer, aber es laeuft.
+
+**Als Naechstes:** Wir sind durchgegangen, welche Open-Source-Programme Qwirbel
+heute braucht und was davon Klecks uebernehmen kann - ohne die Open-Source-Wege
+zu streichen; sie bleiben als Rueckfall. Zuerst kommen die kleinen
+Nebenaufgaben (Gedaechtnis, Mail, Betrugs-Check), die heute nur Ollama oder die
+Cloud fragen, dann Sehen und die Wissenssuche in Klecks, und der Installer bringt
+den internen Browser und Node.js gleich mit.
+
+**Getestet:** ein eigener Test mit 38 Pruefungen (in einem Wegwerf-Ordner); ein
+Erststart wie beim Kunden - ohne Ollama, ohne Modelle, ohne Schluessel: nach 40
+Sekunden war der PC eingelesen, der Anfangs-Guide nannte die echte Karte, die
+Karte "Dein PC" stand im Wissen-Tab, am Rechner und am Handy.
+
 ## v2.9.82 - Grosse Modelle auf 8-GB-Karten zehnmal schneller
 
 "Bei meinem Kollegen mit einer RTX 3050 laeuft Ornith 1.5 mit 1 Token die
