@@ -35,6 +35,50 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.85 - Antippen, was du willst - Qwirbel richtet sich selbst ein
+
+"Moechtest du Bilder editieren, generieren, Videos erstellen - dass man das
+alles antippen kann ... und dann ein riesiger Balken ... und oben rechts eine
+Live-Anzeige." Bisher musste man fuer jede Faehigkeit einzeln in die Bibliothek:
+ein Sprachmodell hier, ein Workflow dort, die Diktat-Erkennung woanders.
+
+**Ein Schritt im Setup: "Was moechtest du?"** Neun Kacheln zum Antippen: mit
+Qwirbel reden, Aufgaben erledigen und programmieren, Bilder erzeugen, Bilder
+bearbeiten, Videos erstellen, Musik machen, Hochskalieren, Diktieren,
+Vorlesen. Bei Bildern und Videos waehlst du auch, welche Workflows mitkommen
+(zum Beispiel WAN 2.2 oder WAN 2.1). Jede Kachel sagt, wie gross das ist, was
+schon da ist und was auf deiner Grafikkarte zu schwer waere. Dieselben Kacheln
+stehen oben in der Generationsbibliothek - du kannst also auch spaeter alles
+auf einmal nachholen.
+
+**Dann ein langer Balken.** Nach dem Antippen setzt Qwirbel zuerst die
+Einstellungen (welcher Motor Bilder macht, welcher die Sprachmodelle rechnet,
+das Profil fuer deine Grafikkarte) - darauf wartest du ein paar Sekunden. Danach
+kannst du im Programm herumklicken: Modelle, Workflows, Diktat-Erkennung und
+Stimme laden im Hintergrund weiter. Workflows werden dabei gleich aktiviert,
+und wenn alles da ist, ordnet Qwirbel die Modelle selbst zu. Passt die Auswahl
+nicht auf die Platte, sagt Qwirbel das vorher, statt halb zu laden.
+
+**Oben rechts die Live-Anzeige.** Solange die Einrichtung laeuft, zeigt ein
+kleiner Balken neben dem Modell-Chip den Stand; ein Klick zeigt jede einzelne
+Sache - was laedt, was fertig ist, was nicht ging. Schliesst du Qwirbel
+zwischendurch, macht die Einrichtung beim naechsten Start dort weiter, wo sie
+war.
+
+**Schneller nebenbei:** Beim Einrichten fielen zwei Stellen auf, an denen
+Qwirbel kurz ganz stehen blieb, solange ComfyUI oder Klecks nicht antworteten
+(die Modell-Liste und die Kontext-Anzeige). Beide warten jetzt im Hintergrund.
+
+**Getestet:** ein eigener Test mit 24 Pruefungen fuer den ganzen Ablauf
+(Einstellungen, Hintergrund, ein Balken, Fehler, Platz, Neustart); dazu der
+ganze Weg in einer frischen Qwirbel-Instanz im Browser - mit nachgestellten
+Downloads, damit nichts wirklich geladen wird: Kacheln antippen, Einrichten,
+der Balken lief von 0 bis 100, die Anzeige oben rechts zeigte "Einstellungen
+...", dann den Stand und am Ende "Eingerichtet". Der Setup-Assistent fuehrt am
+Rechner und am Handy bis zu den Kacheln. Echte Downloads ueber den Assistenten
+sind noch nicht gelaufen - die Lade-Wege selbst sind dieselben wie in der
+Bibliothek.
+
 ## v2.9.84 - Die kleinen Helfer rechnen jetzt auch auf Klecks
 
 Qwirbel erledigt neben deinen Fragen viele kleine Aufgaben selbst: Es fasst
