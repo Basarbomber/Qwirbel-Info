@@ -14,7 +14,7 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://github.com/Basarbomber/Qwirbel-Info/blob/main/CHANGELOG.md",
-  "hinweise": "v2.9.89 - ZenMux mit Claude im Code-Tab, und ein Update-Knopf, der wartet. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
+  "hinweise": "v2.9.89 - ZenMux mit Claude im Code-Tab, und ein Update-Knopf, der wartet. Ausserdem seit v2.9.85: Server, die stehen bleiben, und eine Auftragsliste im Projekt. Lokale Modelle doppelt so schnell, und kein \"fertig\" mehr ohne Arbeit. Die Modelle arbeiten, statt nur zu reden. Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
   "_felder": {
     "version": "Zielversion. Qwirbel bietet sie nur an, wenn sie NEUER ist als die installierte.",
     "kanal": "Fuer welche Kanaele freigegeben (stabil/test/lts). Wer im Kanal 'lts' sitzt, sieht eine Version nur, wenn 'lts' hier steht.",
