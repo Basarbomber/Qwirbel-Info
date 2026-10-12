@@ -35,6 +35,187 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.89 - ZenMux mit Claude im Code-Tab, und ein Update-Knopf, der wartet
+
+**Claude ueber ZenMux arbeitet wieder in Arbeiten und Code.** Hatte sich ein
+Modell frueher ein eigenes Werkzeug gebaut und dabei die Argumente als Text
+uebergeben, stand in der Werkzeugliste ein Name wie ['text']. Die
+Claude-Schnittstelle lehnte daraufhin jeden Aufruf ab - mit Haiku genauso wie
+mit Opus. Solche Namen werden jetzt beim Lesen repariert, und kein einzelner
+ungueltiger Eintrag kann den ganzen Aufruf mehr kippen.
+
+**Update-Knopf statt Neustart-Knopf.** Der Knopf heisst jetzt "Updaten". Laeuft
+gerade eine Aufgabe, lehnt er nicht mehr ab, sondern merkt das Update vor: es
+wird eingespielt, sobald deine Aufgaben fertig sind, und die Oberflaeche laedt
+danach von selbst neu. Nichts wird mittendrin abgebrochen.
+
+---
+
+## v2.9.88 - Server, die stehen bleiben, und eine Auftragsliste im Projekt
+
+Wieder einen Abend lang echte Auftraege mit Gemma 4 26B auf einer 16-GB-Karte:
+ein TikTok-Live-Overlay mit Snake-Modus, ein Minecraft-Modpack mischen, ein
+Spielmodus, Skripte. Was dabei hakte, lag diesmal fast immer an Qwirbel, nicht
+am Modell - und ist behoben, jeweils mit einem Test, der vorher den Fehler zeigte.
+
+**Server, Bots und Spielserver bleiben stehen.** Ein Befehl, der laenger lief,
+wurde als "laeuft im Hintergrund weiter" gemeldet - und an der Zeitgrenze
+trotzdem beendet. Gemmas TikTok-Backend war richtig geschrieben, starb aber nach
+90 Sekunden, und das Modell suchte eine Viertelstunde den Fehler im eigenen
+Code. Jetzt sagt die Meldung die Wahrheit, und auch mittelgrosse lokale Modelle
+haben das Werkzeug fuer Dienste, die dauerhaft laufen sollen - mit dem Python,
+in das sie ihre Pakete installiert haben.
+
+**Eine Auftragsliste im Projektordner.** Jeder Auftrag und jede Nachricht, die du
+waehrend der Arbeit schreibst, steht woertlich in AUFTRAEGE.md im Projekt.
+Abgehakt wird, was ein Lauf erledigt und geprueft hat; was offen bleibt, kommt
+beim naechsten Auftrag im selben Projekt wieder auf den Tisch - auch wenn der
+Chat laengst gekuerzt ist. Im Programmwissen steht, wo die Liste liegt.
+
+**Websuche ohne Schluessel, die etwas findet.** Bisher gewann die erste Quelle,
+die irgendetwas lieferte - oft ein unpassender Wikipedia-Artikel. Jetzt fragt
+Qwirbel Wikipedia, GitHub, Stack Overflow, Modrinth (Minecraft-Mods und
+-Modpacks mit Versionen) und Marginalia gleichzeitig und behaelt nur Treffer, in
+denen deine Suchwoerter stehen.
+
+**Stop und gleich neu fragen.** Nach dem Stop-Knopf schlug Qwirbel noch einige
+Sekunden nach - und traf damit auch den Auftrag, den du direkt danach
+gestartet hattest. Der lief dann mit "Modell nach jedem Zug entladen", lokal
+etwa fuenfmal langsamer. Behoben.
+
+**Lokal: weniger Neuladen.** Arbeitete ein anderes Programm am selben Ollama
+(zum Beispiel ein Code-Editor), warf Qwirbel dessen Modell nach fuenf Minuten
+eigener Ruhe aus dem Speicher. Jetzt erkennt es fremde Arbeit und laesst das
+Modell in Ruhe. Die Grafikspeicher-Aufteilung senkt die Schichtzahl nicht mehr
+doppelt und nicht mehr wegen eines Augenblicks - ein Video im Browser drueckte
+Gemma vorher fuer den ganzen restlichen Auftrag von 21 auf 12 Marken je Sekunde.
+
+**Keine Endlos-Schleifen beim Schreiben.** Schrieb ein Modell eine Datei, die
+es danach geaendert hatte, noch einmal, hiess es "schon erledigt" - obwohl die
+Datei laengst anders aussah. Gemma schrieb daraufhin achtmal dieselbe Datei.
+Jetzt zaehlt, was auf der Platte steht, und wer sich dreht, wird nach drei
+Zuegen ehrlich gestoppt.
+
+**Nichts Geschriebenes geht verloren.** Schrieb ein Modell eine ganze Datei,
+vergass aber den Werkzeugnamen, wurde die Arbeit verworfen (einmal knapp acht
+Minuten). Eindeutige Faelle - Pfad und Inhalt - werden jetzt ausgefuehrt; die
+alte Fassung wird vorher gesichert.
+
+**Qwirbels eigene Umgebung bleibt sauber.** Was ein Modell fuer dein Projekt
+installiert, landet in seiner eigenen Arbeits-Umgebung - jetzt auch dann, wenn
+es Qwirbels Python mit vollem Pfad aufruft. Vorher konnte so etwas wie Flask in
+die Programm-Umgebung rutschen.
+
+**Modellbibliothek mit Familien-Abzeichen.** Jede Modellfamilie hat ein eigenes
+Sinnbild statt eines Buchstabens.
+
+---
+
+## v2.9.87 - Lokale Modelle doppelt so schnell, und kein "fertig" mehr ohne Arbeit
+
+Wir haben Gemma, GLM und Opus den ganzen Tag an echten Auftraegen arbeiten
+lassen - Website mit Login und Admin, Spielmodus fuer ein TikTok-Overlay,
+gezielte Aenderungen, Skripte - und jeden Fehler behoben, den wir dabei
+gefunden haben. Jede Korrektur hat einen Test, der vorher genau den Fehler zeigte.
+
+**Lokal bis zu 2,5-mal schneller.** Auf vielen Windows-PCs belegen Desktop,
+Browser und Hintergrundbild schon 4-5 GB Grafikspeicher. Ollama legte das
+Modell trotzdem ganz auf die Karte, und Windows lagerte den Rest still in den
+Arbeitsspeicher aus. Qwirbel misst das jetzt und gibt der Karte nur so viel,
+wie wirklich passt. Gemessen mit Gemma 4 26B auf 16 GB: Prompt lesen von 365
+auf 925 Marken je Sekunde, Antworten von 8 auf 19 je Sekunde.
+
+**Lange Auftraege bleiben schnell.** Ab etwa dem 14. Schritt musste ein
+lokales Modell bei jedem Zug den ganzen Verlauf neu lesen, weil sich vorn
+darin eine Kleinigkeit aenderte. Jetzt bleibt der Anfang gleich und nur das
+Neue wird gelesen - bei Cloud-Anbietern greift dadurch auch der Cache-Rabatt.
+
+**Kein "fertig" mehr ohne Arbeit.** Qwirbel prueft jetzt gegen die Platte, was
+ein Modell behauptet: "integriert", obwohl nur gelesen wurde; Ordner angelegt
+und leer gelassen; eine Datei genannt, die es nicht gibt; ein Lauf beschrieben,
+der nie stattfand. In all diesen Faellen arbeitet es weiter, statt fertig zu
+melden. Modelle, die mit einer Meldung statt mit "fertig" abschliessen, drehen
+keine Schleifen mehr, und vereinzelt abgeschnittene Antworten brechen lange
+Auftraege nicht mehr ab.
+
+**Denker ueber API.** Jeder Anbieter kann ein Denker-Modell bekommen
+(KI-APIs-Karte): zum Beispiel plant Opus, und ein guenstigeres Modell arbeitet.
+Mit Denker schreibt er vor dem Arbeiten einen kurzen Bauplan - nur fuer das,
+was verlangt ist.
+
+**ZenMux ganz drin.** Eigene ZenMux-Eintraege werden zu "ZenMux
+(Pay-as-you-go)" und "ZenMux (Abo)"; die volle Modellliste holt Qwirbel beim
+Start selbst. Hunderte Modelle bleiben lesbar: nach Hersteller aufklappbar, im
+Modell-Menue mit Suche. Leere Antworten eines Anbieters gelten als Fehler und
+werden wiederholt, statt still als "nichts" weiterzulaufen.
+
+**Modellbibliothek als eine Liste.** Hugging-Face-Modelle und Suchtreffer
+stehen jetzt in ihren Familien (Qwen, Gemma, GLM ...), neue Familien bekommen
+eine eigene Karte. Dazu Kombis: ein Denker und ein Arbeiter, mit einem Klick
+eingerichtet.
+
+**Dazu:** Im Aufgabenfenster steht jeder Schritt nur noch einmal. Der aufgeklappte
+Modell-Chip zeigt jeden Namen ganz (Modell, Anbieter, Quantisierung) und sortiert. Python, das
+ein Modell ausfuehrt, installiert Pakete in eine eigene Arbeitsumgebung statt
+in Qwirbel selbst. Die Werkzeugliste je Modell wird ergaenzt statt jedes Mal
+verworfen - das sparte bis zu zwei Minuten vor jedem Auftrag.
+
+**Ehrlich:** Kleine 9B-Kombis (GLM-Z1 + GLM-4) schaffen grosse Auftraege noch
+nicht; Arbeiten und Programmieren bleiben lokal ab 25B.
+
+## v2.9.86 - Die Modelle arbeiten, statt nur zu reden
+
+"Er sagt, was er tut, und tut es nicht." Wir haben 137 Auftraege aus echten
+Arbeits- und Programmier-Chats ausgewertet und die Ursachen behoben - jede mit
+einem Test, der vorher genau den Fehler zeigte.
+
+**Werkzeug-Aufrufe kommen an.** Viele Aufrufe waren richtig und wurden trotzdem
+als "Text" verworfen: bei GLM, wenn nach dem Aufruf noch Text stand, bei Gemma,
+wenn im Dateiinhalt ein Anfuehrungszeichen oder ein regulaerer Ausdruck stand,
+und bei Ornith, das Werkzeuge in einer XML-Schreibweise aufruft, die Qwirbel
+nicht kannte. Jetzt liest EIN Leser alle Formen fuer alle Modelle.
+
+**Kein "Ich schaue mir das gleich an" mehr als Ergebnis.** Eine Ankuendigung
+zaehlt nicht mehr als erledigte Arbeit, und ein kurzes "weiter" heisst weiter
+arbeiten. Wer nach getaner Arbeit den naechsten Schritt plant, wird nicht mehr
+gesperrt - das war die Schleife "umgeplant gesperrt" bei Gemma.
+
+**Deine Nachrichten waehrend der Arbeit werden beantwortet.** Was du
+dazwischen schreibst, steht jetzt in der Schlussantwort - Fragen werden
+beantwortet, Wuensche bekommen ihren Stand, "schreib in deiner Antwort ..."
+wird woertlich befolgt.
+
+**Schutz vor Datenverlust.** Ein Modell kann eine grosse bestehende Datei nicht
+mehr versehentlich durch ein paar Zeilen ersetzen ("+4 -2066"). Ganz ersetzen
+geht nur ausdruecklich - und dann liegt vorher eine Sicherung.
+
+**Lokale Modelle: schlanker und mit Netz.** Skills gehen nur noch ganz mit,
+wenn sie gebraucht werden, der Rest als Verweis - rund 4.400 Marken weniger je
+Schritt. Kleine lokale Modelle koennen jetzt im Netz suchen, Seiten lesen,
+Dateien laden und entpacken, und Qwirbel findet Werkzeuge wie Maven, Gradle oder
+Java auch ausserhalb des Suchpfads und merkt sich, wo sie liegen.
+
+**ZenMux eingebaut.** Pay-as-you-go und Abo als zwei Eintraege, alle Modelle
+werden live geholt (Knopf "Modelle holen", auch fuer Gemini - mit Gemini 3.8
+Flash). Claude-Modelle ueber ZenMux rufen Werkzeuge auf ihrem eigenen Weg auf;
+Qwirbel uebersetzt das. Modelle, die keine Temperatur annehmen (Opus 5.5),
+merkt sich Qwirbel selbst.
+
+**Kein Limit verbrennen.** Gemini und ZenMux laufen mit hoechstens 10
+Anfragen pro Minute. Meldet ein Anbieter "Limit bis 03:40 erreicht", wartet
+Qwirbel bis dahin und weicht aus, statt immer wieder gegen die Wand zu fragen.
+
+**Dazu:** Der Modell-Chip zeigt ueberall den ganzen Namen mit Quantisierung
+(am Handy wischbar), die Anzeige unten links zeigt den Dienst, der wirklich
+arbeitet - nie mehr rot -, Klecks sagt, wenn es teilweise im Arbeitsspeicher
+rechnet, nutzt die echten schnellen Prozessorkerne, und der Stopp-Knopf
+stoppt jetzt auch Klecks, in mehreren Runden. Eine Webadresse im Auftrag fuehrte
+manchmal zu "Interner Fehler" - behoben.
+
+**Ehrlich:** Wie viel besser Gemma und die anderen lokalen Modelle damit
+wirklich am Stueck arbeiten, messen wir gerade mit echten Auftraegen (eine
+Website mit Login und Admin-Bereich, ein Spielmodus, gezielte Aenderungen).
+
 ## v2.9.85 - Antippen, was du willst - Qwirbel richtet sich selbst ein
 
 "Moechtest du Bilder editieren, generieren, Videos erstellen - dass man das
