@@ -35,6 +35,208 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.90 - Lokale Modelle, durchgeschuettelt: 3D-Modelle, GPT-OSS, und ein Agent, der nicht mehr im Kreis laeuft
+
+Zwei Tage und eine Nacht lang haben wir uns hingesetzt und Qwirbel mit lokalen
+Modellen echte Arbeit machen lassen - auf einer ganz normalen 16-GB-Grafikkarte,
+Aufgabe fuer Aufgabe, Modell fuer Modell: Gemma 4 26B und E4B, GPT-OSS 20B,
+Qwen3.8 27B, Qwen3-Coder 30B, Qwen3.5, Ornith 9B und 35B, GLM-4 9B mit GLM-Z1,
+LFM2.5 mit Nemotron 4B, und zum Vergleich GLM-5.3 in der Cloud. Jedes Mal, wenn
+etwas hakte, haben wir nachgesehen, WARUM - und fast immer lag es nicht am
+Modell, sondern an einer Ecke in Qwirbel. Jede dieser Ecken ist jetzt
+abgeschliffen, jede mit einem eigenen Test, der den Fehler vorher gezeigt hat.
+Das ist kein Abschluss, sondern der Anfang: genau so geht es in den naechsten
+Tagen weiter.
+
+### Was die Modelle jetzt schaffen (gemessen, gleiche drei Aufgaben)
+
+Spielmodus in ein vorhandenes Live-Overlay einbauen, eine Rechenfunktion gezielt
+aendern, ein Skript schreiben und selbst ausfuehren:
+
+- **GPT-OSS 20B: 3 von 3** - heute frueh noch 0 von 3. Die gezielte Aenderung in
+  1,6 Minuten, das Skript in 3,5 Minuten, ohne einen einzigen verworfenen Zug.
+- **Qwen3.8 27B: 2 von 3** - sauber, aber langsam (siehe "Was noch nicht geht").
+- **Ornith 9B denkt, Gemma 4 E4B arbeitet: 2 von 3.**
+- **Gemma 4 26B:** Spielmodus, gezielte Aenderung, Skript, Modpack mischen und
+  ein Blender-Fass bestanden; Website-Bau einmal ja, einmal nein.
+- **GLM-4 9B mit GLM-Z1: 1 von 3**, LFM2.5 8B mit Nemotron 4B und Ornith 35B:
+  0 von 3 - fuer diese Aufgaben auf 16 GB zu klein bzw. zu gross (Ornith 35B
+  liegt zu zwei Dritteln im Arbeitsspeicher). Auch ihre Laeufe haben Fehler in
+  Qwirbel aufgedeckt, die jetzt allen anderen Modellen zugute kommen.
+
+### Neu
+
+**Der Modellchip, aufgeraeumt.** Oben und unten derselbe Chip: jeder Anbieter
+ein eigener Abschnitt mit Pfeil zum Auf- und Zuklappen, deine lokalen Modelle
+immer offen. Jede Zeile zeigt den vollen Namen, die Groesse in GB und - bei
+Cloud-Modellen - den Preis. Unter Darstellung stellst du die Sortierung ein:
+Relevanz (was auf deine Karte passt und gross genug ist, steht oben, kleine und
+gesperrte Modelle unten), nach Groesse, Familie, Name oder Verbrauch. ZenMux-
+Modelle lassen sich nach Preis sortieren - dann siehst du auf einen Blick, dass
+ein grosses Modell vierzigmal so viel kosten kann wie ein kleines.
+
+**Qwirbel baut 3D-Modelle.** Zwei eigene Werkzeug-Server sind dabei und richten
+sich beim Start selbst ein, wenn das Programm da ist:
+- **Blender (Qwirbel):** Modelle per Skript bauen, ohne dass sich ein Fenster
+  oeffnet, als .glb/.blend/.fbx/.obj speichern, eine Vorschau rendern und
+  ansehen, umwandeln - und neu: **reparieren**. Ein einziger Aufruf setzt
+  schwebende Teile an den Koerper, Runde fuer Runde, bis alles zusammenhaengt.
+- **Minecraft-Modelle (Qwirbel):** Blockbench-/Minecraft-Modelle pruefen und als
+  Bild ansehen. Fehlende Pflichtteile einer .bbmodel (Format, Texturflaechen,
+  Gliederung) ergaenzt Qwirbel beim Schreiben selbst.
+Beide Server sind abwaehlbar, und sie stehen auch kleinen lokalen Modellen zur
+Verfuegung, sobald dein Auftrag nach 3D klingt - fremde Werkzeug-Server bleiben
+dort weiter aus.
+
+**Teile zusammenbauen ohne Rechnen.** Im Blender-Skript gibt es jetzt
+`teil(...)`: "Kopf, an die Vorderseite vom Koerper, braun" - Qwirbel setzt das
+Teil buendig an, statt dass das Modell Koordinaten raten muss.
+
+**Eine echte Teile-Pruefung.** Nach jedem Bau prueft Qwirbel an der echten
+Oberflaeche (nicht an einem Rahmen drumherum): schweben Teile? Zerfaellt das
+Modell in zwei Inseln? Stecken Augen oder ein leuchtender Kern unsichtbar IM
+Koerper? Liegen zwei Flaechen genau aufeinander und flimmern? Zu jedem Befund
+kommt der fertige Reparatur-Vorschlag. Geprueft wird nicht nur die Szene,
+sondern jede Datei, die tatsaechlich gespeichert wurde - auch wenn das Modell
+sie in seinem eigenen Code exportiert hat.
+
+**Nicht "fertig", solange etwas schwebt.** Meldet die Pruefung einen Befund,
+nimmt Qwirbel ein "fertig" erst an, wenn genau diese Datei sauber ist.
+
+**3D-Grundwissen.** Im mitgelieferten Wissen steht jetzt, wie viele Wuerfel ein
+erkennbares Minecraft-Item braucht (gemessen an echten Modellen: Speer etwa 25,
+Schwert 36, Bogen 55), dass Tiere 60 bis 200 Wuerfel haben, wie man Rundungen
+als Treppe baut, und fuer Blender: Teile beruehren sich, nichts schwebt, kein
+Flimmern, Boden bei null, Farben, Low-Poly fuer Roblox.
+
+**GPT-OSS ueber Klecks arbeitet.** GPT-OSS ruft seine Werkzeuge in einem eigenen
+Format auf. Bekam es die Werkzeugliste nur als Text, verschluckte der Server den
+Aufruf - es kam leerer Text zurueck. Jetzt bekommt GPT-OSS seine Werkzeuge in
+seinem eigenen Format, und ein einzelner Zug, den der Server nicht lesen kann,
+beendet keinen Auftrag mehr. Ergebnis siehe oben: von 0 auf 3 von 3. Andere
+lokale Modelle bleiben beim bewaehrten Text-Format (gemessen: gleiche Treffer,
+weniger Marken).
+
+**Denker und Arbeiter teilen sich die Karte.** Arbeiten zwei lokale Modelle
+zusammen (eins denkt, eins baut), passten sie oft nicht gleichzeitig auf die
+Grafikkarte - der Arbeiter wurde vor jedem Zug neu geladen, ein kurzer Zug
+dauerte 70 statt 6 Sekunden. Jetzt gibt der Denker die Karte nach seinem Einsatz
+frei. Gemessen: der Arbeiter musste nur noch in 3 von 40 Zuegen neu laden.
+
+**Der Denker hilft, wenn der Arbeiter haengt.** Liest der Arbeiter dieselbe Datei
+zum dritten Mal, schreibt er dieselbe Datei immer wieder neu, ohne sie
+auszufuehren, oder wiederholt er einen Fehler, fragt Qwirbel den Denker nach
+dem naechsten konkreten Schritt. Der Rat steht ausgeschrieben im Chat ("Denker
+raet: ..."), und der Denker kennt jetzt auch das Programmwissen von Qwirbel.
+
+**Cloud: sparsamer denken.** Bei ZenMux denkt jedes Modell jetzt standardmaessig
+auf "niedrig" statt "mittel" - gemessen braucht Claude Haiku fuer dieselbe
+kurze Antwort 3 statt 33 Ausgabe-Marken. Je Anbieter einstellbar. Dazu eine
+Denk-Bremse: denkt ein Modell sehr lange, ohne ein Wort oder einen
+Werkzeugaufruf zu liefern, wird der Zug abgebrochen und neu versucht. Ausloeser
+war ein einzelner Zug von GLM-5.3, der 65.000 Marken lang dachte und 16 Minuten
+brauchte - bezahlt wurde alles.
+
+### Dateien: nichts geht mehr verloren, nichts wird mehr verschluckt
+
+**Deine Dateien sind geschuetzt.** Eine Datei, die schon vor dem Auftrag da war,
+wird nicht durch etwas ueberwiegend Fremdes ersetzt - gemessen an der Fassung
+VOR dem Auftrag, damit sie auch nicht Schritt fuer Schritt ausgehoehlt werden
+kann. Laufender Python-Code wird nie durch Code ersetzt, der nicht kompiliert.
+"Ganz ersetzen" geht weiterhin, aber erst, nachdem der Schutz einmal angeschlagen
+hat - die alte Fassung wird dabei gesichert.
+
+**Aendern verzeiht Einrueckungen.** Traf ein Modell beim gezielten Aendern die
+Einrueckung nicht genau, scheiterte jede Aenderung. Jetzt wird ein Abschnitt
+auch mit abweichenden Leerzeichen gefunden - solange er eindeutig ist - und der
+neue Text bekommt die Einrueckung der Datei.
+
+**Ergaenzen tut, was gemeint ist.** Bei HTML landet ein Ausschnitt vor dem Ende
+der Seite statt hinter `</html>`, und eine zweite komplette Seite wird nicht mehr
+angehaengt (vorher standen am Ende drei Seiten untereinander in einer Datei).
+"Ergaenzen" mit alt/neu wird als Aendern ausgefuehrt, und ein leeres Ergaenzen
+meldet einen Fehler statt "erledigt".
+
+**Fehler im Code fallen sofort auf.** Nach jedem Schreiben, Ergaenzen und Aendern
+prueft Qwirbel die ganze Datei - Python-Syntax mit Zeilennummer, JSON, CSS,
+Minecraft-Modelle - und sagt es dem Modell im selben Zug.
+
+**Weiteres:**
+- Binaerdateien (.glb, .blend, .dll ...) werden nicht mehr als Zeichensalat
+  gelesen - das Modell bekommt Groesse und den richtigen Weg (Vorschau ansehen).
+- Liest ein Modell einen Ausschnitt, der sich mit einem gerade gelesenen
+  ueberschneidet, kommt nur der neue Teil (vorher: Zeilen doppelt).
+- Ein Ordner, der fast genau wie ein vorhandener heisst ("arbeitprobe" neben
+  "arbeitsprobe"), wird erst nach einer Rueckfrage angelegt.
+- Eine neue .blend als Ziel angeben heisst jetzt: leer anfangen und dorthin
+  speichern (vorher 15 Minuten "gibt es nicht").
+- Wird eine .blend neu gespeichert, werden gleichnamige Exporte daneben (zum
+  Beispiel die .glb fuer Roblox) gleich mit erneuert.
+- Will ein Modell eine eigene Datei bewusst verkleinern (Aufraeumen), geht das
+  beim zweiten Mal durch - auch wenn die Fassung etwas anders ist.
+
+### Der Agent laeuft nicht mehr im Kreis
+
+- Schreibt ein Modell abwechselnd dieselben zwei, drei Fassungen einer Datei,
+  wird eine schon dagewesene Fassung nicht noch einmal geschrieben.
+- Wer dreimal dieselbe ausfuehrbare Datei neu schreibt, ohne sie je zu starten,
+  bekommt erst den Denker und dann eine klare Ansage: erst ausfuehren.
+- Derselbe Pruef-Fehler dreimal hintereinander: die naechste Fassung mit genau
+  diesem Fehler wird nicht mehr geschrieben.
+- Ein Aufruf, der immer wieder gleich scheitert, beendet den Schritt ehrlich,
+  statt bis zur Frist zu drehen.
+- Derselbe Fehler eines Werkzeug-Servers zum dritten Mal - auch mit anderem
+  Code - bekommt einen deutlichen Hinweis: die Meldung woertlich lesen.
+- Mehrere Werkzeugaufrufe in einer Antwort werden der Reihe nach ausgefuehrt,
+  statt dass nur der letzte zaehlt. Rechnet ein Modell Aufruf an Aufruf an Aufruf,
+  wird der Strom nach dem dritten angehalten.
+- Kleine Modelle werden besser verstanden: "file_schreiben" ist datei_schreiben,
+  eine .py-Datei "als Python ausfuehren" startet die Datei, ein Programmstart auf
+  ein Skript startet das Skript, woertliche \n im Code werden zu Zeilen.
+- Ein Aufruf ohne Werkzeugnamen wird nachgefasst statt als "fertig" gewertet.
+- Der Lese-Deckel erlaubt in grossen Projekten mehr verschiedene Dateien, bevor
+  er bremst - Wiederholungen bleiben begrenzt.
+
+### Lokal: schneller und stabiler
+
+- Der Grafikspeicher-Waechter hat Modelle entladen, waehrend eine Anfrage noch
+  wartete oder das Modell gerade lud - daher kamen manche 20-Sekunden-Nachlader
+  und eine Aufgabe, die 25 Minuten auf eine Antwort wartete. Wartende Anfragen
+  zaehlen jetzt als Arbeit.
+- Die Grafikspeicher-Aufteilung geht nur hoch, wenn eine Schicht wirklich in den
+  freien Platz passt, und senkt nicht mehr, wenn Senken nichts bringt.
+- Der Lese-Zwischenspeicher greift schon im ersten Schritt.
+- Lange Datei-Inhalte, bei denen ein Modell das Ende falsch maskiert, werden
+  gerettet; Qwens XML-Aufrufe mit endlosen Schluss-Tags werden sauber geschlossen.
+- Jeder lokale Zug steht schon beim Start im Protokoll - ein Haenger ist sichtbar.
+
+### Ohne Aufsicht arbeiten
+
+Fuer Laeufe, bei denen niemand am Rechner sitzt, gibt es einen Modus ohne
+Fenster: Programme mit Fenster, Bildschirmfotos, Maus, Tastatur, Zwischenablage
+und der sichtbare Browser sind dann aus. Ein Probelauf hatte vorher auf dem
+Bildschirm Blockbench geoeffnet und eine Webseite aufgerufen.
+
+### Was noch nicht geht (ehrlich)
+
+- **3D-Qualitaet:** Gemma 4 26B baut zusammenhaengende, farbige Tiere - der
+  Sakura-Hase ist richtig gut geworden -, aber nicht jedes Tier sieht schon nach
+  dem Tier aus (eine Ameise stand aufrecht wie ein Schneemann, ein Skorpion
+  blieb wirr). Minecraft-Sensen aus Wuerfeln gelingen lokal noch nicht.
+- **Qwen 3.5 / 3.8** rechnen bei jedem Zug den ganzen Text neu ein (rund 140
+  Sekunden auf 16 GB) - Gemma braucht mit demselben Text 2 Sekunden. Wir
+  untersuchen, woran es liegt.
+- **GPT-OSS** ist in den Arbeiten- und Code-Tabs noch durch die 25B-Untergrenze
+  gesperrt (es hat 20B). Unter Einstellungen > Modell-Untergrenze laesst sich das senken.
+
+**Kleinkram:** Werkzeug-Zeilen im Chat brechen um statt abgeschnitten zu werden.
+Der Reden-Tab misst je Runde, wo die Zeit bleibt (Stille, erstes Wort, erster
+Satz, Stimme). Blender-Vorschauen zeigen die echten Materialfarben statt grau.
+Eigene Werkzeug-Server sind sofort nach dem Start da, und ein Auftrag wartet
+kurz auf ihre Werkzeugliste, statt ohne sie loszulegen.
+
+---
+
 ## v2.9.89 - ZenMux mit Claude im Code-Tab, und ein Update-Knopf, der wartet
 
 **Claude ueber ZenMux arbeitet wieder in Arbeiten und Code.** Hatte sich ein
