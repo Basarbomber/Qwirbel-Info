@@ -35,12 +35,17 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.95 - Browser-Bruecke 1.4.1: nur EIN Raeum-Timer pro altem Tab
+
+- **Dupletten-Raeumer entschchaerft (15.10. nach Release).** Der Raeumer aus 2.9.94 konnte fuer denselben alten Tab MEHRERE Schliess-Timer starten, wenn Qwirbel dieselbe Seite schnell hintereinander wieder oeffnete. Jetzt merkt sich der Hintergrund-Dienst geplante Raeumungen (duplettGeplant) und startet je altem Tab genau EINEN Timer; egal wie der ausging, ist der Tab danach wieder planbar. In beiden Baeumen (Werkstatt + Installation) und im Paket.
+
 ## v2.9.94 - Browser-Bruecke raeumt Dupletten auf; Handy: Laeufe im Blatt statt Overlay
 
 - **Browser-Bruecke 1.4.0 - Dupletten-Raeumer.** Oeffnet Qwirbel eine Seite, die in einem SEINER Tabs schon offen ist (gleiche Adresse ohne ?/#), schliesst sich der alte Tab nach kurzer Frist - Standard 10 s, im Erweiterungs-Fenster von 0 bis 600 s einstellbar (0 = nie). Falkos eigene Tabs werden nie angefasst. Damit ist Schluss mit hunderten offenen Tabs nach laengeren Browser-Aufgaben.
 - **Handy: Laeufe im Blatt statt Overlay.** Der schwebende Laeufe-Knopf und das Overlay sind weg; die Jobs haben einen eigenen Tab im Blatt (volle Breite, rechts nicht mehr abgeschnitten, im Fenster gebunden wie Ansicht). Im Ansicht-Tab steht jeder Lauf mit einem X zum Stoppen, dazu ein Knopf zu Verbindungen/Browser-Bruecke.
 - **Kein Neuladen durch Wischen.** Nach-unten-Wischen laedt die App nicht mehr neu - dafuer gibt es den Menuepunkt "App neu laden" (Handy, App und PC-Screen gleich bedienbar).
 - **Modellvergleich mit einfachen Prompts.** scripts/modellvergleich.py baut aus allen Arbeitsproben-JSONs die MODELLVERGLEICH.md selbst (inkl. Verstaendnis-Kette ueber 25 lokale Modelle).
+- **Verstaendnis-Pruefung repariert (15.10. nachts).** Frage 5 (apfel zaehlen) bewertete selbst richtige Antworten als falsch, wenn sie nicht als "2x"-Satz formuliert waren - alle 25 Nacht-Laeufe fielen deshalb 0/1. Die Pruefung akzeptiert jetzt jede Form von 2 / 2x / 2-mal / zwei / zweimal in der Antwortzeile (9 Testfaelle gruen, Gegenprobe: 3 / 12 / dreimal bleiben rot). Live-Kontrolle an Ornith-1.5: 4/5 richtig, "ollahH" statt "ollah", 224 s - das Modell ist wirklich noch schwach, die Nacht-Null war aber zusaetzlich der Pruef-Bug.
 
 ## v2.9.93 - Job-Fenster im Chat, Warten weckt auf, und das Modell-Tab kennt die vier neuen Modelle
 
