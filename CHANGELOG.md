@@ -35,6 +35,188 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.94 - Browser-Bruecke raeumt Dupletten auf; Handy: Laeufe im Blatt statt Overlay
+
+- **Browser-Bruecke 1.4.0 - Dupletten-Raeumer.** Oeffnet Qwirbel eine Seite, die in einem SEINER Tabs schon offen ist (gleiche Adresse ohne ?/#), schliesst sich der alte Tab nach kurzer Frist - Standard 10 s, im Erweiterungs-Fenster von 0 bis 600 s einstellbar (0 = nie). Falkos eigene Tabs werden nie angefasst. Damit ist Schluss mit hunderten offenen Tabs nach laengeren Browser-Aufgaben.
+- **Handy: Laeufe im Blatt statt Overlay.** Der schwebende Laeufe-Knopf und das Overlay sind weg; die Jobs haben einen eigenen Tab im Blatt (volle Breite, rechts nicht mehr abgeschnitten, im Fenster gebunden wie Ansicht). Im Ansicht-Tab steht jeder Lauf mit einem X zum Stoppen, dazu ein Knopf zu Verbindungen/Browser-Bruecke.
+- **Kein Neuladen durch Wischen.** Nach-unten-Wischen laedt die App nicht mehr neu - dafuer gibt es den Menuepunkt "App neu laden" (Handy, App und PC-Screen gleich bedienbar).
+- **Modellvergleich mit einfachen Prompts.** scripts/modellvergleich.py baut aus allen Arbeitsproben-JSONs die MODELLVERGLEICH.md selbst (inkl. Verstaendnis-Kette ueber 25 lokale Modelle).
+
+## v2.9.93 - Job-Fenster im Chat, Warten weckt auf, und das Modell-Tab kennt die vier neuen Modelle
+
+**Das Job-Fenster: laufende Befehle immer im Blick.** Läuft etwas Langes im
+Hintergrund (ein Test, ein Build, ein Python-Skript), zeigt der Chat rechts ein
+kleines Fenster: welcher Befehl, seit wann er läuft (der Timer tickt live) und
+die letzten Zeilen aus seinem Log. Eingetragen wird automatisch alles, was
+Qwirbel losgelöst startet (hintergrund_starten) und jeder Hintergrund-Befehl
+(befehl_ausfuehren) - fertig gelaufene verschwinden. So sieht man auf einen
+Blick, dass Qwirbel während langer Tests einfach weiterarbeitet.
+
+**Warten hoert auf zu schlafen.** Waehrend einer langen Aufgabe (Build,
+Generierung, ein Hintergrund-Job) wartet Qwirbel oft Minuten auf ein Ergebnis
+- bis jetzt stur die volle Zeit, egal was daneben passierte. Jetzt weckt jede
+neue Zwischennachricht von dir das Warten sofort: Qwirbel liest, was du gesagt
+hast, und arbeitet es ein, ohne den laufenden Auftrag zu verlieren. Auch das
+Log eines laufenden Hintergrund-Jobs weckt (eine neue Zeile heisst: da tut
+s was - nachsehen statt weiter schlafen). Nachrichten aus fremden Kanaelen
+wecken nicht; sie bleiben liegen, bis der naechste Zug sie liest. Fuenf Tests
+mit Gegenprobe: fremder Kanal weckt NICHT.
+
+**Das Modell-Tab kennt die neuen Modelle - mit Zahlen statt Gefuehl.** Vier
+neue lokale Experten-Modelle (je 12-13 GB) stehen jetzt in den Empfehlungen
+je Grafikkarten-Klasse: Qwen3-30B-A3B-Instruct-2507, GLM-4.7-Flash,
+Qwen3-VL-30B-A3B-Instruct und Granite-4.0-H-Small. Die Angaben stammen aus
+der Planungsprobe am echten GGUF, nicht aus dem Bauchgefuehl: Auf einer
+8-GB-Karte rechnet der Planer bei GLM-4.7 z. B. 26 von 47 Schichten auf der
+Karte und haelt die Experten der restlichen im Arbeitsspeicher (--n-cpu-moe,
+~6,3 GB RAM dafuer). Auf 4 GB stehen nur die zwei Modelle mit ehrlicher
+Bedingung "~16 GB freier RAM" (GLM-4.7-Flash, Granite-4.0-H-Small); das
+Vision-Modell Qwen3-VL wird auf 4 GB bewusst nicht empfohlen. Keine Liste
+sperrt etwas - die Vorhersage (Marken/s) steht wie bisher daneben, und 12-GB-
+Modelle laufen damit auf kleinen Karten schnell und gut, solange der
+Arbeitsspeicher mitspielt.
+
+## v2.9.92 - Komprimieren haelt sein Ziel, und man sieht, ob das Modell arbeitet
+
+**Komprimieren macht den Kontext jetzt wirklich klein.** Gemessen an einem
+echten Chat: aus rund 30.000 Marken wurden nur 16.000 - die Zusammenfassung
+selbst war mit gut 1.200 Marken klein, aber daneben blieben die Inhalte aller
+vorher gelesenen Dateien stehen (hier rund 15.000 Marken) und gingen weiter in
+jeden Zug. Komprimieren raeumt dieses Lese-Gedaechtnis jetzt mit ab. Welche
+Dateien es gab, bleibt im Datei-Wegweiser und in der Zusammenfassung stehen;
+gebraucht werden sie dann frisch von der Platte gelesen - mit dem Stand von
+jetzt statt dem von damals. Das gilt in jedem Tab, in Chat und Planung
+genauso wie in Arbeiten und Programmieren.
+
+**Die Zusammenfassung bleibt bei ihrer Laenge.** Die Modelle schrieben etwa
+doppelt so viel wie verlangt (2.341 Zeichen Ziel, 4.399 geliefert; ein kurzer
+Planungs-Chat wurde von 4.285 nur auf 3.163 Zeichen "verdichtet"). Jetzt ist
+das Ziel eine Obergrenze, und liegt das Ergebnis mehr als 30 % darueber, gibt
+es einen Kuerz-Gang - der rechnet den gemessenen Ueberschuss gleich mit ein.
+Die Untergrenze fuer kleine Chats sinkt von 2.000 auf 1.200 Zeichen.
+
+**Der Kontext-Zaehler zaehlt, was das Modell sieht.** Er las bisher die rohe
+Chat-Datei: der Gedankengang (dort sogar zweimal gespeichert) und die
+Datei-Huelle zaehlten mit. In einem Gespraechs-Chat waren das 54.000 von
+69.000 Zeichen, von denen das Modell nichts bekommt. Auch die Schaetzung im
+Fenster zaehlte nach dem Komprimieren die alten Nachrichten weiter mit - sie
+beginnt jetzt an der Zusammenfassung. Der Anteil "Dateien" misst genau den
+Block, den der Agent mitschickt, statt einer Obergrenze.
+
+**Lebenszeichen waehrend das Modell rechnet.** Ein Cloud-Modell (gemessen:
+GLM-5.3 Flash ueber ZenMux) brauchte je Werkzeugschritt ein bis zwei Minuten
+und zeigte in der Zeit gar nichts an - es sah aus, als haenge es. Es hat
+gearbeitet: 86 % seiner Ausgabe war Gedankengang, rund 2.300 Marken je Zug
+bei etwa 40 Marken je Sekunde. Neben "Qwirbel denkt" steht jetzt alle paar
+Sekunden, was gerade passiert: "wartet auf das Modell" (der Anbieter hat noch
+kein Zeichen geschickt), "denkt" oder "schreibt" - mit Sekunden, Marken und
+Marken je Sekunde, gemessen am Datenstrom. So ist zu sehen, ob das Modell
+arbeitet oder der Anbieter haengt. Klecks liefert seine Antwort nicht
+stueckweise; dort steht ehrlich nur "wartet" mit der Zeit.
+
+**Richtige Knopf-Texte.** Der Loeschen-Knopf im Chat sagte "wird nur
+archiviert, nichts geht verloren" - er loescht aber endgueltig (Verlauf,
+gelesene Dateien, Weitermachen-Stand). Der Text sagt das jetzt, nennt die
+Alternativen (/neu archiviert, Qwirbeln lernt daraus), und auf Englisch heisst
+er Delete statt Clear. Die angeheftete Kopfleiste oben hatte gar keine
+Erklaerungen - sie bekommt dieselben Texte. Der Knopf, der bei Motion Control
+das Referenzbild beschreibt, nannte noch fest minicpm-v; er nimmt seit
+September das beste installierte Seh-Modell.
+
+**Lokale Modelle ueber Klecks sterben nicht mehr am vollen Fenster.** Klecks laedt ein Modell
+mit so viel Fenster, wie die Grafikkarte hergibt - bei GPT-OSS 20B waren das 16.384 statt der
+verlangten 24.576 Marken. Qwirbel kuerzte den Auftrag trotzdem auf 24.576; nach neun Zuegen
+blieben fuer die Antwort 421 Marken, GPT-OSS dachte sie weg, die Aufgabe war tot. Jetzt fragt
+Qwirbel vor jedem Zug, welches Fenster wirklich geladen ist, und kuerzt dagegen.
+
+**Bilder ansehen klappt auch mit "bild".** Mehrere Modelle riefen das Bild-Ansehen mit
+"bild" oder "image" statt "pfad" auf - es kam nichts an, und das Modell baute an einem
+3D-Modell weiter, ohne sein Ergebnis je gesehen zu haben. Das wird jetzt angeglichen, und zwar
+vor der Pruefung, ob ein Server-Konto die Datei ueberhaupt lesen darf.
+
+**GPT-OSS ueber Klecks findet seine Werkzeuge.** Fuer Modelle mit eingebautem Werkzeug-Aufruf
+schreibt Qwirbel Namen wie "mcp:blender_skript" als "mcp__blender_skript" (mehr Zeichen
+erlauben die Modelle nicht). Zurueckuebersetzt wurde nur bei Cloud-Anbietern - ueber Klecks kam
+der Name roh an, war "unbekannt", und das Modell suchte danach blender.exe auf der Platte. Eine
+Dateisuche mit einem Dateipfad statt eines Musters sucht jetzt genau diese Datei, statt "Leeres
+Suchmuster" zu melden. Und Qwirbel lernt je Modell, wie dicht es Text in Marken zerlegt - GPT-OSS
+zerlegt dichter als gedacht, der Auftrag passte deshalb trotz richtigem Fenster nicht hinein.
+
+**Blender-Fehler zeigen auf die richtige Zeile.** Der Code eines Modells laeuft hinter Qwirbels
+eigenen Helfern; Blender meldete deshalb "Zeile 142", wo Zeile 3 gemeint war. Gemma schrieb
+daraufhin sechsmal ein ganzes Skript neu (je fast zwei Minuten). Jetzt wird der Code vorher auf
+Tippfehler geprueft (ohne Blender zu starten), und jeder Fehler nennt die Zeile im eigenen Code
+mit einem Ausschnitt drumherum.
+
+**Lokale Modelle lesen ihren Auftrag nicht mehr jeden Zug von vorn.** Gemessen an Gemma 4 26B:
+Hinter dem bisherigen Verlauf eines Auftrags standen feste Regeln, und jeder neue Zug schob sich davor.
+Modelle mit "gleitendem Fenster" (Gemma 3 und 4, GPT-OSS und andere) koennen dann ihren
+Zwischenspeicher nicht weiterverwenden und lesen den ganzen Auftrag neu - in einer Probe wuchs das
+von 21 auf 52 Sekunden je Zug. Im Versuch: Ende ersetzen 67,7 s, nur anhaengen 14,7 s. Die festen
+Regeln stehen jetzt vor dem Verlauf, hinten waechst er nur noch an. Jeder lokale Zug schreibt
+ausserdem ins Protokoll, wie viel seines Auftrags gleich geblieben ist.
+
+**Kein minutenlanges Umschreiben der Werkzeugliste nach jedem Update.** Jede lokale Modellfamilie
+schreibt sich beim ersten Einsatz ihre Werkzeugliste in eigene Worte um - das dauerte 1,5 bis 8
+Minuten, vor dem ersten Zug des Auftrags. Ausgeloest wurde es von jeder geaenderten Zeile der
+Vorlage, also nach fast jedem Update neu. Jetzt nur noch, wenn ein Werkzeug oder Argument dazukommt
+oder wegfaellt, und vorher steht im Chat, was gerade passiert.
+
+**Datei zeigen geht mit jeder Datei.** Qwirbel konnte im Chat nur Bilder und Videos zeigen - eine
+fertige Analyse als .md-Datei wurde abgelehnt. Jetzt erscheint jede Datei als Karte im Chat, Bilder
+und Videos weiterhin gross.
+
+**Lokale Modelle sehen, was ihre Aenderung angerichtet hat.** Nach jedem Bearbeiten einer Datei
+bekommt das Modell jetzt den geaenderten Bereich mit Zeilennummern zurueck, wie in einem Editor.
+Bisher kam nur "bearbeitet" - in einer Probe aenderte ein Modell eine Tabelle siebzehnmal und
+merkte nie, dass sie am Ende dreifach und zerschnitten in der Datei stand.
+
+**Weniger verworfene Zuege.** Drei haeufige Fehler kleiner Modelle kosten keinen Zug mehr:
+falsch maskierte Zeichen im Werkzeug-Aufruf (etwa \' oder ein verlorenes n bei Zeilenumbruechen),
+woertliche \n statt echter Zeilen in Tabellen, und vertippte Feldnamen (ein Modell schrieb
+zwoelfmal "inhunt" statt "inhalt" und bekam jedes Mal "es fehlt der Inhalt"). Pfade wie
+C:\Users und regulaere Ausdruecke bleiben dabei unangetastet.
+
+**Lange Auftraege bleiben schnell.** Wird der Verlauf eines Auftrags zu lang, kuerzt Qwirbel die
+aelteren Zuege oder fasst sie zusammen. Bisher wanderte diese Grenze mit jedem Zug ein Stueck weiter
+- und jedes Mal musste ein lokales Modell den ganzen Auftrag neu lesen (gemessen: 33-36 Sekunden je
+Zug statt 2-3). Jetzt rastet sie in Schritten, und eine fertige Zusammenfassung bleibt in Gebrauch,
+bis die naechste da ist. Im Nachbau brach der Zwischenspeicher in 30 Zuegen 9-mal statt 28-mal.
+
+**Blender-Code landet in Blender.** Schreibt ein Modell Blender-Code ("import bpy") und will ihn
+als normales Python ausfuehren, geht er jetzt an Blender - vorher scheiterte das jedes Mal.
+Und die Reparatur holt Teile, die ganz in einem anderen stecken (Arme im Koerper, Augen im Kopf),
+so weit heraus, dass sie sichtbar sind und trotzdem dranhaengen.
+
+**Was das fuer GLM heisst:** GLM-5.3 Flash ist langsam, weil es viel denkt,
+nicht weil es haengt. GLM-5.3 (die volle Fassung) hat dieselbe Aufgabe danach
+in 2,5 Minuten erledigt.
+
+---
+
+## v2.9.91 - Der Kombi-Knopf im Chat
+
+**Kombi mit einem Klick.** Neben "Denken" sitzt jetzt der Kombi-Knopf. Er
+zeigt jede Kombi, deren Denker und Arbeiter beide installiert sind - ein Klick
+auf "Nutzen" setzt den Denker, legt den Arbeiter in den Modellchip und schaltet
+das Denken an; "Beenden" schaltet die Kombi wieder ab.
+
+**Der Modellchip wird grau, solange eine Kombi laeuft.** Er bleibt anklickbar -
+beim Draufzeigen steht aber da, dass ein anderes Modell die Kombi beendet und
+neu laedt.
+
+**Sehen, was wirklich rechnet.** Im Menue des Kombi-Knopfs steht je Rolle das
+Modell und wo es gerade liegt (ganz auf der Grafikkarte, geteilt, im
+Arbeitsspeicher oder nicht geladen, mit GB), wie viele Zuege es gerechnet hat
+und wann zuletzt, und wie oft der Denker die Karte wieder freigegeben hat.
+Darunter eine Pruefliste: Denker eingetragen, Arbeiter im Chip, beide
+installiert, Chip auf lokal, Denken an - jeweils mit Haken oder Kreuz.
+
+**Kleinkram:** In der Kombi-Liste stehen jetzt die gemessenen Ergebnisse statt
+"Messung offen", farbig nach Ergebnis.
+
+---
+
 ## v2.9.90 - Lokale Modelle, durchgeschuettelt: 3D-Modelle, GPT-OSS, und ein Agent, der nicht mehr im Kreis laeuft
 
 Zwei Tage und eine Nacht lang haben wir uns hingesetzt und Qwirbel mit lokalen
