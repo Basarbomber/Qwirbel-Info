@@ -31,12 +31,12 @@
     "windows": {
       "datei": "Qwirbel-Windows-Normal-v2.9.99.zip",
       "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.99/Qwirbel-Windows-Normal-v2.9.99.zip",
-      "sha256": "697041755d44b26668b9fd6216be84c54166f8f02d7eef5541eb56d8411f733b"
+      "sha256": "98ddc13230e9395302a197f534dfebadb37668be2f7cb0f06f74944a2b8514db"
     },
     "windows_server": {
       "datei": "Qwirbel-Windows-Server-v2.9.99.zip",
       "url": "https://github.com/Basarbomber/Qwirbel-Info/releases/download/v2.9.99/Qwirbel-Windows-Server-v2.9.99.zip",
-      "sha256": "cccb3ac9c4fbc28cfb54092a0204489a880191b9556d6add0f4d4de4e3690e8f"
+      "sha256": "1d660498c1dc7bb043a91bcf62301ad1bf4ccfd249386df7a15af0ab36ed562a"
     },
     "linux": {
       "datei": "Qwirbel-Linux-Normal-v2.9.99.zip",
