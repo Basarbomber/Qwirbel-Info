@@ -35,9 +35,121 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.99 - Phasen-Register: Reihenfolge ist Vertrag (16.10.2026 23:55)
+
+- **Keine Skips mehr bei grossen Listen.** Neues Register `tools/phasen.py`
+  haelt je Chat den Plan fest - die Reihenfolge ist Vertrag. Offene Schritte
+  stehen als PHASEN-VERTRAG-Block in JEDEM Schritt-Prompt: der Fall vom
+  16.10. ("er wollte zuerst uebersetzen, hat es geskippt") kann so nicht
+  mehr passieren. `fehlt_was()` nennt am Ende alles Nie-Erledigte.
+- **Jede Aussage nur EINMAL.** `sagen()`-Dedupe (3-Gramm-Jaccard +
+  Teilstring-Check): `_tool_melden` blockiert aehnliche Kernaussagen und
+  sagt es dem Modell - "hoere auf mit Upload" kam 3x, jetzt 1x.
+- **Zwischennachrichten wirken sichtbar.** Jede Eingabe waehrend der
+  Arbeit zaehlt als NEU-Badge im Aufgaben-Fenster und landet ungelesen im
+  naechsten Schritt-Prompt (`_phasen_block`), bis der Lauf sie geholt hat.
+- **Aufgaben-Fenster (Falko 16.10. 22:47):** Balken mit Prozent je Chat,
+  Pfeil an JEDEM Schritt oeffnet den internen KI-Prompt (bis 4000 Zeichen
+  - was das Modell wirklich vor sich hat), Schrift graut nach Fortschritt
+  von oben nach unten ab. `/agent/laeufe` liefert `phasen` mit
+  (Reload-sicher); altes Backend ohne das Feld zeigt die alte Anzeige.
+- **Schritt-Prompt entschaerft (17.10. 02:41, Falko: "das im prompt is
+  haesslich").** Der PHASEN-Block in JEDEM Schritt-Prompt ist jetzt knapp
+  und klar: offene Schritte als schlichte "Noch offen"-Liste,
+  Zwischennachrichten als "Falko hat zwischendurch geschrieben (jetzt
+  gelesen)" - mit dem Hinweis, dass es sich meist um Fragen oder
+  Nebenbemerkungen handelt und echte neue Aufgaben per naechster_schritt
+  hinten angehaengt werden. Gleiche Information, kein Wortschwall.
+- **Gesehen gilt als gelesen (17.10. 02:41).** Stand das NEU-Badge auf "2
+  ungelesene Nachrichten", obwohl der Lauf sie laengst gesehen und
+  beantwortet hatte, nimmt sie `_hole_zwischenrufe()` jetzt sofort aus dem
+  NEU-Register (`zwischen_erledigt()`, Vergleich per Aehnlichkeit - auch bei
+  gekuerzten Texten). Das Badge verschwindet, sobald der Agent die Post
+  wirklich bekommen hat.
+- **Beweise:** tests/test_phasen.py 26/26 gruen; py_compile agent.py,
+  main.py, tools/phasen.py in beiden Baeumen sauber; Frontend-Deploy
+  Abdruck cf1c920b338e. Backend-Teil wirkt nach dem naechsten
+  Qwirbel-Neustart. Regel zusaetzlich als QWIRBEL-WISSEN\\
+  CLAUDE-PHASEN-REGEL.md an King (Celestial-Lumber-Chat) uebergeben.
+
+## v2.9.98 - Das Job-Fenster zeigt live, was Qwirbel tut (16.10.2026 21:00)
+
+Das Fenster im Chat stand still, waehrend Qwirbel arbeitete - man sah nur
+Hintergrund-Laeufe. Jetzt steht oben jeder laufende Werkzeug-Schritt mit
+Namen und Laufzeit, und die Anzeige zieht mit, waehrend er arbeitet.
+Laeufe heissen ausserdem nach ihrem Skript statt "Lauf 1".
+
+Erstmals in einem Paket (bislang nur in der laufenden Installation):
+v2.9.96 - der Aufseher arbeitet parallel weiter, waehrend die Agenten bauen;
+v2.9.97 - Roblox-Spielwissen als eigener MCP-Server, MCP-Timeout 180 s,
+Studio-IDs nie hardkodiert.
+
+## v2.9.97 - Roblox-Spielwissen als eigener MCP-Server (16.10.2026 04:00)
+
+- **Falkos Research-MDs sind jetzt Werkzeug.** Neuer eigener MCP-Server
+  `mcp_eigene/roblox_wissen.py` (211 Zeilen) mit drei Tools:
+  `spiel_wissen_lage` (welche Wissens-Ordner/Dateien gibt es),
+  `spiel_wissen_finden` (Stichwortsuche mit Zeile+Titel),
+  `spiel_wissen_regeln` (Regeln/Abschnitte aus den MDs). Durchsucht wird
+  NUR LESEND: `Desktop\Lumber\research`, `Desktop\Qwirbel\knowledge\research`
+  und QWIRBEL-WISSEN-Ordner (Thema Roblox/Bauplan). Damit liest Qwirbel den
+  Bauplan (z.B. RESEARCH-MESH-STAPLER.md) bevor am Spiel gebaut wird - genau
+  wie Claude es tut. Registriert in `tools\mcp_client.py` (EIGENE_SERVER +
+  MCP_STORE), AppData- UND Desktop-Baum synchron. Beweis: Tests 15/15 gruen
+  (`tests/roblox_wissen_pruefung.py`) + echter STDIO-Lauf: 3 Tools, 7245
+  Zeichen Spielwissen geliefert (`tests/roblox_wissen_stdio_ok.log`). Wirkt
+  im laufenden Qwirbel nach dem naechsten Neustart.
+- **Wortloser MCP-Fehler entzaubert.** `screen_capture` auf der grossen Insel
+  brauchte laenger als 120 s; `asyncio.TimeoutError` hat aber einen LEEREN
+  Fehlertext - deshalb stand nur "MCP-Tool screen_capture: " ohne jeden
+  Hinweis. `mcp_client.call_tool`: jetzt 180 s Timeout, und bei leerer
+  Exception-Meldung steht der Typname drin (beide Baeume). Beweis
+  `tests/scb_out2.log`: kurz nach dem Client-Abbruch meldet der Studio-Server
+  SELBST `rmcp "Request timeout"` (Code -32603) - die Wurzel ist ein
+  serverseitiges Timeout in Roblox Studio (Insel mit 404 716 Parts), nicht
+  Qwirbel. Workaround: Kamera vorher per camera_position auf einen kleinen
+  Ausschnitt setzen oder in der Play-Session einfangen (kleiner DataModel).
+- **Frontend:** Werkzeug-Schritte brechen nicht mehr mitten im Wort um
+  (flexWrap + overflowWrap:anywhere, index.html in beiden Baeumen).
+
+## v2.9.96 - Selbst weiterarbeiten, waehrend die Agenten bauen (15.10.2026 22:50)
+
+- **Aufseher darf arbeiten.** Wer Helfer gestartet hat, hiess es bislang nur:
+  warten, Stand ansehen, wieder warten. Jetzt sagen agenten_warten,
+  agenten_stand UND die Mama-Regel im Agent-Prompt dasselbe (Falko 15.10.
+  22:21): WAHREND die Helfer laufen an eigenen Dingen weiterarbeiten -
+  pruefen, einsortieren, vorbereiten. Nur nichts doppelt bauen und kein
+  fertig melden, solange sie laufen. Wirkt im Backend nach dem naechsten
+  Qwirbel-Neustart.
+- **Keine Buchstaben-Stapel mehr im Chat.** 15 Stellen standen auf wordBreak
+  "break-all": in schmalen Spalten brach der Text mitten im Wort, jeder
+  Buchstabe einzeln untereinander (Falko 15.10. 19:59). Jetzt "break-word" -
+  lange Woerter brechen nur, wenn noetig, der Rest an Leerzeichen. Beide
+  Baeume neu gebaut und ausgeliefert (Abdruck 7a19e94e63a2) - einmal neu
+  laden genuegt.
+- **Mehr Modelle im Vergleich.** Zwei Verstaendnis-Arbeitsproben nachgelegt
+  (je 5 Fragen): Ornith-1.5-35B-A3B jetzt in IQ4_XS statt Q2_K - 1/1 richtig
+  (15.10. 22:57, ~8,7 Min) nach der Q2-Null vom Vortag; z-ai/glm-5.3 (Abo)
+  1/1 richtig (15.10. 22:43). MODELLVERGLEICH.md neu gebaut (15.10. 23:08, erneuert 23:44): 57 Arbeitsproben,
+  30 Verstaendnis-Laeufe (erneuert 16.10. 00:29) - auch Qwen3-30B-A3B-Instruct 1/1
+  (23:07) und glm-4.7 (zai) 1/1 (16.10. 00:23, 108,9 s). Der Live-Beweis
+  dafuer liegt in BEWEIS-2026-10-15-AUFSEHER-PARALLEL.md, das Zeitstempel-Paket in
+  backups\20261015-2351-v2.9.96-paket.zip (5 Dateien: Beweis, CHANGELOG,
+  MODELLVERGLEICH, test_aufseher_parallel.py, chatverlauf.py).
+- **Zeitstempel-Sicherungen.** Vor jeder Aenderung lag ein Stand in
+  backend\backups\20261015-2226-aufseher-parallel-modelle\ (agent.py,
+  arbeitsprobe.py, index.html beider Baeume).
+- **Gegenprobe in beiden Baeumen (15.10. 23:21).** test_chatverlauf.py (4)
+  und test_aufseher_parallel.py (5): 9/9 gruen in der Installation (AppData)
+  UND in der Werkstatt (Desktop), py_compile sauber; der Modellvergleich
+  liegt jetzt auch im Backend (tools/MODELLVERGLEICH.md).
+  Live im selben Lauf bewiesen: Waehrend zwei Helfer liefen (Modelltest
+  qwen3:14b, Baum-Sync-Pruefung), entstand dieser Eintrag - genau die
+  Parallelarbeit, fuer die diese Version gebaut ist.
+
 ## v2.9.95 - Browser-Bruecke 1.4.1: nur EIN Raeum-Timer pro altem Tab
 
-- **Dupletten-Raeumer entschchaerft (15.10. nach Release).** Der Raeumer aus 2.9.94 konnte fuer denselben alten Tab MEHRERE Schliess-Timer starten, wenn Qwirbel dieselbe Seite schnell hintereinander wieder oeffnete. Jetzt merkt sich der Hintergrund-Dienst geplante Raeumungen (duplettGeplant) und startet je altem Tab genau EINEN Timer; egal wie der ausging, ist der Tab danach wieder planbar. In beiden Baeumen (Werkstatt + Installation) und im Paket.
+- **Dupletten-Raeumer entschchaerft (15.10. nach Release).** Der Raeumer aus 2.9.94 konnte fuer denselben alten Tab MEHRERE Schliess-Timer starten, wenn Qwirbel dieselbe Seite schnell hintereinander wieder oeffnete. Jetzt merkt sich der Hintergrund-Dienst geplante Raeumungen (duplettGeplant) und startet je altem Tab genau EINEN Timer; egal wie der ausging, ist der Tab danach wieder planbar. In beiden Baumen (Werkstatt + Installation) und im Paket.
 
 ## v2.9.94 - Browser-Bruecke raeumt Dupletten auf; Handy: Laeufe im Blatt statt Overlay
 
@@ -45,7 +157,7 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 - **Handy: Laeufe im Blatt statt Overlay.** Der schwebende Laeufe-Knopf und das Overlay sind weg; die Jobs haben einen eigenen Tab im Blatt (volle Breite, rechts nicht mehr abgeschnitten, im Fenster gebunden wie Ansicht). Im Ansicht-Tab steht jeder Lauf mit einem X zum Stoppen, dazu ein Knopf zu Verbindungen/Browser-Bruecke.
 - **Kein Neuladen durch Wischen.** Nach-unten-Wischen laedt die App nicht mehr neu - dafuer gibt es den Menuepunkt "App neu laden" (Handy, App und PC-Screen gleich bedienbar).
 - **Modellvergleich mit einfachen Prompts.** scripts/modellvergleich.py baut aus allen Arbeitsproben-JSONs die MODELLVERGLEICH.md selbst (inkl. Verstaendnis-Kette ueber 25 lokale Modelle).
-- **Verstaendnis-Pruefung repariert (15.10. nachts).** Frage 5 (apfel zaehlen) bewertete selbst richtige Antworten als falsch, wenn sie nicht als "2x"-Satz formuliert waren - alle 25 Nacht-Laeufe fielen deshalb 0/1. Die Pruefung akzeptiert jetzt jede Form von 2 / 2x / 2-mal / zwei / zweimal in der Antwortzeile (9 Testfaelle gruen, Gegenprobe: 3 / 12 / dreimal bleiben rot). Live-Kontrolle an Ornith-1.5: 4/5 richtig, "ollahH" statt "ollah", 224 s - das Modell ist wirklich noch schwach, die Nacht-Null war aber zusaetzlich der Pruef-Bug.
+- **Verstaendnis-Pruefung repariert (15.10. nachts).** Frage 5 (apfel zaehlen) bewertete selbst richtige Antworten als falsch, wenn sie nicht als "2x"-Satz formuliert waren - alle 25 Nacht-Laefe fielen deshalb 0/1. Die Pruefung akzeptiert jetzt jede Form von 2 / 2x / 2-mal / zwei / zweimal in der Antwortzeile (9 Testfaelle gruen, Gegenprobe: 3 / 12 / dreimal bleiben rot). Live-Kontrolle an Ornith-1.5: 4/5 richtig, "ollahH" statt "ollah", 224 s - das Modell ist wirklich noch schwach, die Nacht-Null war aber zusaetzlich der Pruef-Bug.
 
 ## v2.9.93 - Job-Fenster im Chat, Warten weckt auf, und das Modell-Tab kennt die vier neuen Modelle
 
