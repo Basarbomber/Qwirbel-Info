@@ -35,6 +35,33 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v2.9.100 - Datei-Karten im Chat: ansehen, fragen, starten (18.10.2026 17:00)
+
+Falko 18.10. 15:50: Dateien im Chat - Linksklick zeigt den Quelltext,
+je Typ 3 Optionen, kleine Textbox als KI-Prompt mit Datei-Bezug,
+Programm-Start fuer Roblox/Unity/Blender und localhost-Links, Rechtsklick
+mit denselben Optionen.
+
+- **Linksklick auf eine Datei-Karte zeigt den Quelltext.** Neuer Endpunkt
+  /datei/quelltext (nur Text-Endungen, bis 512 KB, nur freigegebene Pfade).
+  Darunter je Dateityp 3 Optionen (Roblox/Blender/Blockbench/Unity: oeffnen,
+  analysieren, verbessern; Bild: beschreiben, hochskalieren, aufbauen;
+  Video, Audio, md/txt, localhost-Link und Code je passend) und eine kleine
+  Textbox: ihr Text landet als Prompt MIT Datei-Bezug in der Chat-Eingabe.
+- **Rechtsklick auf jede Karte:** dasselbe als Menue - die 3 Optionen,
+  Quelltext anzeigen, Im Programm oeffnen, Pfad kopieren.
+- **Programm-Start aus dem Chat.** Neuer Endpunkt /datei/programm:
+  localhost-Links im Browser, .rbxl/.rbxlx -> Roblox Studio, .blend ->
+  Blender, .bbmodel -> Blockbench, .unity/.unitypackage -> Unity
+  (Windows-Standardzuordnung, nur direkt am PC; vom Handy ehrlicher Hinweis
+  statt Fehler). datei_zeigen nimmt localhost-Links jetzt als Chat-Karte an -
+  "localhost.evil.com" bleibt draussen (Pruefung auf ([/?#]|$) hinter
+  Host:Port).
+- **Beweise:** tests/test_datei_karte.py 8/8 gruen; py_compile main.py +
+  agent.py sauber; Frontend-Deploy Abdruck 238df5d735f2, gebaut/app.js
+  enthaelt DateiDialog/DateiKontext/_dkOptionen. Frontend wirkt nach
+  App-Neuladen (F5), Backend-Endpunkte nach dem naechsten Qwirbel-Neustart.
+
 ## v2.9.99 - Phasen-Register: Reihenfolge ist Vertrag (16.10.2026 23:55)
 
 - **Keine Skips mehr bei grossen Listen.** Neues Register `tools/phasen.py`
