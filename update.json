@@ -1,6 +1,6 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket.",
-  "_naechster_schritt": "v2.9.99 ist gepackt (17.10.2026 01:40) und wartet NUR LOKAL - noch nicht veroeffentlicht (Falko sagt wegen exe/zips/repo Bescheid). Windows-Pakete und SHA256 stehen drin, Linux/macOS folgen, sobald sie gebaut sind. WENN ES RAUS SOLL: Release v2.9.99 anlegen und die ZIPs als Anhaenge hochladen (scripts/release_hochladen.py erledigt Release + Anhaenge), DANN dieses Manifest committen und pushen - in dieser Reihenfolge. Ein gepushtes Manifest, dessen Release-Anhaenge noch fehlen, meldet eine neue Version ohne Knopf; das sieht wie ein Defekt aus. ACHTUNG: ein Release-Anhang ist OEFFENTLICH ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
+  "_naechster_schritt": "v2.9.100 ist veroeffentlicht (18.10.2026). WENN DIE NAECHSTE VERSION RAUS SOLL: VERSION erhoehen, Pakete bauen (scripts/make_release_windows.py) und Setup-EXEs erstellen (scripts/make_setup_exe.py), dann scripts/release_hochladen.py (legt das Release an, laedt die Anhaenge hoch, zieht dieses Manifest nach), DANN committen und pushen - in dieser Reihenfolge. Ein gepushtes Manifest, dessen Release-Anhaenge noch fehlen, meldet eine neue Version ohne Knopf; das sieht wie ein Defekt aus. ACHTUNG: ein Release-Anhang ist OEFFENTLICH ladbar - die Lizenz greift erst IM Programm, nicht vor dem Download.",
   "version": "2.9.100",
   "kanal": [
     "stabil",
