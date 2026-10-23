@@ -35,6 +35,45 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v3.0.0 - Terminal, Ordnerliste, Design-Tab, Auto-Weiterlauf (23.10.2026)
+
+Grosse Sprungnummer, weil mehrere sichtbare Dinge zusammenkommen: das eigene
+Terminal, die Ordnerliste je Chat, der neue Design-Tab, der Auto-Weiterlauf
+und das endgueltige Ende des Token-Budgets.
+
+- **Terminal unten in der Ordnerleiste.** Per Knopf aufzumachen, EIN Befehl
+  pro Eingabe, Enter schickt. Zeigt live auch Qwirbels Befehle aus dem
+  laufenden Chat (Ereignis qw-terminal-live); eigene Eingaben laufen ueber
+  POST /terminal/ausfuehren im gewaehlten Ordner (leer = Desktop).
+- **Ordnerliste rechts bei jedem Chat (nur PC).** Rechts ausklappbar, der
+  gewaehlte Ordner gilt fuer den Chat und das Terminal.
+- **Token-Budget endgueltig raus** (22.10.2026). Default 100000 -> 0 in
+  beiden agent.py-Baeumen, Stopp-Zweig (150 % -> Abbruch) aus der
+  execute_plan-Schleife entfernt - kein Lauf hoert mehr still von selbst auf.
+- **roblox-wissen-MCP entfernt.** Server-Definition aus mcp_client.py raus,
+  Server- und Testdateien aus der Installation.
+- **Leak-Scan-Fix:** echter Name aus einem Kommentar der Android-App
+  entfernt (die Info bleibt, der Name geht nicht ins Paket).
+- **Prompt-Enhancement immer an** (23.10.2026). Jede Chat-Eingabe wird
+  zuerst lokal verbessert - ein Client kann es fuer sich ausdruecklich
+  abschalten (enhance=false).
+- **Design-Tab (neu).** Ein eigener Tab fuer visuelle Entwuerfe: HTML-
+  Beispiele, Menues, 3D-Modelle, Bilder. Im Chat reicht "leg das als
+  Design ab" - gespeicherte HTML-Entwuerfe zeigen eine Live-Vorschau
+  (srcdoc, kein Skript-Zugriff), Bilder und Modelle werden per Pfad
+  referenziert. Jedes Design laesst sich per Knopf an einen anderen Chat
+  uebergeben: Name, Beschreibung, Pfad und Quelltext kommen mit in den
+  Prompt.
+- **Auto-Weiterlauf mit Context Refresh.** Sind die Zuege eines Laufs
+  aufgebraucht, entscheidet das MODELL selbst, ob noch offene Arbeit
+  bleibt: es schreibt eine Zusammenfassung + offene Punkte und stoesst
+  einen neuen Lauf mit frischem Kontext an. Ein Auftrag hoert nicht mehr
+  still auf, nur weil eine Schleife voll ist.
+- **Modell-Benchmark auf der eigenen Karte.** tools/modell_benchmark.py
+  testet lokale Modelle ECHT (Werkzeug-Aufruf, erzeugter Code wird
+  kompiliert UND ausgefuehrt, JSON-Antwort, Selbsteinschaetzung). 8
+  Modelle gemessen; Ergebnisse in tools/modell_tests_ergebnisse.json.
+
 ## v2.9.100 - Datei-Karten im Chat: ansehen, fragen, starten (18.10.2026 17:00)
 
 Falko 18.10. 15:50: Dateien im Chat - Linksklick zeigt den Quelltext,
