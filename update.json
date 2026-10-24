@@ -1,7 +1,7 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket. Seit 23.10.2026: Der Kanal ist die WEBSITE (qwirbel.de/updates/version.json); dieses Repo ist nur noch Ablage/Backup (PRIVAT).",
-  "_naechster_schritt": "v2.9.100 ist veroeffentlicht (23.10.2026). NAECHSTE VERSION: VERSION erhoehen, Pakete bauen (scripts/make_release_windows.py) + Setup-EXEs (scripts/make_setup_exe.py), dann Pakete und diese Datei als version.json nach qwirbel.de hochladen (Vorlage-Ordner: Desktop\\Qwirbel-Website\\updates - dort liegen Anleitung + version.json-Vorlage). GitHub-Releases nur noch OPTIONAL als privates Backup (scripts/mache_github_release.py). Reihenfolge: ERST die Pakete auf der Website, DANN version.json veroeffentlichen - sonst meldet Qwirbel eine neue Version ohne Download.",
-  "version": "2.9.100",
+  "_naechster_schritt": "v3.0.1 gepackt (24.10.2026). Danach: sha256 aus Qwirbel-v3.0.1-SHA256SUMS.txt hier UND in Desktop\\Qwirbel-Website\\updates\\version.json eintragen (url = https://qwirbel.de/downloads/<datei>), Paket-ZIPs + Setup-EXEs nach Desktop\\Qwirbel-Website\\updates\\downloads\\ kopieren, Website-Ordner auf qwirbel.de hochladen. ERST die Pakete auf der Website, DANN version.json veroeffentlichen. GitHub-Releases nur noch OPTIONAL als privates Backup (scripts/mache_github_release.py).",
+  "version": "3.0.1",
   "kanal": [
     "stabil",
     "test",
@@ -14,42 +14,42 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://qwirbel.de",
-  "hinweise": "v2.9.100 - Datei-Karten im Chat: ansehen, fragen, starten (18.10.2026). Update-Kanal umgezogen: neue Versionen kommen ueber qwirbel.de.",
+  "hinweise": "v3.0.1 (24.10.2026) - Selbstheilende Cloud-Antworten (length/max_tokens-Erkennung mit Retry), Kontext-Report je Agent-Zug (Tokens je Kategorie gegen das Modellfenster), Kompressions-Waechter (Ignorier-Regeln und Pflichtinhalte werden geprueft), Wiederholungs- und Aenderungs-Waechter gegen Endlosschleifen, Gemma4-Ursachenanalyse mit Experimenten. Update-Kanal: qwirbel.de/updates/version.json.",
   "pakete": {
     "windows": {
-      "datei": "Qwirbel-Windows-Normal-v2.9.100.zip",
-      "url": "",
-      "sha256": "0958183a818d5289e3ad0e4addd3a5009bc0c2e32e115cdf1fc0fc5a577b45d6"
+      "datei": "Qwirbel-Windows-Normal-v3.0.1.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Normal-v3.0.1.zip",
+      "sha256": "b6c7351387b69318b0ee92df8b316c13d7d2d2d982c465a58b3d33801001c260"
     },
     "windows_server": {
-      "datei": "Qwirbel-Windows-Server-v2.9.100.zip",
-      "url": "",
-      "sha256": "e26918d84fcdaa85bd94a2b81636cd51288f420cc03f39d3fe9c48d754b608a5"
+      "datei": "Qwirbel-Windows-Server-v3.0.1.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Server-v3.0.1.zip",
+      "sha256": "c916be4b7172b65ed18032b1a907f2181c31738d43a64b6eb5a29965eeaaee90"
     },
     "linux": {
-      "datei": "Qwirbel-Linux-Normal-v2.9.100.zip",
-      "url": "",
-      "sha256": "6f62ea1017b37c3849d881b8a33b41e561694e29a2b967eaab953708eaffafc2"
+      "datei": "Qwirbel-Linux-Normal-v3.0.1.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Normal-v3.0.1.zip",
+      "sha256": "8179ef17ff6b4b834e3ff3dd03268453427b1d8798d6c1b7a8a078db1a5cf9b8"
     },
     "linux_server": {
-      "datei": "Qwirbel-Linux-Server-v2.9.100.zip",
-      "url": "",
-      "sha256": "25402834de02f88a64ac6ab6dc73df4668d6ef9a63bc4ee988337581f513c74a"
+      "datei": "Qwirbel-Linux-Server-v3.0.1.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Server-v3.0.1.zip",
+      "sha256": "cf97d38b393f5a630188a76c9ae23c5430bd5102cd6448172f6fd179e01e07b5"
     },
     "macos": {
-      "datei": "Qwirbel-macOS-Normal-v2.9.100.zip",
-      "url": "",
-      "sha256": "bd5eb508a53bd95d835057df6584850f065aac9daa1c2b4675324fbc0bf4493d"
+      "datei": "Qwirbel-macOS-Normal-v3.0.1.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Normal-v3.0.1.zip",
+      "sha256": "8211bc11e9f3ea2914aebde2d166fa3d7e9f7a4cb91a7d603ba164341a766436"
     },
     "macos_server": {
-      "datei": "Qwirbel-macOS-Server-v2.9.100.zip",
-      "url": "",
-      "sha256": "b2c4baa7001ce8e7159dbc23faab3d6e8ad8766d42dd0889c90ef839de63eb64"
+      "datei": "Qwirbel-macOS-Server-v3.0.1.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Server-v3.0.1.zip",
+      "sha256": "ed1918925443704a632aa2f3a97aa7870846d731e5d420f506d99dd57f3f606c"
     }
   },
   "_felder": {
     "url": "Direkter Download des Update-ZIPs. LEER LASSEN, solange das Paket nicht oeffentlich liegen soll - dann meldet Qwirbel nur die neue Version und nennt die Bezugsquelle. Kuenftig: https://qwirbel.de/downloads/<datei> eintragen, sobald die ZIPs auf der Website liegen.",
-    "sha256": "Pruefsumme des ZIPs. Passt sie nicht, wird NICHT angewendet. Steht je Paket auch im pakete-Block.",
+    "sha256": "Pruefsumme des ZIPs. Passt sie nicht, wird NICHT angewendet. Steht je Paket auch im pakete-Block. Nach jedem Build aus Qwirbel-v<VERSION>-SHA256SUMS.txt nachtragen.",
     "pakete": "Je System und Variante ein eigener Eintrag. Qwirbel sucht erst <system>_<variante>, dann <system>. Steht der Block da und fehlt DIESES System, laedt Qwirbel NICHTS."
   }
 }

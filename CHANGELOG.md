@@ -35,6 +35,48 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v3.0.1 - Selbstheilende Cloud-Antworten, Kontext-Wächter (24.10.2026)
+
+Reparatur-Release nach der Gemma4-Ursachenanalyse: Cloud-Antworten brechen
+nicht mehr still ab, der Kontext jedes Zugs wird sichtbar gemessen,
+Verdichtung darf keine Aufgaben wegkomprimieren, Schleifen enden ehrlich.
+
+- **Selbstheilende Cloud-Antworten.** Endet eine Cloud-Antwort mit
+  finish_reason "length" (max_tokens erreicht), wirft der api_manager einen
+  wiederholbaren Fehler mit Retry-Ausloesung - statt eine stumme Halbantwort
+  zu liefern, ueber die der Agent dreht.
+- **Kontext-Report je Agent-Zug.** Vor jedem lokalen Modellzug misst
+  backend/tools/qwirbel_waechter.py die Marken je Kategorie (Sockel,
+  Verlauf, Wissen, Phase) gegen das echte Modellfenster - der Report landet
+  im Aktions-Protokoll (ctx_report). Muell im Kontext wird sichtbar, bevor
+  er Marken frisst.
+- **Kompressions-Waechter.** Beim Verdichten von Kern-Wissen prueft
+  kompression_pruefen() Pflichtinhalte (Ziel, Abnahmekriterium, Stand,
+  offene Probleme, naechster Schritt, Dateien) und verbotene Muster
+  ("ignorieren"/"ueberspringen" fuehrt zu OFFEN statt weg). Eine
+  Verdichtung ohne Pflichtinhalte wird verworfen - die Datei bleibt, wie
+  sie ist.
+- **Wiederholungs- und Aenderungs-Waechter.** Identischer Werkzeug-Aufruf
+  mit identischem Ergebnis wie im vorigen Zug -> Anstoss INS Ergebnis
+  (andere Methode waehlen). Zehn Schritte ohne Dateiaenderung -> Anstoss +
+  ehrlicher Schritt-Abbruch statt Endlosschleife.
+- **Gemma4-Ursachenanalyse (bewiesen, nicht geraten).** Gemma 4 26B-A4B
+  baut Apps DIREKT (Basislinie: komplette Todo-App, 2710 Marken); in
+  Qwirbels JSON-Zug bricht der Code-String an der Laengengrenze
+  (done_reason=length) oder an Escapes, der Zug wird als "Text statt
+  Werkzeug" verworfen. Der experimentelle Teilen-Fix-Satz verschlechterte
+  (laengerer Output) und wurde ZURUECKGEROLLT - die adaptive Ermahnung
+  bei abgeschnittenen Antworten bleibt der richtige Hebel. Nacht-Matrix:
+  12 Modelle x 2 Aufgaben x 2 Laeufe gemessen (workspace-Bericht).
+- **Filter-Scan (nur gemeldet, nichts entfernt).** 88 Treffer, alle
+  content_filter-Infrastruktur (config level "keine", Anbieter-Reaktion
+  auf finish_reason) - KEINE zusaetzliche Zensur-Schicht in Qwirbel selbst.
+
+Beweise: tests/test_qwirbel_waechter.py 11/11 gruen; py_compile agent.py,
+main.py, api_manager.py sauber; Experiment-Berichte in
+workspace/gemma4-experiment/ (Basislinie, ToolCall-Repro, Bisektion,
+Nacht-Matrix).
+
 ## v3.0.0 - Terminal, Ordnerliste, Design-Tab, Auto-Weiterlauf (23.10.2026)
 
 Grosse Sprungnummer, weil mehrere sichtbare Dinge zusammenkommen: das eigene
