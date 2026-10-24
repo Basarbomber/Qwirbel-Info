@@ -35,6 +35,21 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v3.0.2 - Antwort aus dem Denk-Kanal (gpt-oss-Fix) (24.10.2026)
+
+- **Leerer Antwort-Kanal, Antwort im Denk-Kanal.** Manche Laeufe (bewiesen an
+  gpt-oss:20b, Parser-Nachtest 24.10. 11:00: 973 Marken gerechnet, 0 Zeichen
+  Antwort) legen die finale Werkzeug-Antwort in den thinking-Kanal und lassen
+  den Antwort-Kanal leer - der Zug starb als _parse_error. ollama_client
+  sammelt jetzt thinking-Chunks und nimmt sie als Antworttext, wenn der
+  Antwort-Kanal leer bleibt (done_reason-Markierung antwort_aus_denken).
+  Beweis: gpt-oss:20b liefert danach gueltigen datei_schreiben mit
+  lauffaehiger HTML-Datei (workspace/gemma4-experiment/gptoss_fix_beweis_bericht.md).
+- **Parser-Nachtest (10 Faelle):** Qwirbels echter Parser rettet 9/10 der
+  kaputten JSON-Antworten aus der Nacht-Matrix (einfacher Parser nur 3/10) -
+  die Rettungs-Stufen 1-3 greifen breit; der zehnte Fall war der gpt-oss-
+  Denk-Kanal-Fehler (jetzt gefixt).
+
 ## v3.0.1 - Selbstheilende Cloud-Antworten, Kontext-Wächter (24.10.2026)
 
 Reparatur-Release nach der Gemma4-Ursachenanalyse: Cloud-Antworten brechen

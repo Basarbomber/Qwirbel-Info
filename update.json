@@ -1,7 +1,7 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket. Seit 23.10.2026: Der Kanal ist die WEBSITE (qwirbel.de/updates/version.json); dieses Repo ist nur noch Ablage/Backup (PRIVAT).",
-  "_naechster_schritt": "v3.0.1 gepackt (24.10.2026). Danach: sha256 aus Qwirbel-v3.0.1-SHA256SUMS.txt hier UND in Desktop\\Qwirbel-Website\\updates\\version.json eintragen (url = https://qwirbel.de/downloads/<datei>), Paket-ZIPs + Setup-EXEs nach Desktop\\Qwirbel-Website\\updates\\downloads\\ kopieren, Website-Ordner auf qwirbel.de hochladen. ERST die Pakete auf der Website, DANN version.json veroeffentlichen. GitHub-Releases nur noch OPTIONAL als privates Backup (scripts/mache_github_release.py).",
-  "version": "3.0.1",
+  "_naechster_schritt": "v3.0.2 gepackt (24.10.2026). Danach: Paket-ZIPs + Setup-EXEs nach Desktop\\Qwirbel-Website\\updates\\downloads\\ kopieren (oder scripts/release_auf_website.py 3.0.2) und den Website-Ordner auf qwirbel.de hochladen. ERST die Pakete auf der Website, DANN version.json veroeffentlichen. GitHub-Releases nur noch OPTIONAL als privates Backup (scripts/mache_github_release.py).",
+  "version": "3.0.2",
   "kanal": [
     "stabil",
     "test",
@@ -14,37 +14,37 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://qwirbel.de",
-  "hinweise": "v3.0.1 (24.10.2026) - Selbstheilende Cloud-Antworten (length/max_tokens-Erkennung mit Retry), Kontext-Report je Agent-Zug (Tokens je Kategorie gegen das Modellfenster), Kompressions-Waechter (Ignorier-Regeln und Pflichtinhalte werden geprueft), Wiederholungs- und Aenderungs-Waechter gegen Endlosschleifen, Gemma4-Ursachenanalyse mit Experimenten. Update-Kanal: qwirbel.de/updates/version.json.",
+  "hinweise": "v3.0.2 (24.10.2026) - gpt-oss-Fix: liegt die finale Antwort im Denk-Kanal und der Antwort-Kanal bleibt leer, wird sie jetzt erkannt und benutzt (der Zug starb vorher als Parse-Fehler). Parser-Nachtest: Qwirbels Rettungs-Stufen heben 9/10 kaputte JSON-Antworten. Aus v3.0.1: selbstheilende Cloud-Antworten (length-Erkennung mit Retry), Kontext-Report je Agent-Zug, Kompressions-Waechter, Wiederholungs-/Aenderungs-Waechter gegen Schleifen.",
   "pakete": {
     "windows": {
-      "datei": "Qwirbel-Windows-Normal-v3.0.1.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Normal-v3.0.1.zip",
-      "sha256": "b6c7351387b69318b0ee92df8b316c13d7d2d2d982c465a58b3d33801001c260"
+      "datei": "Qwirbel-Windows-Normal-v3.0.2.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Normal-v3.0.2.zip",
+      "sha256": "324853133d4f4e542412d8a353fff1f34a5ea31d6093a324bf4aa104be0de220"
     },
     "windows_server": {
-      "datei": "Qwirbel-Windows-Server-v3.0.1.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Server-v3.0.1.zip",
-      "sha256": "c916be4b7172b65ed18032b1a907f2181c31738d43a64b6eb5a29965eeaaee90"
+      "datei": "Qwirbel-Windows-Server-v3.0.2.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Server-v3.0.2.zip",
+      "sha256": "f788a98e057c71665fe9c09e2161b6f28ec560c62d4c3f20695c3ff426c30d8c"
     },
     "linux": {
-      "datei": "Qwirbel-Linux-Normal-v3.0.1.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Normal-v3.0.1.zip",
-      "sha256": "8179ef17ff6b4b834e3ff3dd03268453427b1d8798d6c1b7a8a078db1a5cf9b8"
+      "datei": "Qwirbel-Linux-Normal-v3.0.2.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Normal-v3.0.2.zip",
+      "sha256": "7421d0034bdc5594e7b492d03ce6b7114dd8a96768f97ac0bb553f05a9a1f6d1"
     },
     "linux_server": {
-      "datei": "Qwirbel-Linux-Server-v3.0.1.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Server-v3.0.1.zip",
-      "sha256": "cf97d38b393f5a630188a76c9ae23c5430bd5102cd6448172f6fd179e01e07b5"
+      "datei": "Qwirbel-Linux-Server-v3.0.2.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Server-v3.0.2.zip",
+      "sha256": "3f3e0b4626153d1f42fc9629f1e4008c16526de7dc8d4700c7d8f8f8ac6906ba"
     },
     "macos": {
-      "datei": "Qwirbel-macOS-Normal-v3.0.1.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Normal-v3.0.1.zip",
-      "sha256": "8211bc11e9f3ea2914aebde2d166fa3d7e9f7a4cb91a7d603ba164341a766436"
+      "datei": "Qwirbel-macOS-Normal-v3.0.2.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Normal-v3.0.2.zip",
+      "sha256": "e74361e079945aed554f602e7d9abdb3f9ec1e37ae0f98535e08e88c27a9cced"
     },
     "macos_server": {
-      "datei": "Qwirbel-macOS-Server-v3.0.1.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Server-v3.0.1.zip",
-      "sha256": "ed1918925443704a632aa2f3a97aa7870846d731e5d420f506d99dd57f3f606c"
+      "datei": "Qwirbel-macOS-Server-v3.0.2.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Server-v3.0.2.zip",
+      "sha256": "7567785bbd0a10eef16e76440bc32b8a1dbb16e2a7ad63f51550213a7b2ac409"
     }
   },
   "_felder": {
