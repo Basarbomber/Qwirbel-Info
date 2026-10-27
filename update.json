@@ -1,12 +1,8 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket. Seit 23.10.2026: Der Kanal ist die WEBSITE (qwirbel.de/updates/version.json); dieses Repo ist nur noch Ablage/Backup (PRIVAT).",
-  "_naechster_schritt": "v3.0.2 gepackt (24.10.2026). Danach: Paket-ZIPs + Setup-EXEs nach Desktop\\Qwirbel-Website\\updates\\downloads\\ kopieren (oder scripts/release_auf_website.py 3.0.2) und den Website-Ordner auf qwirbel.de hochladen. ERST die Pakete auf der Website, DANN version.json veroeffentlichen. GitHub-Releases nur noch OPTIONAL als privates Backup (scripts/mache_github_release.py).",
-  "version": "3.0.2",
-  "kanal": [
-    "stabil",
-    "test",
-    "lts"
-  ],
+  "_naechster_schritt": "v3.0.7 gepackt (27.10.2026): 7 ZIPs + SHA256SUMS auf dem Desktop, Manifest auf 3.0.7 gebracht. OFFEN: Live-Upload auf qwirbel.de - ERST Pakete nach /downloads, DANN version.json nach /updates, DANACH Live-Gegenprobe https://qwirbel.de/updates/version.json. Anleitung dafuer: Desktop-Manifestanleitung (LES-MICH-ZUERST.md).",
+  "version": "3.0.7",
+  "kanal": ["stabil", "test", "lts"],
   "freigabe_ab": "",
   "min_version": "",
   "rollout_prozent": 100,
@@ -14,42 +10,42 @@
   "sha256": "",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://qwirbel.de",
-  "hinweise": "v3.0.2 (24.10.2026) - gpt-oss-Fix: liegt die finale Antwort im Denk-Kanal und der Antwort-Kanal bleibt leer, wird sie jetzt erkannt und benutzt (der Zug starb vorher als Parse-Fehler). Parser-Nachtest: Qwirbels Rettungs-Stufen heben 9/10 kaputte JSON-Antworten. Aus v3.0.1: selbstheilende Cloud-Antworten (length-Erkennung mit Retry), Kontext-Report je Agent-Zug, Kompressions-Waechter, Wiederholungs-/Aenderungs-Waechter gegen Schleifen.",
+  "hinweise": "v3.0.7 (27.10.2026) - Kopfleiste mit Settings-Knopf liegt jetzt UEBER allen Fenstern (das Ordnermenue rechts verschiebt/verdeckt sie nicht mehr), Agent-Kontext-Deckel bei 1 Million Tokens (keine 40-Millionen-Token-Laeufe mehr), Modellliste beim Start gecacht: Klecks blockiert den App-Start nicht mehr auf jede einzelne Modell-Abfrage. Aus v3.0.6: laeuft auch ohne Grafikkarte (CPU-Modus), verschwundener Prompt kommt bei Abbruch/Fehler zurueck. Aus v3.0.5: 8 Bild-Werkzeuge fuer jedes Modell.",
   "pakete": {
     "windows": {
-      "datei": "Qwirbel-Windows-Normal-v3.0.2.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Normal-v3.0.2.zip",
-      "sha256": "324853133d4f4e542412d8a353fff1f34a5ea31d6093a324bf4aa104be0de220"
+      "datei": "Qwirbel-Windows-Normal-v3.0.7.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Normal-v3.0.7.zip",
+      "sha256": "7ed60a80074604a4a1b7feb57c519aa224ccdf1ec87859871559e0ddebf0982f"
     },
     "windows_server": {
-      "datei": "Qwirbel-Windows-Server-v3.0.2.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Server-v3.0.2.zip",
-      "sha256": "f788a98e057c71665fe9c09e2161b6f28ec560c62d4c3f20695c3ff426c30d8c"
+      "datei": "Qwirbel-Windows-Server-v3.0.7.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Server-v3.0.7.zip",
+      "sha256": "99a2f423d2166e3edb10a4828a696f02f6cd6dc886a3d02a17d6b9065d2d5709"
     },
     "linux": {
-      "datei": "Qwirbel-Linux-Normal-v3.0.2.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Normal-v3.0.2.zip",
-      "sha256": "7421d0034bdc5594e7b492d03ce6b7114dd8a96768f97ac0bb553f05a9a1f6d1"
+      "datei": "Qwirbel-Linux-Normal-v3.0.7.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Normal-v3.0.7.zip",
+      "sha256": "27edb9b120d90314357b97df8333aaf999020a46857f190f0bb0206124368820"
     },
     "linux_server": {
-      "datei": "Qwirbel-Linux-Server-v3.0.2.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Server-v3.0.2.zip",
-      "sha256": "3f3e0b4626153d1f42fc9629f1e4008c16526de7dc8d4700c7d8f8f8ac6906ba"
+      "datei": "Qwirbel-Linux-Server-v3.0.7.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Server-v3.0.7.zip",
+      "sha256": "dd44423344cae86d5dec6d53624384be107ea1cb171de383a2d1b004a2063daa"
     },
     "macos": {
-      "datei": "Qwirbel-macOS-Normal-v3.0.2.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Normal-v3.0.2.zip",
-      "sha256": "e74361e079945aed554f602e7d9abdb3f9ec1e37ae0f98535e08e88c27a9cced"
+      "datei": "Qwirbel-macOS-Normal-v3.0.7.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Normal-v3.0.7.zip",
+      "sha256": "a399d6db501c4b66bee06540286d87fb79899c5a5e2966d4cb19cb98929058ba"
     },
     "macos_server": {
-      "datei": "Qwirbel-macOS-Server-v3.0.2.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Server-v3.0.2.zip",
-      "sha256": "7567785bbd0a10eef16e76440bc32b8a1dbb16e2a7ad63f51550213a7b2ac409"
+      "datei": "Qwirbel-macOS-Server-v3.0.7.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Server-v3.0.7.zip",
+      "sha256": "ffadaa3c2bd73708fdfb705a35bcb8388d660a5b25cd75db95f9334b91e5d9ae"
     }
   },
   "_felder": {
-    "url": "Direkter Download des Update-ZIPs. LEER LASSEN, solange das Paket nicht oeffentlich liegen soll - dann meldet Qwirbel nur die neue Version und nennt die Bezugsquelle. Kuenftig: https://qwirbel.de/downloads/<datei> eintragen, sobald die ZIPs auf der Website liegen.",
-    "sha256": "Pruefsumme des ZIPs. Passt sie nicht, wird NICHT angewendet. Steht je Paket auch im pakete-Block. Nach jedem Build aus Qwirbel-v<VERSION>-SHA256SUMS.txt nachtragen.",
-    "pakete": "Je System und Variante ein eigener Eintrag. Qwirbel sucht erst <system>_<variante>, dann <system>. Steht der Block da und fehlt DIESES System, laedt Qwirbel NICHTS."
+    "url": "Direkter Download des Update-ZIPs. LEER LASSEN, solange das Paket nicht oeffentlich liegen soll.",
+    "sha256": "Pruefsumme des ZIPs. Passt sie nicht, wird NICHT angewendet. Steht je Paket auch im pakete-Block.",
+    "pakete": "Je System und Variante ein eigener Eintrag. Qwirbel sucht erst <system>_<variante>, dann <system>."
   }
 }

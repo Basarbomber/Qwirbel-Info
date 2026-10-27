@@ -35,6 +35,60 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v3.0.4 - Cloud-Lese-Frist für lange Denker, GLM-5 (24.10.2026)
+
+- **Letzter offener Nacht-Matrix-Punkt behoben: GLM-5.3 (z.ai) starb in
+  Basis-Läufen an der Standard-Lesefrist von 300 s** (Beleg:
+  workspace/gemma4-experiment/glm_cloud_ergebnisse.jsonl - html-basis lief
+  141,9 s durch, spiel-basis starb nach 300 s an einem HTTP-Read-Timeout;
+  das Modell denkt 26 802 Zeichen lang nach, bevor das erste Wort kommt).
+  Neue Tabelle `CLOUD_LESEFRIST_MIN` in backend/api_manager.py: Modelle mit
+  "glm-5" im Namen bekommen im OpenAI-Stream mindestens 600 s Lese-Frist
+  (Funktion `_lese_frist`). Wie bei qwq:32b (v3.0.3) wird NUR angehoben -
+  ein Provider-eigenes timeout_lesen (z.B. 3600 für Colibri) und größere
+  Werte bleiben unberührt, fremde Modelle ebenfalls.
+- **Zweites GLM-Ergebnis braucht keinen Programm-Fix:** html-basis endete
+  mit finish_reason "length" bei 8192 Token Budget - das Budget stand im
+  Testskript, Qwirbel selbst setzt für z.ai bewusst KEIN max_tokens
+  (Begründung in der Provider-Definition: mit knappem Budget bleibt der
+  Antwort-Kanal leer, weil alles im Denk-Block aufgeht).
+- **GLM-4.7-Flash (lokal, GGUF): Antwort-Budget ins Modellprofil.** Der
+  spiel-basis-Lauf der Nacht-Matrix endete mit done_reason "length" bei
+  4040 erzeugten Marken (10 724 Zeichen HTML, mitten im Code abgeschnitten)
+  - das Modell denkt 4 000-6 000 Zeichen vor der Antwort und lief dann ins
+  Standard-Budget. Neues Profil "glm-4.7-flash" in backend/modell_profile.py:
+  max_tokens_min 8192 (wirkt nur anhebend). Damit ist der letzte Modell-
+  Fund der Nacht-Matrix in einem Profil - alle übrigen Loop-Fehler rettet
+  der Client selbst (v3.0.1/v3.0.2).
+- **Beweise:** tests/test_cloud_lesefrist.py 7/7 grün (Minimum greift bei
+  glm-5.x je Schreibweise, Provider-Wert 3600 bleibt, fremde Modelle
+  unberührt); tests/test_modell_profile.py 17/17 grün (drittes Profil
+  gemessen); py_compile beider geänderter Dateien ohne Fehler.
+
+## v3.0.3 - Modellprofile aus Messungen (24.10.2026)
+
+- **Pro-Modell-Einstellungen statt globaler Hartcodierung** (Auftrag
+  GEMMA-ERKENNTNISSE AUF ALLE MODELLE). Neue Datei backend/modell_profile.py
+  haelt die GEMESSENEN Abweichungen aus der Nacht-Matrix (12 lokale Modelle,
+  je html_app + spiel, direkt und im Qwirbel-Loop) bereit; ollama_client wendet
+  sie je Aufruf an:
+  - Gemma 4 (26B-A4B, 12B): Hersteller-Sampling temperature 1.0, top_p 0.95,
+    top_k 64 (Ollamas Defaults 0.8/0.9/40 weichen ab).
+  - Qwen3.8-27B: Antwort-Budget mindestens 12288 - das Modell denkt
+    12 704-17 222 Zeichen, das Standard-Budget endete mitten im Denken
+    (done_reason "length", Basis 2x NEIN; mit hoeherem Budget Loop 2x JA).
+  - qwq:32b: gesetzte Timeouts werden nur angehoben (mindestens 900 s) - im
+    Test lief eine Anfrage in den HTTP-Read-Timeout.
+  - Regeln: max_tokens/timeout nur ANHEBEN, nie senken; temperature greift nur,
+    wenn der Aufrufer beim Funktions-Standard (0.7) blieb; top_p/top_k gehen
+    als Zusatz-Optionen in den Ollama-Request. Ein kaputtes Profil crashht
+    keinen Aufruf (try/except, Warnung im Log).
+- **Beweise:** tests/test_modell_profile.py 13/13 gruen (Profil-Match auch bei
+  hf.co/-Namen, Anhebungs-Regeln, unbekannte Modelle bleiben unberuehrt);
+  Live-Lauf gemma-4-12b ueber den echten ollama_client: "Modellprofil aktiv
+  ... {'temperature': 1.0, 'top_p': 0.95, 'top_k': 64}", Antwort in 9,3 s;
+  Bericht workspace/gemma4-experiment/modellprofil_beweis_bericht.md.
+
 ## v3.0.2 - Antwort aus dem Denk-Kanal (gpt-oss-Fix) (24.10.2026)
 
 - **Leerer Antwort-Kanal, Antwort im Denk-Kanal.** Manche Laeufe (bewiesen an
