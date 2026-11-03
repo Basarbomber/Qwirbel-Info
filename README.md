@@ -215,7 +215,7 @@ Versionen, jede in normaler Sprache beschrieben: was sich geaendert hat,
 warum, und was dabei gemessen wurde. Wer wissen will, wie sich das Programm
 entwickelt hat, liest dort.
 
-Aktuelle veroeffentlichte Fassung: **v3.2.1** (03.11.2026).
+Aktuelle veroeffentlichte Fassung: **v3.2.2** (03.11.2026).
 
 ---
 
