@@ -35,6 +35,54 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v3.3 - Modell-Anzeige einstellbar + Mega-Changelog der 3.2-Welle (04.11.2026)
+
+- **Modell-Anzeige frei einstellbar** (Nutzerwunsch 03.11.: „bei vielen
+  Anbietern wie Google oder ZenMux möchte ich komplett einstellen, welche
+  Modelle überhaupt angezeigt werden“). Im Modell-Menü unten im Chat gibt
+  es je Anbieter jetzt „Anzeige einstellen“: jedes Modell lässt sich per
+  Klick ausblenden und wieder einblenden. Nichts wird gelöscht und beim
+  Anbieter abgemeldet – nur die Anzeige ändert sich; das gerade aktive
+  Modell bleibt immer sichtbar. Die Einstellung wirkt in beiden
+  Modell-Chips (Kopf und Chat), bleibt gespeichert und ist jederzeit
+  rücknehmbar. (frontend/index.html: MODELL_AUS + Ereignis
+  qw-modell-anzeige; Babel-Bau und Gegenprobe OK am 03.11.,
+  Abdruck 2a3d6145436d)
+
+### Mega-Changelog: die komplette 3.2-Welle auf einen Blick
+
+Die nächtliche Dauerprobe – 25 echte Agent-Aufgaben je Modell auf immer
+ derselben Maschine – hat zwischen dem 02. und 03.11. sieben weitere
+ Umgebungs-Fallen zutage gefördert. Jede ist gefixt, mit Tests gesichert
+ (Test-Suite 312 → 346 grün) und ausgeliefert. Die Umgebung wurde ehrlicher;
+ davon profitiert jedes Modell:
+
+- **v3.2 – Fallen 20-23:** Kaskaden-Spirale ehrlich beendet (ein Modell
+  schickte 28x denselben Stummel-Block und verbrannte 641 s – ab 3 Blöcken
+  endet der Schritt jetzt mit klarer Ansage statt endlos weiter zu
+  blocken). JSON-Pfade aus r'...'-Raw-Strings werden kanonisch (doppelte
+  Backslashes wanderten sonst in Vergleiche und Ausgaben). ffmpeg erbt
+  nie mehr die stdio-Pipe des MCP-Servers (Untertitel-Aufträge hingen
+  zweimal bis zum 180-s-Timeout). ffmpeg-Video-Encoding bekommt 4 GB
+  Sandbox-Speicher statt 1 GB – 1080x1920-x264 starb vorher an der
+  Speichergrenze und lieferte 0x0-Dateien.
+- **v3.2.1 – Fallen 24-25:** Die Arbeitsproben-Bewertung kennt jetzt auch
+  die eigenen MCP-Werkzeuge – video-editor-Rufe zählen wie ffmpeg (vorher
+  hieß es fälschlich „kein Video-Werkzeug genutzt“, obwohl 12x richtig
+  gerufen wurde). Der Blender-MCP übersetzt Material-Socket-Namen aus
+  Blender-2.x-Trainingsdaten (Specular, Transmission, Subsurface) auf die
+  aktuellen Namen von Blender 4/5.
+- **v3.2.2 – Gratis-Filter und Preise:** Die Modell-Suche kennt die
+  Wörter „gratis“/„free“ und „bezahlt“/„paid“ (Cloud-Modelle mit Preis 0
+  bzw. mit Kosten, kombinierbar mit normalen Suchwörtern), Modelle mit
+  0/0 $ zeigen das Wort „gratis“, und die Preise aus der Sammel-Liste
+  stehen direkt in der Modellzeile.
+- **v3.3 – Anzeige einstellbar** (dieser Eintrag).
+
+Alle Messzahlen stehen offen im Benchmark-Bericht des öffentlichen Repos
+(github.com/Basarbomber/Qwirbel-Info) – 88 Läufe, 23 Modelle, nichts
+schöngerechnet.
+
 ## v3.2.2 - Gratis-Filter im Modell-Menü, Preise je API-Modell (03.11.2026)
 
 - **Paid/Free-Suche im Modell-Menü.** Die Suchfelder oben (Cloud-Chip) und

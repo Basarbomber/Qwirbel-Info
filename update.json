@@ -1,7 +1,7 @@
 {
   "_lies_mich": "Update-Manifest fuer Qwirbel. Das Programm holt diese Datei ueber Updates -> JETZT PRUEFEN. Sie enthaelt NUR Metadaten - kein Programmcode, kein Paket. Seit 23.10.2026: Der Kanal ist die WEBSITE (qwirbel.de/updates/version.json); dieses Repo ist nur noch Ablage/Backup (PRIVAT).",
-  "_naechster_schritt": "v3.2.2 (03.11.2026): Modell-Menue kennt die Suchwoerter gratis/free und bezahlt/paid - 'gratis' zeigt Cloud-Modelle mit Preis 0, 'bezahlt' die mit Kosten, kombinierbar mit normalen Suchwoertern. Modelle mit 0/0 $ zeigen in der Zeile das Wort 'gratis'. Preise aus /modelle/api landen direkt in der Modellzeile, damit Anzeige und Verbrauchs-Sortierung sofort stimmen. Die sha256-Werte stammen aus Qwirbel-v3.2.2-SHA256SUMS.txt.",
-  "version": "3.2.2",
+  "_naechster_schritt": "v3.3 (04.11.2026): Modell-Anzeige frei einstellbar - je Anbieter lassen sich Modelle einzeln ausblenden (nur die Anzeige, nichts wird geloescht; das aktive Modell bleibt immer sichtbar). Dazu der Mega-Changelog der 3.2-Welle: 25 Umgebungs-Fallen der Dauerprobe gefixt, Gratis-/Bezahlt-Suche, Preise je API-Modell. Die sha256-Werte stammen aus Qwirbel-v3.3-SHA256SUMS.txt.",
+  "version": "3.3",
   "kanal": [
     "stabil",
     "test",
@@ -10,41 +10,41 @@
   "freigabe_ab": "",
   "min_version": "",
   "rollout_prozent": 100,
-  "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Normal-v3.2.2.zip",
-  "sha256": "8df2cd37717c5a05d1ca2e1be33fe644ba55b5b7ccc72564c887bc028bbffc4b",
+  "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Normal-v3.3.zip",
+  "sha256": "bfd890ee91c3a2242af009c3c37f8c2b1cb1852bfa753a4886d1fd1c3a4ed524",
   "bezugsquelle": "https://qwirbel.de",
   "changelog_url": "https://qwirbel.de",
-  "hinweise": "v3.2.2 - Gratis-/Bezahlt-Suche im Modell-Menue + Preise je API-Modell. v3.2.1 - Fallen 24-25 der Dauerprobe (Blender-Socket-Namen, faire Arbeitsproben-Bewertung). v3.2 - Fallen 20-23 (Kaskaden-Stopp, Raw-Pfad-Bereinigung, ffmpeg -nostdin, ffmpeg-Sandbox-Speicher). Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
+  "hinweise": "v3.3 - Modell-Anzeige einstellbar + Mega-Changelog der 3.2-Welle (Fallen 20-25, Gratis-Filter, Preise je API-Modell). v3.2.2 - Gratis-/Bezahlt-Suche im Modell-Menue. v3.2.1 - Fallen 24-25 (Blender-Socket-Namen, faire Arbeitsproben-Bewertung). v3.2 - Fallen 20-23 (Kaskaden-Stopp, Raw-Pfad-Bereinigung, ffmpeg -nostdin, ffmpeg-Sandbox-Speicher). Vollstaendiger Verlauf: CHANGELOG.md in diesem Repo. Paket ueber https://qwirbel.de.",
   "pakete": {
     "windows": {
-      "datei": "Qwirbel-Windows-Normal-v3.2.2.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Normal-v3.2.2.zip",
-      "sha256": "8df2cd37717c5a05d1ca2e1be33fe644ba55b5b7ccc72564c887bc028bbffc4b"
+      "datei": "Qwirbel-Windows-Normal-v3.3.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Normal-v3.3.zip",
+      "sha256": "bfd890ee91c3a2242af009c3c37f8c2b1cb1852bfa753a4886d1fd1c3a4ed524"
     },
     "windows_server": {
-      "datei": "Qwirbel-Windows-Server-v3.2.2.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Server-v3.2.2.zip",
-      "sha256": "3993e85e1ba6bcf7f7721f5c49374fcc6c4436956c5d81de6fa798efa83afb11"
+      "datei": "Qwirbel-Windows-Server-v3.3.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Windows-Server-v3.3.zip",
+      "sha256": "42a633119f9de9e6022f6922dc8d613a9ab51bfec47c33d651e40ec29f02581d"
     },
     "linux": {
-      "datei": "Qwirbel-Linux-Normal-v3.2.2.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Normal-v3.2.2.zip",
-      "sha256": "8af38b2713e150efec43706a3a1bf82ec11dae9b0f9f73e664433c81bf48ee25"
+      "datei": "Qwirbel-Linux-Normal-v3.3.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Normal-v3.3.zip",
+      "sha256": "c790f3697c402df8484fc02c3834be60f5ebd99effa83c4cec22edcbb6d91965"
     },
     "linux_server": {
-      "datei": "Qwirbel-Linux-Server-v3.2.2.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Server-v3.2.2.zip",
-      "sha256": "e2fb9f605cbc197cb83364c29af4a8d995b1d44872f7dc6120c805519b1dd64b"
+      "datei": "Qwirbel-Linux-Server-v3.3.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-Linux-Server-v3.3.zip",
+      "sha256": "11f72f86a974aba77f52307ea79c9ccdaed434cbf28d0c667ee4f7bc714b72c8"
     },
     "macos": {
-      "datei": "Qwirbel-macOS-Normal-v3.2.2.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Normal-v3.2.2.zip",
-      "sha256": "0d8d8f2f448d09763f691db9bbf6c2359d986d9b2ab2657db8f881eddfd2cb95"
+      "datei": "Qwirbel-macOS-Normal-v3.3.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Normal-v3.3.zip",
+      "sha256": "9557ed2b595f8d94c1ddb6f5aa911ca0a543155537ed39ee93c6041c6f6a2fc2"
     },
     "macos_server": {
-      "datei": "Qwirbel-macOS-Server-v3.2.2.zip",
-      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Server-v3.2.2.zip",
-      "sha256": "5985725089a59988bdf83af98eaf182e1a1cefcefaa90ac86c303c9779a1db9b"
+      "datei": "Qwirbel-macOS-Server-v3.3.zip",
+      "url": "https://qwirbel.de/downloads/Qwirbel-macOS-Server-v3.3.zip",
+      "sha256": "41e102f322e22e481e29238e923e1007261838b56070a4b2ce84bb8319c1ba3f"
     }
   },
   "_felder": {
