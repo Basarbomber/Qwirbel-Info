@@ -35,6 +35,445 @@ Eintraege darunter sagen, wann es dazugekommen ist.
 
 ---
 
+## v3.2.2 - Gratis-Filter im Modell-Menü, Preise je API-Modell (03.11.2026)
+
+- **Paid/Free-Suche im Modell-Menü.** Die Suchfelder oben (Cloud-Chip) und
+  unten (Anbieter-Chip) kennen jetzt die Wörter „gratis“/„free“ und
+  „bezahlt“/„paid“: „gratis“ zeigt Cloud-Modelle mit Preis 0, „bezahlt“ die
+  mit Kosten – kombinierbar mit normalen Suchwörtern (z. B. „glm gratis“).
+  Modelle mit 0/0 $ zeigen in der Zeile das Wort „gratis“ statt
+  „0 / 0 $ je 1 Mio.“. Wirkt nur bei Cloud-Listen; lokal ändert sich nichts
+  (frontend/index.html: modelleFiltern + modellPreisText).
+- **Preise aus /modelle/api landen in der Modellzeile.** Die Sammel-Liste
+  liefert je Eintrag ihr eigenes preise-Feld {ein, aus} – das Frontend merkt
+  es sich jetzt (MODELL_PREIS), damit Preisanzeige und Verbrauchs-Sortierung
+  auch dann funktionieren, wenn provider.preise die beim Öffnen gemeldeten
+  Modelle noch nicht kennt.
+
+## v3.2.1 - Fallen 24-25: Faire Arbeitsprobe-Bewertung, Blender-Socket-Namen (03.11.2026)
+
+- **Falle 25 - Blender-2.x-Socket-Namen im Material-Code uebersetzt.** Bonsai-Runde 2 mob_*/blender: 6 blender_skript-Aufrufe liefen ok:false, weil kleine Modelle Material-Sockets aus der Blender-2.x-Trainingswelt ansprechen (z.B. Specular/Transmission/Subsurface), die es in Blender 4/5 unter diesen Namen nicht gibt - KeyError, keine .glb-Datei. Der Blender-MCP kennt jetzt eine Namens-Map und hebt solche Zugriffe vor dem Lauf auf die aktuellen Socket-Namen. (backend/mcp_eigene/blender.py, Tests test_falle25_socket_namen.py 16/16)
+- **Falle 24 - Pruefer kannte die eigenen MCP-Werkzeuge nicht.** Bonsai-Runde 2
+  'untertitel': das Modell rief 12x mcp:video-editor_video_untertitel (jeder
+  Ruf starb am Falle-22-Timeout der noch alten Instanz), aber der Aufgaben-
+  Pruefer in scripts/arbeitsprobe.py kannte nur ffmpeg/video_schneiden/befehl/
+  python als "Video-Werkzeug" und wertete die Aufgabe zusaetzlich mit "kein
+  Video-Werkzeug genutzt" falsch ab. MCP-Rufe des Video-Editors (video-editor,
+  video_untertitel) zaehlen jetzt genauso; alle anderen _pruef_*-Stellen
+  gegengecheckt - video (kennt video_schneiden im MCP-Namen), skript, analyse,
+  format916 und gif bewerten ihre Werkzeuge bereits korrekt. Internes
+  Testwerkzeug, kein Kunden-Code betroffen - wirkt ab der naechsten Runde.
+
+## v3.2 - Fallen 20-23: Kaskaden-Spirale, JSON-Pfade, ffmpeg-stdin, ffmpeg-Speicher (03.11.2026)
+
+- **Falle 20 - Kaskaden-Spirale ehrlich beendet.** Nemotron schickte nach
+  zwei bewusst bestaetigten Verkleinerungen dieselbe 16-Zeichen-Stummel-
+  Fassung 28x erneut - jeder Block wurde geblockt, aber Lese-Rufe dazwischen
+  setzten den ohne_aktion-Zaehler zurueck: 58 Zuege, 641 s verbrannt, Aufgabe
+  trotzdem tot. _kaskade_stopp zaehlt je Datei mit: Ab 3 Kaskaden-Bloecken
+  endet der Schritt ehrlich statt endlos weiter zu blocken; die Kaskaden-
+  Meldung nennt die Mindestzeichenzahl fuer vollstaendigen Inhalt.
+  (backend/agent.py, Tests test_schrumpf_kaskade.py)
+- **Falle 21 - JSON-Pfade in r'...'-Raw-Strings kanonisch.** Modell-Code
+  kopiert Pfade aus JSON-Werkzeug-Ausgaben in r'...'-Strings: r'C:\\Users\\...'
+  enthaelt dort ZWEI echte Backslashes je Trenner. Windows' open()
+  normalisiert das oft selbst (Gegenprobe bewiesen), aber der Muell wandert
+  in Vergleiche, Ausgaben und JSON weiter und macht Pfade ungleich.
+  bereinige_raw_pfade() in tools/code_runner.py macht NUR Windows-Laufwerks-
+  pfade in Raw-Strings vor dem python_ausfuehren-Lauf kanonisch - UNC-Pfade,
+  normale Strings ('C:\\' ist ein Escape!) und Linux-Pfade bleiben unberuehrt.
+  (Bonsai-Runde 2 'alltag', Tests test_pfad_doppelbs.py 16/16)
+- **Falle 22 - ffmpeg erbt nie die stdio-Pipe des MCP-Servers.** Der eigene
+  video-editor-MCP liefert seine Ergebnisse ueber stdin/stdout - ffmpeg erbte
+  diese offene Pipe als stdin und wartete auf Eingabe: video_untertitel hing
+  2x bis zum 180-s-Timeout (ffmpeg lebte bei 0 % CPU, Diagnose 12:20),
+  derselbe Aufruf direkt im Prozess lief in 2,8 s durch. Alle ffmpeg/ffprobe-
+  Aufrufe starten jetzt mit -nostdin und stdin=DEVNULL.
+  (backend/mcp_eigene/video_editor.py, Tests test_video_nostdin.py; Suite 346)
+- **Falle 23 - ffmpeg-Video-Encoding bekommt mehr Sandbox-Speicher.** x264-
+  Encoding auf 1080x1920 belegt real 2-4 GB - an der 1024-MB-Standardgrenze
+  der Sandbox starb ffmpeg mit "x264: malloc of size ... failed" und
+  lieferte ein 0x0-Audio-File (Bonsai-Runde 2 'format916' scheiterte so;
+  Reproduktion 13:44: derselbe Befehl lief ausserhalb der Sandbox problemlos).
+  sandbox.fuehre_aus nimmt jetzt speicher_mb je Lauf, shell.py gibt ffmpeg-
+  Befehlen 4096 MB - begrenzt bleibt es trotzdem (Job-Objekt).
+  (backend/tools/sandbox.py + backend/tools/shell.py, Tests
+  test_falle23_ffmpeg_speicher.py)
+
+## v3.1.9 - Falle 19: Leer-Antwort im heissen Cache geknackt (03.11.2026)
+
+- **qwen3.5:9b verlor 34 Zuege an LEERE Antworten - trotz 3-fach-Wiederholung.**
+  Die Runde 09:31 (erste mit allen Fixes 6-18) zeigte die Grenze des
+  Wiederholungs-Wegs: Der heisse KV-Cache (vorn_gleich=98%) macht den
+  Wiederholungs-Versuch DETERMINISTISCH - derselbe Prompt liefert denselben
+  Zusammenbruch, Temperatur allein aendert daran nichts. 13 weitere Zuege
+  starben an "Ollama-Fehler: EOF / XML syntax error" (auch wiederholt).
+  Ab Versuch 2 kommen deshalb zwei gezielte Veraenderungen:
+  (a) JSON-STUPS ans Prompt-ENDE: Der gecachte Praefix bleibt guenstig
+  stehen, aber die Generierung verlaesst den Crash-Pfad. Der Stups nennt
+  das Zielformat (ein JSON-Werkzeugaufruf) und verbietet genau das, woran
+  Ollamas Parser starb (<function>-/<parameter>-XML) bzw. was statt eines
+  Aufrufs kam ("sagen:"-Prosa).
+  (b) DENK-KANAL OEFFNEN: Modelle mit erzwungenem Denken-aus schicken die
+  62-90 gerechneten Marken gelegentlich komplett in den abgeschalteten
+  Denk-Kanal (0 Zeichen Antwort). Der Wiederholungs-Versuch erlaubt
+  think=True - die Antwort-aus-dem-Denken-Rettung (Falle 12) greift dann.
+- Wirkung: qwen3.5-Runde 09:31 = 1/25 mit tiktok als erstem BESTANDENEN
+  tiktok-Lauf ueberhaupt; die naechste Runde misst Falle 19.
+- Tests: backend\tests\test_ollama_retry.py erweitert (Stups/Think am
+  Wiederholungs-Versuch), Suite 312 passed.
+
+## v3.1.8 - Falle 18: Video-lesen nennt den Bearbeitungs-Weg (03.11.2026)
+
+- **datei_lesen auf Videos/Bilder/3D-Dateien sagt jetzt, Womit man sie bearbeitet.**
+  Nemotron las urlaub.mp4 in der Arbeitsprobe 14x: jede Antwort nannte nur
+  "Ansehen: video_ansehen", kein Wort davon, wie man schneidet, untertitelt
+  oder auf 9:16 skaliert - die Aufgabe starb im Leseloop. Die Binaer-Antwort
+  nennt jetzt den echten Weg: Video-Editor-MCP (video_schneiden,
+  video_format, video_untertitel, video_gif, video_ton), Blender-MCP fuer
+  .glb/.blend, PIL/bild_hochskalieren fuer Bilder - und sagt klar, dass
+  erneutes datei_lesen nichts bringt.
+- Tests: backend\tests\test_binaer_weg_video.py (10 Tests, alle gruen).
+
+## v3.1.7 - Falle 16 + 17: Ordner-Ziel erkannt, Blender-Code kompakt (03.11.2026)
+
+- **Ordner statt Datei (nemotron, bis 8 Versuche je Aufgabe):** Schrieb das
+  Modell eine Datei auf einen Ordner-Pfad (…\mob_skorpion ohne Dateinamen),
+  kam von Windows nur „[Errno 13] Permission denied“ - damit konnte das Modell
+  nichts anfangen und probierte denselben Pfad immer wieder. datei_schreiben
+  erkennt Ordner-Ziele jetzt selbst und nennt einen korrekten Beispielpfad
+  („…\mob_skorpion\plan.py“). Tests in backend\tests\test_ordner_als_ziel.py.
+- **Blender-Code an der Laengengrenze (nemotron, 7 Zuege verloren):** Das Modell
+  rief blender_skript (der 3D-Wegweiser wirkt!) - schrieb aber bpy-Listen
+  laenger als die Antwort-Grenze: jeder Zug wurde ABGESCHNITTEN, kein Modell
+  wurde je gebaut. Der 3D-Hinweis verlangt jetzt kurzen Code (rund 4500
+  Zeichen) mit dem teil()-Helfer des Blender-MCP und Schleifen statt langer
+  bpy.ops-Listen. Tests in backend\tests\test_dreid_kompakt.py, Gesamtsuite
+  296 passed.
+
+## v3.1.6 - Falle 14: Plan-Zettel durchgewunken statt gebaut (03.11.2026)
+
+- **Plan-Zettel statt Bau (bonsai, Website-Aufgabe nach 67 s "fertig"):**
+  Ein Modell schrieb beim Auftrag "baue mir eine Website" als einzige Datei
+  einen Plan-Zettel (Aufgabenliste/Struktur) und meldete den Auftrag fertig -
+  der Abschluss-Check winkte das durch. Er vergleicht bei Bau-Auftraegen
+  jetzt die geschriebenen Dateien mit dem Auftrag: Ist das einzige Ergebnis
+  eine Plan-Datei (AUFTRAEGE.md, ROADMAP.md, Plaene/ToDos ohne Umsetzung),
+  weist der Agent das zurueck und nennt das echte Ziel (z. B. index.html).
+  Betrifft auch 3D-Auftraege (nur ROADMAP.md, keine .glb-Datei). Tests in
+  backend\tests\test_plan_statt_bau.py, Gesamtsuite 274 passed, Deploy
+  06:29 (Backup agent.py.vor_falle14_20261103).
+- **Bild-Umrechnung statt Bild malen (nemotron, web.jpg-Endlosschleife):**
+  Beim Auftrag „foto.jpg auf Web-Groesse verkleinern“ rief das Modell fuenfmal
+  datei_schreiben mit Beschreibungs-Text auf web.jpg (jedes Mal abgeschnitten,
+  vom Binaer-Gate geblockt) - gemalt wurde nie etwas. Der Werkzeug-Wegweiser
+  fuer Bilder nennt jetzt ZUERST die Umrechnung der VORHANDENEN Vorlage
+  (python_ausfuehren mit PIL oder video_schneiden/skalieren) und erst bei
+  fehlender Vorlage die Neuerzeugung (generation_starten). Tests in
+  backend\tests\test_binaer_weg_bild.py, Gesamtsuite 280 passed, Deploy
+  07:36 (Backup agent.py.vor_falle15_20261103) - wirkt ab der naechsten
+  Proben-Instanz.
+
+## v3.1.5 - Dauerprobe-Nacht: 13 Modell-Fallen gefixt + Endlos-Testkette (03.11.2026)
+
+- **Endlos-Testkette (Dauerprobe):** Neue Skript-Kette testet lokale Modelle
+  (bonsai-2, nemotron-30b, qwen3.5) rund um die Uhr automatisch - je Runde 25
+  Aufgaben, danach Modell-Vergleich, dann das nächste Modell, wieder von vorn.
+  Sie erkennt selbst, wenn du spielst (Roblox/Valheim/Rocket League), und wartet
+  auf deine Pause. Stop per Datei arbeitsprobe_ergebnisse\STOP_DAUERPROBE.txt.
+- **Nur-Denken-Schleife (qwen3.5, 38 tote Zuege):** Antwortete ein Modell nur
+  mit Gedanken ohne Entscheidung, lief die Aufgabe ins Leere. Der Parser
+  rettet jetzt Werkzeug-Aufrufe aus dem Denkblock, sonst ermahnt der Agent
+  gezielt ("NACH dem Denken die Entscheidung").
+- **Ollama-Abstuerze mitten im Antwort-Strom (EOF/XML-Fehler):** Bisher warf
+  ein fluechtiger Fehler die halbe Antwort weg - ganze Aufgaben starben ohne
+  einen einzigen Werkzeug-Ruf. Schon gesammelte Antwort-Teile werden jetzt
+  geliefert, fluechtige Fehler bis zu 2x wiederholt, und Leer-Antworten (alles
+  steckte nur im Denk-Kanal) frisch bis zu 3x neu angefragt.
+- **Abgeschnittene Schreib-Aufrufe:** Wurde eine grosse Datei an der Laengen-
+  grenze abgeschnitten, war bisher ALLES verloren und das Modell fing bei 0 an
+  (Zug um Zug verloren). Der gueltige Anfang wird jetzt als Teil 1 gesichert -
+  das Modell vollendet per datei_ergaenzen.
+- **Binaer-Gate:** Modelle schrieben Beschreibungs-TEXTE in .glb/.png/.mp4-
+  Dateien (8 Aufgaben allein dadurch tot). Solche Schreib-Versuche werden
+  geblockt und auf die echten Werkzeuge verwiesen (Blender-MCP, Generierung).
+- **Schrumpf-Kaskade + Bestands-Schutz:** Nach EINER Bestaetigung durfte ein
+  Modell Dateien immer weiter schrumpfen (rechner.py 1034 -> 121 Zeilen
+  Stummel). Die zweite Verkleinerung je Datei blockt jetzt hart; der Schutz
+  misst die Platten-Laenge vor dem ersten Zugriff, damit Bestaende nie
+  wegfallen.
+- **3D- und Video-Wegweiser im Prompt:** Bei .glb/.blend-Aufgaben pip-
+  installierten oder googelten alle Modelle, statt den verbundenen Blender-MCP
+  zu nutzen (0 blender_skript-Rufe in 3 Naechten). Der Prompt nennt jetzt bei
+  3D-Schritten den echten Weg (blender_skript/speichern_als, blender_vorschau,
+  mc_modell_pruefen) - ebenso bei Video-Aufgaben (Untertitel/9:16/GIF) den
+  Video-Editor-MCP statt roher ffmpeg-Befehle (Exit 127/2).
+- **Spiel-Erkennung der Testkette repariert:** tasklist crashte an Umlauten
+  (CP1252) und lief im Hintergrund-Prozess ins Leere - die Kette startete
+  Proben ins laufende Spiel. Jetzt via Get-Process (System32-voller Pfad), der
+  Spiel-Check wird mitgeloggt.
+- **MCP-Knopf nie wirkungslos:** Ist "MCP-Knopf immer zeigen" an, bleibt der
+  Chip aktiv - auch bei Cloud-Modellen ueber der Grenze.
+- **Backend-Neustartreisst keine Proben mehr mit:** Ein Update-Neustart nahm
+  laufende Test-Proben mit (6,5 h Messung unsichtbar verloren). Die Kette
+  wartet jetzt auf vorgemerkte Neustarts.
+- **Erste Wirkung:** bonsai-2 bestand in der Vergleichsnacht die Kern-Aufgaben
+  video + verstaendnis (vorher 1/8) - alle weiteren FAILs messen bereits
+  gefixte Alt-Fallen; die naechsten Runden laufen mit allen 13 Fixes.
+
+## v3.1.4 - Bild-Paste aus Lightshot + Batch-Modus wird wirklich geladen (02.11.2026)
+
+- **Bild-Einfügen aus Lightshot & Co. (02.11. 00:12):** Der Paste-Handler im
+  Chat kannte nur clipboardData.items. Externe Screenshot-Tools legen ein
+  Bild anders ab - jetzt gibt es drei weitere Wege, bevor aufgegeben wird:
+  a) clipboardData.files direkt, b) `<img src="data:image/...;base64,...">`
+  im text/html, c) file:///Pfad als Anhang-Chip ohne Upload. Bilder vom PC
+  gingen schon; der Fix betrifft nur die Zwischenablage externer Tools.
+- **Batch-Modus wird wirklich geladen:** Diagnose (scripts/batch_lage_pruefen.py)
+  zeigte als Ursache: Backend-Prozesse vom 01.11. 14:37 waren aelter als der
+  Batch-Deploy 18:38 - der neue Code lief also noch gar nicht.
+  scripts/backend_frisch_machen.py merkt den Neustart per /update/restart
+  (wenn_frei) vor; er feuert sobald die laufenden Aufgaben fertig sind,
+  ohne etwas abzubrechen.
+
+## v3.1.3 - Arbeitsprobe wirklich lokal + Werkzeug-Namen toleranter (01.11.2026)
+
+- **Arbeitsprobe wirklich lokal:** Ohne `--anbieter` wird die Wegwerf-Instanz
+  jetzt fest auf Ollama gepinnt. Vorher griff die Cloud-Weiche still - lokale
+  Modelle (bonsai-2, nemotron) liefen über den Cloud-Anbieter und starben mit
+  HTTP 402, obwohl Ollama da war. Cloud-Vergleiche weiter nur mit `--anbieter`
+  und `--cloud-mit-meinem-schluessel`.
+- **Lizenz-Falle der Wegwerf-Instanz beseitigt:** Die Probe kopiert die eigene
+  config.json - stand darin `lizenz_pflicht: true`, antwortete das Lizenz-Gate
+  der Wegwerf-Instanz auf JEDEN Pfad mit HTTP 402 (sah aus wie ein
+  Zahlungsfehler, war aber das eigene Gate ohne lizenz.bin). Die Probe-Instanz
+  ist keine verkaufte Kopie: die Pflicht wird jetzt ausgeschaltet.
+- **Werkzeug-Argumente toleranter (agent.py):** Modelle, die `datei_schreiben`
+  mit `filename`/`file_path` statt `pfad` schicken (z.B.
+  ternary-nemotron-30b), landen jetzt richtig - vorher ging der Schreib-Zug
+  daneben und die Datei fehlte.
+
+## v3.1.2 - Batch-Modus: starke Cloud-Modelle arbeiten blockweise (01.11.2026)
+
+- **Was du davon hast:** Starke Cloud-Modelle (GLM 5.3, Gemini Flash, Agent Pi
+  und vergleichbare) arbeiten im Work-/Code-Tab jetzt in großen Blöcken statt
+  zeilenweise: erst den kompletten Kontext parallel laden (bis 10 Dateien auf
+  einmal, Suchen/Lesen gebündelt in einem Zug), dann ein Gesamtplan, dann alle
+  Änderungen in einem Durchgang schreiben, am Ende einmal gesammelt prüfen.
+  Große Aufgaben brauchen damit deutlich weniger Züge und bleiben über das
+  ganze Projekt im roten Faden. Lokale Modelle und Mini-Cloud (nano, mini,
+  haiku, lite, tiny ...) bleiben beim zeilenweisen Vorgehen - dort ist das das
+  bewährte Verfahren.
+- **Einstellbar:** Einstellungen → Agent: Batch-Modus „auto“ (Standard) /
+  „an“ / „aus“, plus Feinsteuerung pro Modell (z. B. „glm-5.3:aus,
+  agent-pi:an“) - der längste Treffer gewinnt, „flash-lite“ schlägt „flash“.
+  Ein Segment-Vergleich sorgt dafür, dass „gemini“ nicht wegen der
+  Buchstabenfolge „mini“ fälschlich als klein gilt.
+- **MCP-Knopf nicht mehr grundlos grau:** War „MCP-Knopf immer zeigen“ an,
+  wurde der Chip in der Eingabezeile trotzdem grau dargestellt, sobald das
+  Cloud-Modell über der Modellgrenze lag. Jetzt: Einstellung an = Knopf nie
+  wirkungslos/grau. Grau bleibt nur bei ausgeschalteter Einstellung UND
+  Modell über der Grenze UND keiner Auswahl.
+- **Unter der Haube:** Eine Stelle entscheidet alles (backend/batch_modus.py:
+  auto/an/aus plus Pro-Modell-Override); der Prompt-Block hängt cache-stabil
+  VOR dem Zugverlauf, damit der Kontext-Cache intakt bleibt. 19 Deploy- und
+  Integrationsprüfungen gegen die laufende Installation (0 FAIL) plus echte
+  Probeaufgabe im Batch-Modus.
+
+---
+
+## v3.1.1 - Bild-Erkennung, Agenten-Briefing und Join-Ladezeit (31.10.2026)
+
+- **Was du davon hast:** Der Join auf den Minecraft-Server (127–138 s) ist
+  jetzt vermessen statt geraten: 125–138 s davon entfallen auf die Pack- und
+  Chunk-Phase. Der PackGuard-Download ist nachweislich NICHT die Bremse –
+  8,89 MB in 0,07 s über localhost (128 MB/s, 0,05 % der Join-Zeit). Die
+  Bremse ist die Chunk-Arbeit: Sichtweite 12 (625 Chunks) kostet 91,6 s
+  Kaltgenerierung (MSPT-Spitze 13,2), Sichtweite 6 (169 Chunks) nur 12,6 s –
+  gut siebenmal schneller. Empfehlung: Sichtweite 8 als Mittelweg; der
+  PackGuard kann anbleiben.
+- **Nur ein Bild geschickt? Kein Riesen-Projekt mehr.** Ein Screenshot oder
+  eine einzelne Datei im Chat hat die Projekt-Erkennung vorher auf einen
+  großen Ordner aus dem Verlauf gezogen – aus einem kurzen «guck mal» wurde
+  ein Riesen-Auftrag mit vollem Projekt-Befund. Jetzt gilt: Anhänge ohne
+  echten Projektpfad im Auftrag sind Material und legen das Projekt nicht
+  mehr fest (Gegenprobe mit drei Fällen grün: nur Bild, echter Pfad im
+  Text, Ordner-Anhang).
+- **Agenten mit richtigem Kontext losgeschickt.** Ein Auftrag kann jetzt ein
+  Briefing-Paket mitgeben (Ordnerpfad oder briefings/<ID>): das Backend hängt
+  die 00–08-Dateien automatisch an den Helfer-Text. Einstellungen → API ist
+  in Kategorien unterteilt (Chat-Modelle / Sprache & Medien / lokale
+  Motoren) mit Suchfeld statt Endlos-Scrollen; Tripo ist als Anbieter drin.
+- **Messwerkzeug:** server_ladezeit_messung.py (Modi --letzte / --jetzt /
+  --wache / --selbsttest) schreibt pro Join eine Zeile in
+  logs/ladezeit_messung.log und .jsonl: Sicht-/Sim-Distanz, Chunk-Zahlen,
+  TPS, Pack-Download und MSPT.
+- **Neue Suite:** tests/test_packguard_suite.py, 15 Checks: (A) PackGuard-
+  Schalter und Chunk-Regler über das A/B-Werkzeug (Selbsttest; im
+  Kundenpaket bewusst ohne echten Server), (B) Minecraft-Modell-Texturen
+  (fehlende Textur, uv-Bereich, Raum-Check, bbmodel-Version), (C) Cloud-
+  Modell-Menü an FAKE-Anbietern ohne jeden Netzkontakt. Gegenprobe bewiesen:
+  ein absichtlich falscher Erwartungswert schlägt rot – als EIGENE Suite
+  tests/test_packguard_suite_gegenprobe.py: jede absichtlich falsche
+  Erwartung muss scheitern, korrekte Kontroll-Erwartungen müssen durchgehen
+  (sonst wäre der Scheiderns-Zähler blind und bewiese nichts).
+- **Ehrlich dazu:** Ein voller Join ohne PackGuard wurde nicht gemessen –
+  dafür müsste ein echter Client joinen. Die Entlastung des PackGuards
+  stützt sich auf die Download-Messung (0,05 % der Join-Zeit) und die
+  Kaltmessung der Chunk-Generierung.
+
+---
+
+## v3.1.0 - Update-Kanal repariert: gleicher Stand wie 3.0.10, Nummer wegen Sortierfehler übersprungen (29.10.2026)
+
+- **Was passiert ist:** Nach dem 3.0.10-Release blieb das automatische Update
+  stumm – installierte Qwirbels (3.0.9 und älter) haben das Angebot nie
+  gesehen. Die Pakete selbst lagen bereit: Alle neun Downloads lieferten die
+  3.0.10-Dateien (Status 200, Prüfsummen stimmten), die Changelog-Seite zeigte
+  3.0.10 ganz oben. Nur der Update-Zeiger (version.json) blieb auf 3.0.9
+  stehen – über 40 Minuten und mehrere Re-Uploads hinweg.
+- **Die Ursache:** Der Website-Server baut den Update-Zeiger automatisch aus
+  dem Download-Ordner und vergleicht Versionsnummern dabei als reinen TEXT.
+  Alphabetisch ist „3.0.10“ KLEINER als „3.0.9“ (das Zeichen '1' kommt vor
+  '9') – der Server hielt 3.0.9 für die neuere Version und hat den Zeiger
+  nie umgestellt. Changelog-Importe und erneutes Hochladen ändern daran
+  nichts (29.10. nachts mehrfach geprüft: Klecks-Slot, normaler Slot, direkt
+  über qwirbel.de – der Zeiger rührte sich nicht).
+- **Der Ausweg:** „3.1.0“ ist alphabetisch UND versionsmäßig größer als
+  „3.0.9“ – damit stellt der Server den Zeiger um und das Update kommt bei
+  allen Installationen an. Inhaltlich ist 3.1.0 identisch mit 3.0.10:
+  MCP-Werkzeugliste einmal bauen und byte-identisch im Kontext halten,
+  Bonsai 2 27B mit vollem 262K-Kontext, 8-GB-Klasse im Modell-Tab. Kein
+  weiterer Code-Unterschied außer der Versionsnummer.
+- **Fürs Protokoll (Website-Server):** Beim Vergleich von Versionsnummern die
+  Zahlen je Block vergleichen (3.0.10 > 3.0.9), nicht die Zeichenketten –
+  sonst fällt jede künftige zweistellige Patch-Nummer wieder unter 3.0.9
+  zurück.
+
+## v3.0.10 - MCP-Werkzeugliste EINMAL bauen, byte-identisch halten; Bonsai 2 27B + 8-GB-Klasse im Modell-Tab (28.10.2026)
+
+- **Der Befund (Nutzer 28.10. abends):** Im Cache-Zaehler standen 5,5 Millionen
+  Marken fuer MCP-Tools - „jeder prompt losgeschickt, immer wieder MCP neu
+  reinladen". Ursache: `tools_doku()` (tools/mcp_client.py) hat die Werkzeug-
+  Doku bei JEDEM Aufruf neu serialisiert - Aufgabenstart, Zug-Prompts, Marken-
+  Zaehler - obwohl der Inhalt derselbe blieb. Fuer Praefix-Caches (Cloud) und
+  Ollamas KV-Cache zaehlt aber byte-identischer Text: einmal gebaut, immer
+  wieder geliefert.
+- **Der Fix:** `tools_doku()` hat einen Cache vor der Tuer bekommen
+  (`_doku_cache`): Die Werkzeugliste wird zu einem Schluessel serialisiert
+  (Name + Beschreibung + Schema je Werkzeug, plus Deckelung). Aendert sich
+  nichts, kommt EXAKT derselbe String zurueck - lokal wie Cloud, dieselbe
+  Code-Stelle. Aendert sich die Liste (Server an/aus, `mcp_holen`), faellt der
+  Eintrag von selbst raus und wird neu gebaut. Deckel: 8 Eintraege, dann leer.
+- **Der Block bleibt, wo er hingehoert:** Die MCP-Doku steht im System-Prompt
+  (`_system_mit_doku`), vor dem staendig wachsenden Verlauf - und der Zug-
+  Prompt enthaelt KEINEN MCP-Block mehr. Native-Werkzeuge-Anbieter (ZenMux)
+  bekommen die Schemas einmalig statt Text-Beispielen, ebenfalls aus dem
+  stabilen System-Teil. Nichts wird doppelt mitgeschickt.
+- **Regressionsschutz:** `tests/test_mcp_doku_cache.py` - Cache-Hit ist
+  byte-identisch (`is`-Vergleich), geaenderte Liste/Schema/Deckelung erzeugt
+  einen NEUEN Schluessel (Gegenprobe), leere Liste bleibt leer, Deckel
+  haelt 8 Eintraege.
+- **Bonsai 2 27B an Bord (prism-ml, 28.10. abends):** ternäres 27B-Reasoning
+  in ~7,6 GB statt 20+ GB (Basis Qwen3.8-27B, 262K nativer Kontext). Profil
+  „bonsai-2“ in modell_profile.py: Hersteller-Sampling (temperature 1.0,
+  top_p 0.95, top_k 20), Denk-Budget 16 384 gegen leere/abgeschnittene
+  Antworten (Known Issues), ctx_min 262 144 – Ollama lud das Modell mit
+  Lade-Default 4096 (Beweis ollama ps), das Modelfile
+  (C:/Users/Nutzer/.ollama/gguf/Modelfile.bonsai) baut es mit vollem Kontext
+  neu. Beweise: Testfrage korrekt auf Deutsch beantwortet (Exit 0 nach 15 s),
+  tests/test_modell_profile.py komplett grün.
+- **8-GB-Klasse im Modell-Tab statt 20-GB-Klötzten:** EMPFOHLENE_CHAT in
+  backend/tools/hf_bibliothek.py jetzt mit bonsai-2 27b und Ternary Nemotron
+  30B-A3B samt echten Stufen-Größen – die Empfehlung passt damit auf die
+  16-GB-Karte. Quelle UND AppData-Live-Kopie gepatcht.
+
+## v3.0.9 - Nemotron 3.5 Lightning: 256K-Kontext statt 16k-Boden, Hersteller-Sampling gegen Wiederholungen (28.10.2026)
+
+- **Warum sich das Modell wiederholte und „schwierig dachte“:** ternary-nemotron-30b-a3b (Nemotron 3.5 Lightning 30B-A3B, Mamba-2-Hybrid) meldet keine klassischen KV-Zahlen - agent._ctx_gerechnet() blieb 0, der Agent-Loop lief auf dem 16.384er-Boden (gemessen: _agent_ctx = 16384). Das Modell sah eigene Züge nicht mehr -> Wiederholungen und stockendes Denken. Research: boro64-GGUF nennt 262 144 nativen Kontext (3/3 Needle bis 341K), NVIDIA selbst nutzt auf einer H100 256K.
+- **Neues ctx_min im Modellprofil (modell_profile.py + agent._agent_ctx):** wie temperature/max_tokens/timeout wirkt jetzt auch ein Mindest-Kontextfenster je Modell - nur anhebend, immer unter des Nutzers Deckeln (agent_num_ctx_max, 1-Mio-Hartlimit). Die Profile „nemotron-3.5-lightning“ und „ternary-nemotron“ heben auf 262 144 an. Bewiesen: _agent_ctx(ternary-nemotron-30b-a3b) = 262144; Live-Lauf über Ollama mit num_ctx 262144 lud in 6,2 s und antwortete korrekt (done_reason stop).
+- **Hersteller-Sampling (NVIDIA Model Card: Temperature 1.0, Top_P 0.95):** wie bei Gemma 4 - die höhere Temperatur bricht Wiederholungsschleifen auf. Kein top_k/max_tokens/timeout: nichts gemessen, nichts geraten.
+- **Beweise:** tests/test_modell_profile.py 24/24 grün (drei neue Prüfungen: Profil in beiden Schreibweisen, ctx_min hebt an, bleibt unter den Deckeln); Quelle (Desktop) UND AppData-Live-Kopie gepatcht.
+
+## v3.0.8 - Handy: Mehr-Menü über der Eingabe, Platz-Knöpfe im Raster, Zahnrad-Menü sichtbar; Tabs überall lösbar, Free-API-Chips (27./28.10.2026)
+
+- **Mehr-Menü liegt über der Eingabebox (Handy):** Beim Ausklappen des „Mehr“-Menüs
+  ragte die Promptbox (z 1000) noch über das Blatt (z 906) - die untere Hälfte des
+  Menüs war verdeckt, der Stift „Leiste einstellen“ und die Platz-Knöpfe waren
+  nicht zu sehen. Sheet liegt jetzt mit z 1100 (Dimmer 1090) über der Eingabezone.
+  Gemessen (Playwright, 375 px): alle drei Prüfpunkte landen im Sheet, keines
+  mehr in der Eingabebox.
+- **Platz-Knöpfe gerade und gleich groß (Stift-Modus):** Die Plätze 1-4 waren
+  verschieden breit (94-146 px) und Platz 4 brach versetzt in die zweite Zeile.
+  Jetzt ein Raster mit gleichen Zellen (je 82 px, alles in EINER Reihe bei y 379),
+  Labels kürzen sich mit Auslassungspunkten statt umzubrechen.
+- **Zahnrad „Knöpfe ein-/ausblenden“ kommt ins Bild (Handy):** Das Menü am
+  Zahnrad-Knopf in der Promptbox klappte mit position:absolute INNERHALB der
+  Chatzeile auf – Container-Containment und der 1000er-Stacking-Level der
+  Eingabebox schnitten es ab bzw. erdrückten es, nach dem Antippen erschien
+  gar nichts. Es hängt jetzt wie alle Chip-Menüs per Portal an <body> (fixed,
+  z 5901, Position über fixedMenuePos hart ins Fenster geklemmt, rechts am
+  Knopf ausgerichtet). Gemessen (Playwright, 375 px): Menü 214×359 px bei
+  x8/y302, vollständig im Bild, Klickprobe trifft das Menü, Elter ist <body>.
+- **Tabs überall lösen (Rechtsklick auf der GANZEN Fläche, 28.10. 02:55):** Ein
+   unter die obere Leiste geschobener Tab ließ sich dort nicht mehr lösen. Der
+   Rechtsklick auf der ganzen Tab-Fläche öffnet jetzt das Menü (Lösen/
+   Ursprungsposition zurück), nicht nur der Kopf-Streifen; Felder, Schalter,
+   Links und Medien im Panel behalten ihr eigenes natives Menü, am Kopf
+   öffnet weiterhin genau eins. Regressionstests:
+   tests/test_tab_andock_ganzflaeche.py (Quelle + alle Deploy-Kopien).
+- **Free-API-Chips im Modelle-Tab (28.10. 02:45):** Katalog kostenloser
+   API-Anbieter (u. a. Pollinations ganz ohne Key, Groq, weitere) als Chips
+   mit Detailkarte; ein Klick legt den Anbieter an. Eine Stelle der Wahrheit:
+   backend/tools/free_api_katalog.py, Routen GET /api/free_models und
+   POST /api/free_models/<id>/anlegen. TestSuite (Katalog, Backend-Route in
+   Quelle UND AppData, Frontend in allen drei app.js-Kopien):
+   tests/test_free_api_chips.py.
+
+## v3.0.7 - Promptbox geht wieder, Kopfleiste hält oben (27.10.2026)
+
+- **Promptbox/Chat repariert (3.0.6-Killer):** In 3.0.6 brach JEDER Chat-Aufruf
+  ab (/chat las `kanal`, aber ChatRequest hatte kein solches Feld). Senden im
+  Chat-Tab funktioniert wieder - getestet mit Direktlauf und Testfall.
+- **Settings-Knopf bleibt an seinem Platz:** Das Ordnermenü rechts verschiebt
+  oder verdeckt den Zahnrad-/Settings-Knopf nicht mehr - die Kopfzeile
+  (Kopfleiste) sitzt jetzt fix über dem Fensterinhalt.
+- **Knöpfe oben topmost:** Schwebende Fenster (Aufgaben, Schwarm, Qwirbeln)
+  rutschen jetzt UNTER die obere Knopfleiste, statt sie zu verdecken - egal
+  wohin man sie zieht.
+- **Kontext-Deckel 1 Million Tokens:** Kein lokales Modell (Ollama UND Klecks)
+  bekommt ein größeres Kontextfenster mehr - hart gedeckelt an EINER Stelle im
+  Code. Kein Cache-/Kontext-Anwachsen über 1 Mio. Tokens hinaus.
+- **Schnellerer Start:** Die gemeinsame Modell-/Engine-Liste (Ollama, Klecks,
+  Anbieter) wird kurz zwischengespeichert - der Start blockiert nicht mehr auf
+  jede einzelne Modell-Abfrage (Klecks-Start-Beschleunigung).
+
+## v3.0.6 - Läuft auch ohne Grafikkarte, Installations-Fixes (26.10.2026)
+
+- **Fragefenster auf dem Handy zu groß** und blockierte das UI: Die panels sind
+  jetzt auf min(92vw, 540px) begrenzt, max. 82-84 dvh hoch, mit Scrollen im
+  Inneren; Knöpfe stapeln auf schmalen Bildschirmen untereinander.
+- **Installation auf fremden PCs ging nicht** (Microsoft Edge WebView konnte
+  nicht auf den Profil-Ordner zugreifen): window.py räumte mit einem festen
+  Benutzer-Pfad auf, den es auf anderen Rechnern nicht gibt. Jetzt wird der
+  Ordner aus LOCALAPPDATA berechnet und fehlende Ordner automatisch angelegt.
+- **Setup startet automatisch als Administrator** (requireAdministrator im
+  Manifest) - kein Rechtsklick mehr nötig.
+- **Ohne dedizierte Grafikkarte kein Ausschluss mehr**: Rechner mit nur
+  eingebauter Grafik (Intel UHD & Co.) laufen im CPU-Modus weiter, statt bei
+  der GPU-Suche hängen zu bleiben. Modell-Suche und Ollama-Start funktionieren
+  auch ohne eigene Karte (langsamer, aber komplett).
+- **Verschwundener Prompt im Chat**: Gesendeter Text wird jetzt vor dem
+  Leeren gemerkt. Bricht der Lauf ab oder ist das Backend weg, steht der Text
+  sofort wieder in der Box (oder per Strg+Z bei leerem Feld).
+
+## v3.0.5 - Sehen als Schicht: 8 Bild-Werkzeuge für jedes Modell (25.10.2026)
+
+- **Acht neue Bild-Werkzeuge** (backend/tools/bild_werkzeuge.py, neu): `bild_info` (Größe, Format, EXIF, Datei-Hash), `bild_zoom` mit Kacheln und Überlappung (kleine Details wie Löcher oder Beschriftungen werden sichtbar), `bild_raster` + `bild_annotation` (Koordinaten-Gitter, Boxen, Pfeile, Beschriftungen - Modell und Mensch meinen dieselbe Stelle), `bild_vergleich` (Vorher/Nachher nebeneinander, Pixel-Differenz, Zahl der veränderten Pixel), `bild_ocr` (Text im Bild; braucht die Tesseract-Engine, sonst ehrliche Meldung), `bild_tiefe` (Tiefenkarte aus Foto/Screenshot; braucht das lokale Tiefenmodell). Jedes Ergebnis wird gecacht (Hash der Datei + Werkzeug + Parameter) - nichts wird doppelt gerechnet.
+- **Sehen ist eine Schicht, kein Modell mehr** (tools/vision.py, tools/sehen.py ausgebaut): Ein Modell MIT Bild-Fähigkeit bekommt Bilder direkt hinein. Ein Modell OHNE (GLM-5.3, gpt-oss und andere Text-Modelle) bekommt automatisch eine strukturierte Beschreibung vom Seh-Modell - lokal (Ollama) oder vom selben Cloud-Anbieter, wenn er eines hat. Damit versteht jetzt JEDE Modellbasis Bilder und Videos: Map prüfen, Videos analysieren, Vorher/Nachher vergleichen.
+- **Seh-Failover repariert und live bewiesen (Roblox-Test, 25.10. 03:06):** Fällt der Cloud-Blick aus (z.B. HTTP 400 bei Text-only-Modellen), sieht das lokale Modell nach - jetzt in richtiger Reihenfolge: 1. ein bereits GELADENES sehendes Modell (0 Ladezeit), 2. sonst das KLEINSTE sehende Modell (lädt in Sekunden). Vorher lud der Failover das RANG-beste Seh-Modell KALT (Qwen3.8-27B, rund 10 GB) - allein das Laden überstieg die Frist und der Blick schlug fehl, während ein sehendes Modell schon in der Grafikkarte lag. Auf einem 10-GB-Laptop darf ein Notfall-Blick niemals ein 12-GB-Modell nachladen.
+- **Klare Meldung statt stiller Abbruch**, wenn ein Bild leer oder unlesbar ist.
+
 ## v3.0.4 - Cloud-Lese-Frist für lange Denker, GLM-5 (24.10.2026)
 
 - **Letzter offener Nacht-Matrix-Punkt behoben: GLM-5.3 (z.ai) starb in
@@ -187,7 +626,7 @@ und das endgueltige Ende des Token-Budgets.
 
 ## v2.9.100 - Datei-Karten im Chat: ansehen, fragen, starten (18.10.2026 17:00)
 
-Falko 18.10. 15:50: Dateien im Chat - Linksklick zeigt den Quelltext,
+Nutzer 18.10. 15:50: Dateien im Chat - Linksklick zeigt den Quelltext,
 je Typ 3 Optionen, kleine Textbox als KI-Prompt mit Datei-Bezug,
 Programm-Start fuer Roblox/Unity/Blender und localhost-Links, Rechtsklick
 mit denselben Optionen.
@@ -225,15 +664,15 @@ mit denselben Optionen.
 - **Zwischennachrichten wirken sichtbar.** Jede Eingabe waehrend der
   Arbeit zaehlt als NEU-Badge im Aufgaben-Fenster und landet ungelesen im
   naechsten Schritt-Prompt (`_phasen_block`), bis der Lauf sie geholt hat.
-- **Aufgaben-Fenster (Falko 16.10. 22:47):** Balken mit Prozent je Chat,
+- **Aufgaben-Fenster (Nutzer 16.10. 22:47):** Balken mit Prozent je Chat,
   Pfeil an JEDEM Schritt oeffnet den internen KI-Prompt (bis 4000 Zeichen
   - was das Modell wirklich vor sich hat), Schrift graut nach Fortschritt
   von oben nach unten ab. `/agent/laeufe` liefert `phasen` mit
   (Reload-sicher); altes Backend ohne das Feld zeigt die alte Anzeige.
-- **Schritt-Prompt entschaerft (17.10. 02:41, Falko: "das im prompt is
+- **Schritt-Prompt entschaerft (17.10. 02:41, Nutzer: "das im prompt is
   haesslich").** Der PHASEN-Block in JEDEM Schritt-Prompt ist jetzt knapp
   und klar: offene Schritte als schlichte "Noch offen"-Liste,
-  Zwischennachrichten als "Falko hat zwischendurch geschrieben (jetzt
+  Zwischennachrichten als "Nutzer hat zwischendurch geschrieben (jetzt
   gelesen)" - mit dem Hinweis, dass es sich meist um Fragen oder
   Nebenbemerkungen handelt und echte neue Aufgaben per naechster_schritt
   hinten angehaengt werden. Gleiche Information, kein Wortschwall.
@@ -263,7 +702,7 @@ Studio-IDs nie hardkodiert.
 
 ## v2.9.97 - Roblox-Spielwissen als eigener MCP-Server (16.10.2026 04:00)
 
-- **Falkos Research-MDs sind jetzt Werkzeug.** Neuer eigener MCP-Server
+- **Nutzers Research-MDs sind jetzt Werkzeug.** Neuer eigener MCP-Server
   `mcp_eigene/roblox_wissen.py` (211 Zeilen) mit drei Tools:
   `spiel_wissen_lage` (welche Wissens-Ordner/Dateien gibt es),
   `spiel_wissen_finden` (Stichwortsuche mit Zeile+Titel),
@@ -293,14 +732,14 @@ Studio-IDs nie hardkodiert.
 
 - **Aufseher darf arbeiten.** Wer Helfer gestartet hat, hiess es bislang nur:
   warten, Stand ansehen, wieder warten. Jetzt sagen agenten_warten,
-  agenten_stand UND die Mama-Regel im Agent-Prompt dasselbe (Falko 15.10.
+  agenten_stand UND die Mama-Regel im Agent-Prompt dasselbe (Nutzer 15.10.
   22:21): WAHREND die Helfer laufen an eigenen Dingen weiterarbeiten -
   pruefen, einsortieren, vorbereiten. Nur nichts doppelt bauen und kein
   fertig melden, solange sie laufen. Wirkt im Backend nach dem naechsten
   Qwirbel-Neustart.
 - **Keine Buchstaben-Stapel mehr im Chat.** 15 Stellen standen auf wordBreak
   "break-all": in schmalen Spalten brach der Text mitten im Wort, jeder
-  Buchstabe einzeln untereinander (Falko 15.10. 19:59). Jetzt "break-word" -
+  Buchstabe einzeln untereinander (Nutzer 15.10. 19:59). Jetzt "break-word" -
   lange Woerter brechen nur, wenn noetig, der Rest an Leerzeichen. Beide
   Baeume neu gebaut und ausgeliefert (Abdruck 7a19e94e63a2) - einmal neu
   laden genuegt.
@@ -330,7 +769,7 @@ Studio-IDs nie hardkodiert.
 
 ## v2.9.94 - Browser-Bruecke raeumt Dupletten auf; Handy: Laeufe im Blatt statt Overlay
 
-- **Browser-Bruecke 1.4.0 - Dupletten-Raeumer.** Oeffnet Qwirbel eine Seite, die in einem SEINER Tabs schon offen ist (gleiche Adresse ohne ?/#), schliesst sich der alte Tab nach kurzer Frist - Standard 10 s, im Erweiterungs-Fenster von 0 bis 600 s einstellbar (0 = nie). Falkos eigene Tabs werden nie angefasst. Damit ist Schluss mit hunderten offenen Tabs nach laengeren Browser-Aufgaben.
+- **Browser-Bruecke 1.4.0 - Dupletten-Raeumer.** Oeffnet Qwirbel eine Seite, die in einem SEINER Tabs schon offen ist (gleiche Adresse ohne ?/#), schliesst sich der alte Tab nach kurzer Frist - Standard 10 s, im Erweiterungs-Fenster von 0 bis 600 s einstellbar (0 = nie). Nutzers eigene Tabs werden nie angefasst. Damit ist Schluss mit hunderten offenen Tabs nach laengeren Browser-Aufgaben.
 - **Handy: Laeufe im Blatt statt Overlay.** Der schwebende Laeufe-Knopf und das Overlay sind weg; die Jobs haben einen eigenen Tab im Blatt (volle Breite, rechts nicht mehr abgeschnitten, im Fenster gebunden wie Ansicht). Im Ansicht-Tab steht jeder Lauf mit einem X zum Stoppen, dazu ein Knopf zu Verbindungen/Browser-Bruecke.
 - **Kein Neuladen durch Wischen.** Nach-unten-Wischen laedt die App nicht mehr neu - dafuer gibt es den Menuepunkt "App neu laden" (Handy, App und PC-Screen gleich bedienbar).
 - **Modellvergleich mit einfachen Prompts.** scripts/modellvergleich.py baut aus allen Arbeitsproben-JSONs die MODELLVERGLEICH.md selbst (inkl. Verstaendnis-Kette ueber 25 lokale Modelle).
@@ -1643,7 +2082,7 @@ noch nicht.
 
 ## v2.9.70 - VRAM bleibt leer, wenn niemand arbeitet
 
-"Irgendwo wird unnoetig VRAM genommen. Wenn kein Chat laeuft, soll das Programm im Hintergrund selbst dafuer sorgen, dass der VRAM die ganze Zeit leer ist." (Falko, 03.10.2026)
+"Irgendwo wird unnoetig VRAM genommen. Wenn kein Chat laeuft, soll das Programm im Hintergrund selbst dafuer sorgen, dass der VRAM die ganze Zeit leer ist." (Nutzer, 03.10.2026)
 
 **Der Leerlauf-Waechter.** Ein Hintergrund-Dienst schaut alle 5 Minuten nach: Laeuft irgendetwas - Chat, Agent-Zug, lokale Modell-Anfrage, Diktat, ComfyUI-Generierung - bleibt alles wie es ist. Erst nach 5 Minuten vollkommener Ruhe raeumt er selbst auf: Ollama-Modelle werden entladen (keep_alive=0), ComfyUI-Speicher nur bei voellig leerer Warteschlange freigegeben.
 
@@ -1655,7 +2094,7 @@ noch nicht.
 
 ## v2.9.69 - Kontext schlanker nutzen: Komprimieren behaelt Thema, Regeln und Ergebnisse
 
-"Ich brauche viel zu viele Tokens fuer eine Aufgabe, die am Ende halb fertig ist. Beim Komprimieren behalte Regeln, Styles, Abhaengigkeiten, Thema des Chats alles drin - nicht nur was getan wurde." (Falko, 03.10.2026)
+"Ich brauche viel zu viele Tokens fuer eine Aufgabe, die am Ende halb fertig ist. Beim Komprimieren behalte Regeln, Styles, Abhaengigkeiten, Thema des Chats alles drin - nicht nur was getan wurde." (Nutzer, 03.10.2026)
 
 **Das Ende eines Zugs ueberlebt die Kompression.** Bisher schnitt die Schere nur von vorn: Bei einem Zug wie datei_schreiben(...) ueberlebte der Werkzeugname, das ERGEBNIS am Ende (Pfad, Zeilenzahl, Fehlercode) fiel aber weg - und spaeter wusste der Agent nicht mehr, was er getan hatte. Jetzt bekommt der Kopf zwei Drittel des Budgets und der Schwanz ein Drittel; nur die Mitte wird als ...[Mitte komprimiert]... ausgelassen. Gepinnte Eintraege bleiben wie immer unangetastet.
 
@@ -1935,7 +2374,7 @@ ihren Tab (tab_id aus oeffnen) und - freiwillig - ihren Auftrag
 Backend-Suiten (Fokus 42, Sicherheit 152). Ob Chrome das Fenster "Qwirbel"
 wirklich ohne Fokuswechsel anlegt (windows.create focused:false) und ob
 storage.session den Tab-Besitz ueber einen Dienst-Neustart traegt, ist am
-echten Browser nicht gesehen. Falkos Ad-Uploader muessen ihre Tabs jetzt
+echten Browser nicht gesehen. Nutzers Ad-Uploader muessen ihre Tabs jetzt
 selbst ueber "oeffnen" anlegen (fremde tab_ids lehnt die Erweiterung ab).
 Noch nicht gebaut: das Regelwerk fuer Konten mit Bestaetigung (Runde 2,
 braucht C2/C5/C6), Live-Karte und Abbrechen-Knopf (Runde 3), der interne
@@ -1998,7 +2437,7 @@ alte Fassung war dort in 18 rot), das Backend gegen eine Wegwerf-Instanz
 (125 Pruefungen). Ob Chrome den Dialog "Aenderungen verwerfen?" von X als
 beforeunload meldet, ist nicht am echten Browser gemessen - falls nicht,
 kommt der alte Haenger zurueck und steht dann sichtbar in der Antwort.
-Falkos Ad-Uploader-Skripte muessen sich an /browser-bruecke/befehl als
+Nutzers Ad-Uploader-Skripte muessen sich an /browser-bruecke/befehl als
 Admin ausweisen (Desktop-Geheimnis oder Admin-Token) - womit sie sich heute
 anmelden, konnte ich hier nicht sehen. Noch nicht gebaut: Tab-Besitz und
 Fokus (Runde 1), das Regelwerk fuer Konten mit Bestaetigung (Runde 2), die
@@ -5070,7 +5509,7 @@ weiterzurechnen.
 
 ### Uebersetzung: die Seitenleiste bleibt nicht mehr deutsch
 
-**Falko hat auf Polnisch umgestellt, und die ganze linke Leiste blieb
+**Nutzer hat auf Polnisch umgestellt, und die ganze linke Leiste blieb
 deutsch.** Grund: die Tab-Namen stehen nicht als uebersetzbarer Text im
 Programm, sondern in einer Tabelle - der Sammler sah sie nie, und die
 Anzeige holte sie direkt von dort. Jetzt gehen Tab- und Untertab-Namen
@@ -5120,7 +5559,7 @@ auf Anzahl und Platzhalter).
   einen fertig gebauten Beispiel-Tab mit (Pflanzen, sieben Bausteine, mit
   Eintraegen und einem abgehakten Punkt), dazu die acht Vorgaben im
   Baudialog. Schreibende Klicks lehnt die Demo wie ueberall ehrlich ab.
-- **"Kompakt" heisst jetzt "Komprimieren"** (Falko: "Kompakt umbenennen
+- **"Kompakt" heisst jetzt "Komprimieren"** (Nutzer: "Kompakt umbenennen
   zu komprimieren"). Die Karte im Verlauf heisst entsprechend
   "KOMPRIMIERT"; die Rolle in gespeicherten Chats bleibt, wie sie ist -
   ein Umbenennen dort waere ein Datenbruch ohne Gegenwert.
@@ -6279,7 +6718,7 @@ deshalb startete der Auto-Schwarm nie von allein. Jetzt gilt: Roadmap ODER Nachr
 300 Zeichen, die mehrere Dinge auf einmal nennt. Die KI denkt dabei weiterhin erst
 selbst nach: Die Zerlegung läuft über das LLM, ergibt sie nur EINEN Teil, arbeitet der
 Agent allein weiter – eine bewusste Entscheidung MIT oder OHNE Schwarm, ohne Rückfrage
-(genau Falkos Wunsch: „du denkst erst mal nach“).
+(genau Nutzers Wunsch: „du denkst erst mal nach“).
 
 **Zweitens warf ein mitgeschicktes Bild die Nachricht aus dem Aufgaben-Weg.** Ein Bild
 erzwang vorher überall typ=generation – auch im Work-/Code-Tab. Damit verschwand die
@@ -6293,12 +6732,12 @@ Chip bleibt Generation – im Chat-Tab wie bisher.
 mehrfach ankommen (Reload/Reconnect spielt Events nach) – die Nachricht stand dann zwei-
 oder dreimal im Chat. zwischenrufEcho ist jetzt idempotent: Existiert bereits ein
 bestätigter Zwischenruf mit demselben Text, fliegt nur die vorläufige Zeile raus,
-eingefügt wird nichts mehr. Dasselbe Netz jetzt auch an der SENDEN-Stelle: Schickt Falko
+eingefügt wird nichts mehr. Dasselbe Netz jetzt auch an der SENDEN-Stelle: Schickt Nutzer
 dieselbe Nachricht mehrfach los (Doppelklick, Enter + Klick), meldet das Backend
 "duplikat" und die vorläufige Zeile verschwindet wieder, statt doppelt stehen zu
 bleiben. Und der Verlaufs-Schreiber verwirft ein zweites identisches Zwischenruf-Echo –
 quittieren mehrere Helfer denselben Posteingang (Broadcast UND Stream), landet die Zeile
-trotzdem nur einmal in der Chat-Datei. Nur FALKOS Zwischenrufe werden entdupliziert;
+trotzdem nur einmal in der Chat-Datei. Nur Nutzers Zwischenrufe werden entdupliziert;
 Qwirbels eigene Meldungen bleiben unberührt.
 
 ## v2.8.2 - Kleine Modelle wissen jetzt, was sie schon getan haben
@@ -6532,7 +6971,7 @@ jetzt vorher statt hinterher zu enttaeuschen.
 
 **Der Lösch-Knopf löscht jetzt WIRKLICH.** Bisher stand beim Löschen „es geht
 nichts verloren, wird nur verschoben“ – der Chat wanderte als .alt.jsonl zur
-Seite und blieb damit auf der Platte liegen. Falko: „Der Knopf soll aber halt
+Seite und blieb damit auf der Platte liegen. Nutzer: „Der Knopf soll aber halt
 löschen. den Chat, den man dann hat.“ Der Knopf schickt jetzt hart:true und das
 Backend entfernt die Chat-Datei wirklich (unlink) – schnell, ohne LLM-Runde;
 die Anbieter-Bindung des Kanals löst sich mit (ein neuer Chat wählt neu). /neu
@@ -6565,7 +7004,7 @@ große lokale Modelle (ab 30B) behalten die volle Liste wie bisher.
 **In Work und Code bindet der erste Zug den Chat an seinen Anbieter – lokal ODER
 Cloud.** Der Zwang vom 21.08. („Arbeits-Tabs nur noch lokale Modelle“) blockierte
 dort jeden API-Key und war der Back, weswegen dieses Update nie installiert wurde.
-Jetzt gilt: Startet Falko einen Work-/Code-Chat mit GLM, bleibt genau dieses Modell
+Jetzt gilt: Startet Nutzer einen Work-/Code-Chat mit GLM, bleibt genau dieses Modell
 für den gesamten Chat gesetzt – die Modell-Leiste wirkt „grau“, ein stiller Wechsel
 findet nie statt. Lokal bindet sofort; Cloud bindet nur mit passendem Key (ohne Key
 kommt ein ehrlicher Fehler mit Grund und Ausweg, kein stiller Rückfall auf lokal).
@@ -6575,7 +7014,7 @@ neuen Datei backend/chat_fixierung.py (wahl_fuer_chat), nicht mehr als if-Blöck
 an zwei Stellen in main.py.
 
 **Gemma 26B arbeitet jetzt auch in Work/Code – mit der kompakten Werkzeugliste.**
-Falkos Gemma 4 26B lief im Chat-Tab schnell und sicher, weil die Werkzeug-Liste
+Nutzers Gemma 4 26B lief im Chat-Tab schnell und sicher, weil die Werkzeug-Liste
 kompakt war und kein MCP-Ballast im Prompt stand. Genau das gilt ab jetzt auch in
 Work und Code: Die Schwelle für die vollständige ~60-Werkzeug-Liste steigt von 25
 auf 30 Milliarden Parameter (werkzeug_profile.VOLL_AB_B_DEFAULT=30) – Modelle
@@ -6592,7 +7031,7 @@ global: eine Stufe im Code-Tab stellte auch Chat, Work und Planung um. Jetzt hä
 jeder Kanal seine eigene Stufe (qw_autonomie8_<kanal>), genauso wie der
 Mühe-Regler daneben (qw_muehe8_<kanal>).
 
-**Während Falko spielt, darf Qwirbel ins Fenster schauen.** fenster_ansehen ist
+**Während Nutzer spielt, darf Qwirbel ins Fenster schauen.** fenster_ansehen ist
 bewusst nicht mehr in der Vollbild-Sperre – Reinschauen reißt ihn nicht aus dem
 Spiel. Eigene Fenster und Programme gehören auf den anderen Monitor; die
 Sperrmeldung nennt beides wörtlich als Ausweg.
@@ -6687,7 +7126,7 @@ Paket gehoerten.
 
 **Das Diktat hatte eine unsichtbare Decke.** Der Regler fuer die Empfindlichkeit
 des Live-Diktats liess sich bislang bis 5 stellen - und genau dort stand er bei
-Falko schon lange. Wer leiser sprach oder ein Stueck weiter vom Mikro sass,
+Nutzer schon lange. Wer leiser sprach oder ein Stueck weiter vom Mikro sass,
 wurde schlicht nicht mehr erkannt; Drehen half nichts, denn die Skala hinter
 dem Regler endete bei 5 und klemmte jeden hoeheren Wert stumm dorthin zurueck.
 Ab jetzt reicht der Regler bis 10, und die Erkennung nutzt den ganzen Weg:

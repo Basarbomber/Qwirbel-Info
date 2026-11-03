@@ -215,7 +215,18 @@ Versionen, jede in normaler Sprache beschrieben: was sich geaendert hat,
 warum, und was dabei gemessen wurde. Wer wissen will, wie sich das Programm
 entwickelt hat, liest dort.
 
-Aktuelle veroeffentlichte Fassung: **v2.8.1**.
+Aktuelle veroeffentlichte Fassung: **v3.2.1** (03.11.2026).
+
+---
+
+## Modell-Benchmark
+
+**Wie gut ist ein Sprachmodell wirklich? Qwirbel misst es — mit echten
+Agent-Aufträgen, jede Nacht.** Der Bericht [BENCHMARK.md](BENCHMARK.md)
+zeigt die Zahlen ungekürzt: 87 Läufe über 23 Modelle (Oktober bis
+03.11.2026), inklusive der Läufe, die schlecht ausgingen — und inklusive
+der 25 Umgebungs-Fallen, die Qwirbel dabei an sich selbst gefunden und
+repariert hat (v3.1.5 bis v3.2.1).
 
 ---
 
