@@ -5,7 +5,7 @@
 Qwirbel misst das jede Nacht mit echten Agent-Aufträgen. Dieser Bericht
 zeigt die Zahlen ungekürzt, inklusive der Läufe, die schlecht ausgingen.
 
-Stand: **03.11.2026** — 87 Läufe, 23 Modelle, alles auf derselben Maschine
+Stand: **03.11.2026, 20:45 Uhr** — 88 Läufe, 23 Modelle, alles auf derselben Maschine
 (Ryzen 7 5700X, Radeon RX 9060 XT 16 GB, Windows 11, Ollama).
 
 ---
@@ -47,6 +47,7 @@ Runde frisch:
 | ternary-nemotron-30b-a3b | 02.11. 09:04 | 1/25 | 4.255 s |
 | ternary-nemotron-30b-a3b | 02.11. 03:22 | 1/25 | 4.624 s |
 | qwen3.5:9b | 02.11. 23:53 | 0/25 | 1.164 s |
+| ternary-nemotron-30b-a3b | 03.11. 19:28 | 0/1 | 84 s |
 | ternary-nemotron-30b-a3b | 03.11. 07:12 | 0/25 | 4.597 s |
 
 \* Abbruch nach 16 Aufgaben — der Besitzer spielte gerade. Die Testkette gibt
@@ -64,7 +65,7 @@ selbst: abgebrochene Modell-Ströme, Leer-Antworten im Denk-Kanal, ein
 Blocker, der Aufgaben in Endlosschleifen schickte, zu wenig Sandbox-Speicher
 für 1080p-ffmpeg, Blender-Socket-Namen aus Blender-2.x-Trainingsdaten.
 **25 solcher „Fallen“ wurden bis zum 03.11. gefunden, repariert, mit Tests
-gesichert und ausgeliefert** (v3.1.5 bis v3.2.1). Was bleibt, ist
+gesichert und ausgeliefert** (v3.1.5 bis v3.2.2). Was bleibt, ist
 Modell-Schwäche — und die sieht man dann ungeschönt. Die Messreihe läuft
 weiter; dieser Bericht wird mitgezogen.
 
@@ -84,7 +85,7 @@ weiter; dieser Bericht wird mitgezogen.
 | granite-4.0-h-small UD-IQ3_XXS | 1/4 | |
 | Qwen3.8-27B UD-Q2_K_XL | 1/4 | |
 
-Insgesamt 23 Modelle gemessen; die vollständige Tabelle aller 87 Läufe
+Insgesamt 23 Modelle gemessen; die vollständige Tabelle aller 88 Läufe
 wächst im Entwicklungs-Repo mit.
 
 ---
@@ -104,7 +105,7 @@ wächst im Entwicklungs-Repo mit.
 
 ---
 
-*Alle Zahlen stammen aus Qwirbels eingebauter Arbeitsprobe (87 Läufe bis
+*Alle Zahlen stammen aus Qwirbels eingebauter Arbeitsprobe (88 Läufe bis
 03.11.2026). Kein Lauf wurde nachträglich schöngerechnet; schlechte Tage
 stehen mit drin.*
 
@@ -118,6 +119,9 @@ stehen mit drin.*
   Oktober-Schnelltests, beste Quote je Modell
 - [benchmark/benchmark_verlauf.png](benchmark/benchmark_verlauf.png) —
   wie die Messung geheilt wurde (25 Umgebungs-Fallen, v3.1.5–v3.2.2)
+- [benchmark/benchmark_lokal_cloud.png](benchmark/benchmark_lokal_cloud.png) —
+  lokal vs. Cloud: Probe-Quote gegen echte Arbeit — inklusive GLM 5.3,
+  dem Cloud-Modell, das diesen Bericht gebaut hat (Haiku & Flash geschätzt)
 
 Erzeugt mit `scripts/benchmark_bilder.py` (Werkstatt-Repo) — im Stil des
 Vorbilds: dunkler Grund, orange Akzente, Kategorien-Zeilen. Nach jeder
