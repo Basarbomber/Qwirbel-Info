@@ -107,3 +107,18 @@ wächst im Entwicklungs-Repo mit.
 *Alle Zahlen stammen aus Qwirbels eingebauter Arbeitsprobe (87 Läufe bis
 03.11.2026). Kein Lauf wurde nachträglich schöngerechnet; schlechte Tage
 stehen mit drin.*
+
+---
+
+## Bilder (für die Website)
+
+- [benchmark/benchmark_dauerprobe.png](benchmark/benchmark_dauerprobe.png) —
+  25 Aufgaben × 3 Modelle (Dauerprobe, 03.11.2026)
+- [benchmark/benchmark_schnelltests.png](benchmark/benchmark_schnelltests.png) —
+  Oktober-Schnelltests, beste Quote je Modell
+- [benchmark/benchmark_verlauf.png](benchmark/benchmark_verlauf.png) —
+  wie die Messung geheilt wurde (25 Umgebungs-Fallen, v3.1.5–v3.2.2)
+
+Erzeugt mit `scripts/benchmark_bilder.py` (Werkstatt-Repo) — im Stil des
+Vorbilds: dunkler Grund, orange Akzente, Kategorien-Zeilen. Nach jeder
+neuen Runde neu bauen, dann sind die Zahlen aktuell.
