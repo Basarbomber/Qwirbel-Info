@@ -5,7 +5,7 @@
 Qwirbel misst das jede Nacht mit echten Agent-Aufträgen. Dieser Bericht
 zeigt die Zahlen ungekürzt, inklusive der Läufe, die schlecht ausgingen.
 
-Stand: **03.11.2026, 20:45 Uhr** — 88 Läufe, 23 Modelle, alles auf derselben Maschine
+Stand: **04.11.2026, 01:50 Uhr** — 89 Läufe, 23 Modelle, alles auf derselben Maschine
 (Ryzen 7 5700X, Radeon RX 9060 XT 16 GB, Windows 11, Ollama).
 
 ---
@@ -44,6 +44,7 @@ Runde frisch:
 | bonsai-2:27b | 02.11. 04:40 | 4/25 | 15.729 s |
 | bonsai-2:27b | 03.11. 00:16 | 1/8 | 3.167 s |
 | qwen3.5:9b | 03.11. 08:30 | 1/25 | 3.618 s |
+| qwen3.5:9b | 04.11. 00:40 | 0/25† | 7 s |
 | ternary-nemotron-30b-a3b | 02.11. 09:04 | 1/25 | 4.255 s |
 | ternary-nemotron-30b-a3b | 02.11. 03:22 | 1/25 | 4.624 s |
 | qwen3.5:9b | 02.11. 23:53 | 0/25 | 1.164 s |
@@ -52,6 +53,10 @@ Runde frisch:
 
 \* Abbruch nach 16 Aufgaben — der Besitzer spielte gerade. Die Testkette gibt
 die Grafikkarte freiwillig frei und macht nach der Pause weiter.
+
+† Parallel-Doppellauf: Diese Probe startete in derselben Sekunde wie die
+bonsai-2:27b-Probe (gleiche GPU) und endete nach 7 s Aufgabenzeit ohne
+Ergebnis — keine Aussage über das Modell.
 
 Bestanden hat bonsai-2:27b zuletzt: Video-Schnitt, Bild-Aufgabe,
 GIF-Erzeugung und die Verständnisfragen — mit 44, 17, 33 und 26 echten
@@ -85,7 +90,7 @@ weiter; dieser Bericht wird mitgezogen.
 | granite-4.0-h-small UD-IQ3_XXS | 1/4 | |
 | Qwen3.8-27B UD-Q2_K_XL | 1/4 | |
 
-Insgesamt 23 Modelle gemessen; die vollständige Tabelle aller 88 Läufe
+Insgesamt 23 Modelle gemessen; die vollständige Tabelle aller 89 Läufe
 wächst im Entwicklungs-Repo mit.
 
 ---
@@ -105,8 +110,8 @@ wächst im Entwicklungs-Repo mit.
 
 ---
 
-*Alle Zahlen stammen aus Qwirbels eingebauter Arbeitsprobe (88 Läufe bis
-03.11.2026). Kein Lauf wurde nachträglich schöngerechnet; schlechte Tage
+*Alle Zahlen stammen aus Qwirbels eingebauter Arbeitsprobe (89 Läufe bis
+04.11.2026). Kein Lauf wurde nachträglich schöngerechnet; schlechte Tage
 stehen mit drin.*
 
 ---
